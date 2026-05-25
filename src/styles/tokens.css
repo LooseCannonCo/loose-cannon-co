@@ -1,0 +1,100 @@
+/* Loose Cannon Co. — design tokens
+ *
+ * Source of truth: .claude/skills/loose-cannon-website-system/SKILL.md
+ * Both blocks below ("Color tokens" and "Typography system") are marked LOCKED
+ * in the skill — values and names are transcribed verbatim. The size scale,
+ * spacing, and animation timings in the skill are specified as classes/values,
+ * not CSS custom properties, so they are intentionally not tokenized here.
+ */
+
+:root {
+  /* ── Color (locked) ──────────────────────────────────────────────────────
+   * Pink 0–3 are screened densities of the single LC brand pink (not separate
+   * brand colors) — the single-ink-at-different-densities defense for the
+   * strict 2-color rule. Violet reads as a print-registration bleed, not a
+   * third ink. */
+  --lc-pink-0: #fec6eb;   /* canvas */
+  --lc-pink-1: #fbafdf;   /* base under halftone */
+  --lc-pink-2: #f793cc;
+  --lc-pink-3: #ee65b3;
+  --lc-plum:   #270c1d;   /* ink */
+  --lc-violet: #b14aff;   /* registration bleed */
+  --lc-cream:  #fdf3e7;
+  --lc-red:    #d9342c;
+
+  /* ── Typography (locked) ───────────────────────────────────────────────────
+   * The skill defines these as literal Google-Fonts family stacks. In this app
+   * the families are loaded via next/font/google, which exposes them as the
+   * --font-display / --font-body variables (set on <body> in layout.tsx), so
+   * the tokens resolve through those first and keep the literal family names as
+   * a fallback. Bricolage is UPRIGHT only — never italic. */
+  --lc-display: var(--font-display), "Bricolage Grotesque", system-ui, sans-serif;
+  --lc-body: var(--font-body), "DM Sans", system-ui, sans-serif;
+
+  /* ── Semantic aliases ──────────────────────────────────────────────────────
+   * Convenience names consumed by globals.css and components. */
+  --color-bg: var(--lc-pink-0); /* canvas */
+  --color-fg: var(--lc-plum); /* ink */
+  --font-family-display: var(--lc-display);
+  --font-family-body: var(--lc-body);
+
+  /* ── Layout (from "Layout rules" + "Responsive breakpoint") ─────────────────
+   * Verbatim values from the skill; ranges/derived numbers are not invented. */
+  --lc-page-max-width: 1320px;
+  --lc-page-pad: 32px; /* desktop */
+  --lc-page-pad-mobile: 20px; /* at/under the mobile breakpoint */
+  --lc-section-pad-y: 80px; /* section vertical padding (top; last section also bottom) */
+  --lc-section-title-grid: 1.1fr 1.4fr; /* section title block columns */
+  --lc-section-gap: 48px; /* section title block gap */
+  --lc-bp-mobile: 900px; /* single mobile breakpoint. NOTE: CSS @media cannot
+                          * consume custom properties — this is for JS/reference;
+                          * hardcode 900px in actual @media queries. */
+
+  /* ── Typography sizes (from the "Display sizes" + "Body sizes" tables) ──────
+   * Range values use the midpoint; the full range is noted in the comment. */
+  --lc-size-display-xl: clamp(120px, 16vw, 200px);
+  --lc-size-hero-number: 148px;
+  --lc-size-display-lg: 56px; /* range 54-58px */
+  --lc-size-display-md: 45px; /* range 42-48px */
+  --lc-size-display-sm: 21.5px; /* range 19-24px */
+  --lc-size-body: 15.5px; /* range 14-17px */
+  --lc-size-eyebrow: 10.5px; /* range 10-11px */
+  --lc-size-caption: 13px;
+  --lc-size-source: 9px;
+
+  /* opsz (optical size) per the display table; ranges use the midpoint */
+  --lc-opsz-display-xl: 96;
+  --lc-opsz-hero-number: 96;
+  --lc-opsz-display-lg: 72;
+  --lc-opsz-display-md: 60; /* range 48-72 */
+  --lc-opsz-display-sm: 36; /* range 24-48 */
+
+  /* Weights per the skill (display follows the opsz 96 / wght 700 rule) */
+  --lc-weight-display: 700;
+  --lc-weight-body: 400;
+  --lc-weight-eyebrow: 600;
+  --lc-weight-caption: 600;
+  --lc-weight-source: 600;
+
+  /* Letter-spacing where specified; eyebrow range uses the midpoint */
+  --lc-tracking-eyebrow: 0.15em; /* range 0.12-0.18em */
+  --lc-tracking-source: 0.14em;
+
+  /* Source label opacity */
+  --lc-opacity-source: 0.7; /* 70% */
+
+  /* ── Motion (from "Animation choreography") ─────────────────────────────────
+   * IntersectionObserver values are JS-only, kept as comments:
+   *   threshold: 0.2   rootMargin: "0px 0px -10% 0px" */
+  --lc-slam-1: 400ms; /* slam stage 1 — overshoot */
+  --lc-slam-2: 220ms; /* slam stage 2 — kickback */
+  --lc-slam-3: 240ms; /* slam stage 3 — settle */
+  --lc-plum-chase: 220ms; /* plum halftone chases base+violet by this delay */
+  --lc-violet-breath: 4.2s; /* idle violet-bleed breathing cycle */
+  --lc-reveal-stagger: 60ms; /* section reveal stagger between elements */
+  --lc-slot-roll-interval: 45ms; /* digit roll interval (~45ms) */
+  --lc-magnetic-radius: 180px; /* sticker magnetic pull radius */
+  --lc-magnetic-pull: 8px; /* sticker magnetic max translate */
+  --lc-sticker-rot-min: -14deg; /* sticker rotation range floor */
+  --lc-sticker-rot-max: 10deg; /* sticker rotation range ceiling */
+}
