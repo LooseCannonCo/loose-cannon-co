@@ -1,0 +1,10 @@
+.footMeta {
+  padding: 16px 0 28px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.55;
+}

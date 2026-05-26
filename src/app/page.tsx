@@ -1,26 +1,20 @@
+import { Footer } from "@/components/Footer/Footer";
+import { Nav } from "@/components/Nav/Nav";
+import { Page } from "@/components/Page/Page";
+import { Section } from "@/components/Section/Section";
+
+import styles from "./page.module.css";
+
 export default function Home() {
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        display: "grid",
-        placeItems: "center",
-        padding: "2rem",
-        background: "var(--color-bg)",
-      }}
-    >
-      <h1
-        style={{
-          fontFamily: "var(--font-family-display)",
-          fontWeight: 700,
-          fontSize: "clamp(2rem, 6vw, 4.5rem)",
-          color: "var(--color-fg)",
-          textAlign: "center",
-          letterSpacing: "-0.02em",
-        }}
-      >
-        Loose Cannon Co. scaffold OK
-      </h1>
-    </main>
+    <Page>
+      <Nav />
+      <main>
+        <Section>
+          <h1 className={styles.placeholder}>Phase B.1 foundation</h1>
+        </Section>
+      </main>
+      <Footer />
+    </Page>
   );
 }

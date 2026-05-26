@@ -170,11 +170,11 @@ All elements centered horizontally, `text-align: center`, `gap: 8px`.
 | Sticker | When | Sentiment |
 |---|---|---|
 | `Banger!` | Hero stat slam, big-win moments | Pride, slight swagger |
-| `Mic drop.` | Quote slam, conclusion moments | Confidence, finality |
-| `Off the charts.` | Stat that exceeded the scale | Disbelief, scale-breaking |
-| `Next level.` | Comparison wins | Casual flex |
-| `Lost it.` | Reaction moments | Surprise |
-| `Are you kidding?` | Disbelief at a result | Mock skepticism |
+| `Mic drop!` | Quote slam, conclusion moments | Confidence, finality |
+| `Off the charts!` | Stat that exceeded the scale | Disbelief, scale-breaking |
+| `Next level!` | Comparison wins | Casual flex |
+| `Lost it!` | Reaction moments | Surprise |
+| `Are you kidding?!` | Disbelief at a result | Mock skepticism |
 
 Rules:
 - **Sentence case always.** "Banger!" not "BANGER!" or "banger!".

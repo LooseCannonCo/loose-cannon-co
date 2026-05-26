@@ -1,0 +1,57 @@
+/* LC Sticker — pink-1 pill, plum outline, with a violet halftone registration
+ * bleed offset down-right via ::before. Shared shape; variants set size only. */
+
+.wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.pill {
+  position: relative;
+  display: inline-block;
+  background: var(--lc-pink-1);
+  border: 1.75px solid var(--lc-plum);
+  color: var(--lc-plum);
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-hero-number), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  letter-spacing: -0.02em;
+  border-radius: 100px;
+  white-space: nowrap;
+  cursor: pointer;
+  will-change: transform;
+  z-index: 5;
+}
+
+/* Violet halftone bleed — the print misregistration, offset translate(2px, 1.5px). */
+.pill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 100px;
+  transform: translate(2px, 1.5px);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Ccircle cx='2' cy='2' r='1.1' fill='%23b14aff' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+/* Size presets */
+.hero {
+  font-size: 30px;
+  padding: 11px 26px;
+}
+
+.mic {
+  font-size: 26px;
+  padding: 11px 24px;
+}
+
+.corner {
+  font-size: 18px;
+  padding: 8px 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill {
+    transition: none !important;
+  }
+}

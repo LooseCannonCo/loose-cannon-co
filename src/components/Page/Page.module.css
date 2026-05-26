@@ -1,0 +1,16 @@
+.page {
+  max-width: var(--lc-page-max-width);
+  margin: 0 auto;
+  padding: 0 var(--lc-page-pad);
+  background: var(--lc-pink-0);
+  min-height: 100vh;
+  position: relative;
+  z-index: 2;
+}
+
+/* Single mobile breakpoint (--lc-bp-mobile = 900px; @media can't read tokens). */
+@media (max-width: 900px) {
+  .page {
+    padding: 0 var(--lc-page-pad-mobile);
+  }
+}

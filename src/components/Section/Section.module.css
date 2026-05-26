@@ -1,0 +1,23 @@
+.section {
+  padding: var(--lc-section-pad-y) 0 0;
+  position: relative;
+}
+
+.last {
+  padding-bottom: var(--lc-section-pad-y);
+}
+
+.titleBlock {
+  display: grid;
+  grid-template-columns: var(--lc-section-title-grid);
+  gap: var(--lc-section-gap);
+  align-items: start;
+  margin-bottom: var(--lc-section-gap);
+}
+
+@media (max-width: 900px) {
+  .titleBlock {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}

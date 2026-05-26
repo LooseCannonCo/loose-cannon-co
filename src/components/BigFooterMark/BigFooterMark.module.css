@@ -1,0 +1,17 @@
+.bigFoot {
+  padding: 96px 0 24px;
+  text-align: center;
+}
+
+.mark {
+  margin: 0;
+  font-family: var(--lc-display);
+  /* opsz 96 is what gives Bricolage its display character; upright only. */
+  font-variation-settings: "opsz" var(--lc-opsz-display-xl), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-style: normal;
+  font-size: var(--lc-size-display-xl);
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  color: var(--lc-plum);
+}
