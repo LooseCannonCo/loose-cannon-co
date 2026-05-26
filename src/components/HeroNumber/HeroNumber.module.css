@@ -1,0 +1,63 @@
+.number {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  margin: 0 0 28px;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-hero-number), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  letter-spacing: -0.045em;
+  line-height: 0.82;
+  font-variant-numeric: tabular-nums;
+  color: var(--lc-plum);
+}
+
+/* Prefix / suffix — 60px, start hidden, popped in by JS. */
+.affix {
+  font-size: 60px;
+  padding-top: 14px;
+  display: inline-block;
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.digits {
+  font-size: var(--lc-size-hero-number);
+  display: inline-flex;
+}
+
+.digits > span {
+  display: inline-block;
+  transform-origin: center;
+  transition: transform 0.18s cubic-bezier(0.2, 1.5, 0.3, 1);
+}
+
+.heroSticker {
+  position: absolute;
+  bottom: -10px;
+  right: -20px;
+  z-index: 5;
+}
+
+@media (max-width: 900px) {
+  .digits {
+    font-size: 84px;
+  }
+  .affix {
+    font-size: 36px;
+  }
+  .heroSticker {
+    bottom: -6px;
+    right: -8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .affix {
+    opacity: 1;
+    transform: none;
+  }
+  .digits > span {
+    transition: none;
+  }
+}
