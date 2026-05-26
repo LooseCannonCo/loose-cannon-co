@@ -179,7 +179,7 @@ All elements centered horizontally, `text-align: center`, `gap: 8px`.
 Rules:
 - **Sentence case always.** "Banger!" not "BANGER!" or "banger!".
 - **Max 2 stickers per page**, typically 3 only if the page is exceptionally long.
-- **Rotation between -14° and +10°.** Hero sticker tucked into the right of the hero number rotates +6°. Mic drop. in quote rotates +8°. Vary the angle per sticker.
+- **Rotation between -14° and +10°.** Hero sticker tucked into the right of the hero number rotates +6°. Mic drop! in quote rotates +8°. Vary the angle per sticker.
 - **Halftone bleed** via `::before` pseudo-element: `transform: translate(2px, 1.5px)` with a violet dot pattern background.
 
 ## Permanent halftone splatter (escaped ink)
@@ -230,7 +230,7 @@ Every LC case study page assembles from this skeleton, in this order. Each secti
 8. QUOTE
    Big quote mark + 44px Bricolage quote text
    Attribution: name + role
-   Mic drop. sticker top-right rotated +8°
+   Mic drop! sticker top-right rotated +8°
 
 9. CREDITS
    4-col grid: 4 disciplines with name underneath each
