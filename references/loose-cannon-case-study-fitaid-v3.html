@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loose Cannon Co. — Case 001: FITAID</title>
+
+  <!-- Bricolage Grotesque (variable: opsz 12-96, wght 400-700) + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=DM+Sans:wght@400;600&display=swap">
+
+  <style>
+    /* ============================================================
+       LOOSE CANNON CO. — DESIGN SYSTEM TOKENS
+       ============================================================ */
+    :root {
+      --lc-pink-0: #fec6eb;   /* canvas */
+      --lc-pink-1: #fbafdf;   /* base under halftone */
+      --lc-pink-2: #f793cc;
+      --lc-pink-3: #ee65b3;
+      --lc-plum:   #270c1d;   /* ink */
+      --lc-violet: #b14aff;   /* registration bleed */
+      --lc-cream:  #fdf3e7;
+      --lc-red:    #d9342c;
+      --lc-display: 'Bricolage Grotesque', system-ui, sans-serif;
+      --lc-body:    'DM Sans', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--lc-pink-0);
+      color: var(--lc-plum);
+      font-family: var(--lc-body);
+      font-size: 14px;
+      line-height: 1.5;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Page-wide grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.5;
+      mix-blend-mode: multiply;
+      z-index: 1000;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' seed='19'/><feColorMatrix values='0 0 0 0 0.153  0 0 0 0 0.047  0 0 0 0 0.114  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+
+    /* ============================================================
+       DISPLAY TYPE — opsz drives the personality
+       ============================================================ */
+    .display-xl, .display-lg, .display-md, .display-sm {
+      font-family: var(--lc-display);
+      font-weight: 700;
+      color: var(--lc-plum);
+    }
+    .display-xl {
+      font-variation-settings: "opsz" 96, "wght" 700;
+      letter-spacing: -0.045em;
+      line-height: 0.82;
+      font-variant-numeric: tabular-nums;
+    }
+    .display-lg {
+      font-variation-settings: "opsz" 72, "wght" 700;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+    }
+    .display-md {
+      font-variation-settings: "opsz" 48, "wght" 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .display-sm {
+      font-variation-settings: "opsz" 24, "wght" 700;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+    }
+
+    .eyebrow {
+      font-family: var(--lc-body);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 700ms ease-out, transform 700ms cubic-bezier(0.2, 0.7, 0.25, 1);
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .page { max-width: 1320px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 2; }
+
+    /* NAV */
+    .nav {
+      padding: 18px 0;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 18px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .nav .center {
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 24, "wght" 700;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+      text-transform: none;
+    }
+    .nav .right { display: flex; gap: 22px; justify-content: flex-end; }
+    .nav a { color: inherit; text-decoration: none; }
+    .nav a:hover { opacity: 0.6; }
+
+    /* METADATA */
+    .meta-strip {
+      padding: 16px 0 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+    }
+    .meta-strip .grp { display: flex; gap: 36px; }
+    .meta-col { display: flex; flex-direction: column; gap: 3px; }
+    .meta-col .lbl {
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.55;
+    }
+    .meta-col .val {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    .hero {
+      padding: 42px 0 36px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .hero-left { position: relative; }
+    .hero__eyebrow-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 24px;
+    }
+    .hero__eyebrow-row .dot {
+      width: 7px;
+      height: 7px;
+      background: var(--lc-plum);
+    }
+    .hero__number {
+      position: relative;
+      display: inline-flex;
+      align-items: flex-start;
+      margin: 0 0 28px;
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 96, "wght" 700;
+      font-weight: 700;
+      letter-spacing: -0.045em;
+      line-height: 0.82;
+      font-variant-numeric: tabular-nums;
+    }
+    .hero__plus, .hero__suffix {
+      font-size: 52px;
+      padding-top: 14px;
+      display: inline-block;
+      opacity: 0;
+      transform: scale(0.6);
+    }
+    .hero__digits {
+      font-size: 128px;
+      display: inline-flex;
+    }
+    .hero__digits > span {
+      display: inline-block;
+      transition: transform 0.18s cubic-bezier(0.2, 1.5, 0.3, 1);
+      transform-origin: center;
+    }
+    .hero__sticker {
+      position: absolute;
+      bottom: -10px;
+      right: -20px;
+      background: var(--lc-pink-1);
+      border: 1.75px solid var(--lc-plum);
+      padding: 11px 26px;
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 96, "wght" 700;
+      font-weight: 700;
+      font-size: 30px;
+      letter-spacing: -0.02em;
+      color: var(--lc-plum);
+      border-radius: 100px;
+      transform: rotate(-11deg) scale(0);
+      z-index: 5;
+      white-space: nowrap;
+      will-change: transform;
+      cursor: pointer;
+    }
+    .hero__sticker::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 100px;
+      z-index: -1;
+      transform: translate(2px, 1.5px);
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4'><circle cx='2' cy='2' r='1.1' fill='%23b14aff' opacity='0.55'/></svg>");
+    }
+    .hero__headline {
+      margin: 0 0 14px;
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 48, "wght" 700;
+      font-weight: 700;
+      font-size: 38px;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      max-width: 480px;
+    }
+    .hero__sub {
+      margin: 0 0 18px;
+      font-size: 15px;
+      line-height: 1.5;
+      max-width: 400px;
+      font-weight: 400;
+    }
+    .hero__meta {
+      margin: 0;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+      text-transform: uppercase;
+      max-width: 400px;
+      line-height: 1.55;
+      opacity: 0.65;
+    }
+
+    /* GOLLUM POSTER — Flippy removed */
+    .poster {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 0.78 / 1;
+      background: linear-gradient(155deg, #0a0805 0%, #231a14 45%, #1a1410 100%);
+      border: 2px solid var(--lc-plum);
+      overflow: hidden;
+      box-shadow: 10px 10px 0 var(--lc-plum);
+    }
+    .poster__tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: var(--lc-plum);
+      color: var(--lc-pink-1);
+      padding: 5px 11px;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      font-weight: 600;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    .poster__stand-in {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: #7a6b5a;
+      text-align: center;
+      padding: 24px;
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 24, "wght" 400;
+      font-size: 14px;
+    }
+    .poster__stand-in span {
+      opacity: 0.5;
+      font-family: var(--lc-body);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+    .poster__precious {
+      position: absolute;
+      bottom: 16px;
+      right: -4px;
+      background: var(--lc-pink-3);
+      color: var(--lc-plum);
+      padding: 6px 14px 6px 16px;
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 24, "wght" 700;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      transform: rotate(-2deg);
+      border: 1.5px solid var(--lc-plum);
+    }
+
+    /* ============================================================
+       SECTION SHELL
+       ============================================================ */
+    .section { padding: 80px 0 0; }
+    .section.last { padding-bottom: 80px; }
+
+    .section__title-block {
+      display: grid;
+      grid-template-columns: 1.1fr 1.4fr;
+      gap: 48px;
+      align-items: start;
+      margin-bottom: 48px;
+    }
+    .section__title-block .label {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.65;
+      margin-bottom: 12px;
+    }
+    .section__title-block .ttl {
+      margin: 0;
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 72, "wght" 700;
+      font-weight: 700;
+      font-size: 42px;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .section__title-block .body {
+      font-size: 15px;
+      line-height: 1.55;
+      max-width: 500px;
+      margin: 0;
+      padding-top: 12px;
+    }
+
+    /* ============================================================
+       9-GRID — editorial gallery
+       ============================================================ */
+    .nine {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .tile {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 22px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--lc-pink-1);
+      border: 1.25px solid var(--lc-plum);
+    }
+    .tile.dark { background: #2c1f1a; color: var(--lc-pink-1); border-color: #2c1f1a; }
+    .tile.cream { background: var(--lc-cream); border-color: var(--lc-plum); }
+    .tile.img { background: var(--lc-pink-1); }
+
+    .tile .stand {
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 24, "wght" 400;
+      font-size: 13px;
+      color: rgba(39, 12, 29, 0.55);
+      line-height: 1.3;
+      max-width: 75%;
+    }
+    .tile.dark .stand { color: rgba(251, 175, 223, 0.6); }
+    .tile .stand-lbl {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.6;
+      margin-top: 8px;
+      font-family: var(--lc-body);
+    }
+
+    /* GYM dictionary tile */
+    .tile-gym .word {
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 96, "wght" 700;
+      font-weight: 700;
+      font-size: 56px;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .tile-gym .pron {
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.65;
+      margin-bottom: 12px;
+      font-family: var(--lc-body);
+    }
+    .tile-gym .def {
+      font-size: 13px;
+      line-height: 1.4;
+      max-width: 180px;
+      font-family: var(--lc-body);
+    }
+
+    /* OVERHEARD AT THE GYM tile */
+    .tile-overheard .ovr {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--lc-red);
+      margin-bottom: 14px;
+    }
+    .tile-overheard .q-mark {
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 48, "wght" 700;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 1;
+      display: block;
+      margin: 0 0 8px;
+    }
+    .tile-overheard .q-mark.btm { margin: 8px 0 0; }
+    .tile-overheard .body {
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 48, "wght" 700;
+      font-weight: 700;
+      font-size: 19px;
+      line-height: 1.05;
+    }
+    .tile-overheard .body + .body { margin-top: 10px; }
+
+    /* STEVIA tile */
+    .tile-stevia {
+      padding: 0;
+      background: #3a3530;
+      justify-content: flex-end;
+      align-items: center;
+      border-color: #3a3530;
+    }
+    .tile-stevia .tape {
+      background: var(--lc-pink-1);
+      color: var(--lc-plum);
+      padding: 8px 14px;
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 24, "wght" 700;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      text-align: center;
+      max-width: 85%;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 28px;
+      border: 1px solid var(--lc-plum);
+    }
+    .tile-stevia .name-tag {
+      position: absolute;
+      bottom: 16px;
+      background: var(--lc-red);
+      color: var(--lc-pink-0);
+      padding: 4px 14px;
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 24, "wght" 700;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    /* REVIEW tile */
+    .tile.review {
+      padding: 16px;
+      justify-content: flex-start;
+      align-items: stretch;
+      text-align: left;
+      font-size: 10px;
+    }
+    .tile.review .stars { color: #f5c12a; letter-spacing: 2px; font-size: 12px; margin-bottom: 10px; }
+    .tile.review .who { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; }
+    .tile.review .avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--lc-plum); }
+    .tile.review .name {
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 24, "wght" 700;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 1.1;
+    }
+    .tile.review .role { font-size: 9px; letter-spacing: 0.06em; opacity: 0.65; }
+    .tile.review .body { font-size: 10px; line-height: 1.45; margin-bottom: 8px; }
+    .tile.review .posted {
+      font-size: 9px;
+      opacity: 0.55;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: auto;
+    }
+    .tile.review .src {
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 24, "wght" 700;
+      font-weight: 700;
+      font-size: 11px;
+      color: #4285f4;
+      margin-top: 2px;
+    }
+    .tile.review .src.yelp { color: var(--lc-red); }
+
+    /* PHOTOSHOP tile */
+    .tile-photoshop {
+      background: var(--lc-pink-0);
+    }
+    .tile-photoshop .ovr {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--lc-red);
+      margin-bottom: 14px;
+    }
+    .tile-photoshop .body {
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 48, "wght" 700;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.15;
+    }
+    .tile-photoshop .q-mark {
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 48, "wght" 700;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 1;
+      display: block;
+    }
+    .tile-photoshop .q-mark.btm { text-align: right; width: 100%; margin-top: 8px; }
+
+    .nine-foot {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.55;
+      margin-top: 12px;
+    }
+
+    /* ============================================================
+       BRIEF DECODED
+       ============================================================ */
+    .brief {
+      display: grid;
+      grid-template-columns: 1fr 1.8fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .brief .left .label {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.65;
+      margin-bottom: 10px;
+    }
+    .brief .left .ttl {
+      margin: 0;
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 72, "wght" 700;
+      font-weight: 700;
+      font-size: 36px;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+    }
+    .brief .left .ttl span { display: block; }
+    .brief .right p { margin: 0 0 16px; font-size: 15px; line-height: 1.6; }
+    .brief .right p:last-child { margin-bottom: 0; }
+    .brief .right p .em { font-weight: 600; }
+    .brief .right p .underline {
+      text-decoration: underline;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 3px;
+    }
+
+    /* THREE-COLUMN BREAKDOWN */
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-top: 48px;
+      padding-top: 32px;
+    }
+    .three-col .ttl {
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 48, "wght" 700;
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.01em;
+      margin: 0 0 6px;
+    }
+    .three-col .sub {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.6;
+      margin-bottom: 10px;
+    }
+    .three-col .body { font-size: 13px; line-height: 1.55; margin: 0; }
+
+    /* ============================================================
+       STATS TRIO — v7 (color under dots)
+       ============================================================ */
+    .stats-trio {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 36px;
+      align-items: start;
+      margin-top: 24px;
+    }
+    .trio-cell { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+    .trio-vis {
+      width: 100%;
+      aspect-ratio: 1;
+      max-width: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .trio-vis svg { max-width: 100%; max-height: 100%; display: block; }
+    .trio-num {
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 96, "wght" 700;
+      font-weight: 700;
+      font-size: 60px;
+      letter-spacing: -0.035em;
+      line-height: 0.9;
+      color: var(--lc-plum);
+      font-variant-numeric: tabular-nums;
+      display: flex;
+      align-items: flex-start;
+    }
+    .trio-num > span { display: inline-flex; }
+    .trio-num > span > span {
+      display: inline-block;
+      transition: transform 0.18s cubic-bezier(0.2, 1.5, 0.3, 1);
+      transform-origin: center;
+    }
+    .trio-num sup {
+      font-size: 0.5em;
+      font-weight: 700;
+      line-height: 1;
+      margin-top: 8px;
+      margin-left: 3px;
+    }
+    .trio-cap { font-size: 13px; font-weight: 600; line-height: 1.4; max-width: 220px; margin: 0; }
+    .trio-src {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin: 0;
+      opacity: 0.7;
+    }
+
+    .v-wrap { transform: translate(0, 0); will-change: transform; }
+    .v-wrap.idle { animation: v-breath 4.2s ease-in-out infinite; }
+    @keyframes v-breath {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(0.8px, 0.5px); }
+    }
+
+    /* ============================================================
+       QUOTE BLOCK
+       ============================================================ */
+    .quote-block {
+      padding: 96px 0 32px;
+      position: relative;
+    }
+    .quote-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 22px;
+      align-items: flex-start;
+      max-width: 1000px;
+    }
+    .quote-mark-big {
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 96, "wght" 700;
+      font-weight: 700;
+      font-size: 52px;
+      line-height: 1;
+      color: var(--lc-plum);
+      letter-spacing: -0.04em;
+      display: inline-block;
+      transform: translateY(0.42em);
+    }
+    .quote-text {
+      margin: 0;
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 72, "wght" 700;
+      font-weight: 700;
+      font-size: 44px;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+    }
+    .quote-attr {
+      margin: 28px 0 0;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.7;
+    }
+    .quote-attr .role {
+      font-weight: 400;
+      opacity: 0.65;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      font-size: 11px;
+    }
+    .mic-drop {
+      position: absolute;
+      top: 56px;
+      right: 80px;
+      background: var(--lc-pink-1);
+      border: 1.75px solid var(--lc-plum);
+      padding: 11px 24px;
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 96, "wght" 700;
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: -0.02em;
+      color: var(--lc-plum);
+      border-radius: 100px;
+      transform: rotate(8deg) scale(0);
+      z-index: 5;
+      white-space: nowrap;
+      will-change: transform;
+      cursor: pointer;
+    }
+    .mic-drop::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 100px;
+      z-index: -1;
+      transform: translate(2px, 1.5px);
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4'><circle cx='2' cy='2' r='1.1' fill='%23b14aff' opacity='0.55'/></svg>");
+    }
+
+    /* ============================================================
+       CREDITS
+       ============================================================ */
+    .credits {
+      padding: 36px 0 32px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+    }
+    .credits .col .lbl {
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.6;
+      margin-bottom: 8px;
+    }
+    .credits .col .val {
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 24, "wght" 700;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+
+    /* UP NEXT */
+    .upnext { padding: 60px 0 0; cursor: pointer; }
+    .upnext .lbl {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.7;
+      margin-bottom: 8px;
+    }
+    .upnext .ttl-row { display: flex; align-items: baseline; gap: 18px; }
+    .upnext .ttl-text {
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 96, "wght" 700;
+      font-weight: 700;
+      font-size: 58px;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin: 0;
+    }
+    .upnext .arrow {
+      font-size: 42px;
+      line-height: 1;
+      transition: transform 240ms cubic-bezier(0.3, 1.4, 0.4, 1);
+    }
+    .upnext:hover .arrow { transform: translateX(10px); }
+    .upnext .meta-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 18px;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.55;
+    }
+
+    /* BIG FOOTER MARK */
+    .big-foot { padding: 96px 0 24px; text-align: center; }
+    .big-foot-mark {
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 96, "wght" 700;
+      font-weight: 700;
+      font-size: clamp(120px, 16vw, 200px);
+      letter-spacing: -0.05em;
+      line-height: 0.9;
+      color: var(--lc-plum);
+      margin: 0;
+    }
+
+    /* FOOTER COLS */
+    .foot-cols {
+      padding: 32px 0;
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      gap: 40px;
+      font-size: 13px;
+    }
+    .foot-cols .col .lbl {
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.6;
+      margin-bottom: 10px;
+    }
+    .foot-cols .col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 5px; }
+    .foot-cols .col li {
+      font-family: var(--lc-display);
+      font-variation-settings: "opsz" 24, "wght" 400;
+      font-weight: 400;
+      font-size: 13px;
+    }
+    .foot-cols .tagline { font-size: 14px; line-height: 1.5; max-width: 280px; margin: 0; }
+
+    .foot-meta {
+      padding: 16px 0 28px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.55;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 900px) {
+      .page { padding: 0 20px; }
+      .hero { grid-template-columns: 1fr; gap: 32px; }
+      .hero__digits { font-size: 88px; }
+      .hero__plus, .hero__suffix { font-size: 38px; }
+      .hero__sticker { font-size: 22px; padding: 8px 18px; bottom: -6px; right: -8px; }
+      .section__title-block { grid-template-columns: 1fr; gap: 16px; }
+      .section__title-block .ttl { font-size: 32px; }
+      .nine { grid-template-columns: 1fr 1fr; }
+      .brief { grid-template-columns: 1fr; gap: 24px; }
+      .brief .left .ttl { font-size: 30px; }
+      .three-col { grid-template-columns: 1fr; gap: 24px; }
+      .stats-trio { grid-template-columns: 1fr; gap: 32px; }
+      .quote-text { font-size: 28px; }
+      .quote-mark-big { font-size: 36px; }
+      .mic-drop { top: 16px; right: 16px; font-size: 18px; padding: 8px 16px; }
+      .credits { grid-template-columns: 1fr 1fr; }
+      .foot-cols { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+      .reveal { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SHARED SVG DEFS (halftone patterns) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <pattern id="ht-p" width="5" height="5" patternUnits="userSpaceOnUse">
+        <circle cx="2.5" cy="2.5" r="1.55" fill="#270c1d"/>
+      </pattern>
+      <pattern id="ht-v" width="5" height="5" patternUnits="userSpaceOnUse">
+        <circle cx="2.5" cy="2.5" r="1.4" fill="#b14aff" fill-opacity="0.6"/>
+      </pattern>
+      <pattern id="ht-p-sm" width="4" height="4" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1.25" fill="#270c1d"/>
+      </pattern>
+      <pattern id="ht-v-sm" width="4" height="4" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1.1" fill="#b14aff" fill-opacity="0.6"/>
+      </pattern>
+    </defs>
+  </svg>
+
+  <div class="page">
+
+    <!-- NAV -->
+    <nav class="nav">
+      <div class="left"><a href="#">&larr;&nbsp;&nbsp;Back to work</a></div>
+      <div class="center">Loose Cannon Co.</div>
+      <div class="right">
+        <a href="#">Work</a>
+        <a href="#">Services</a>
+        <a href="#">About</a>
+        <a href="#">Shop</a>
+        <a href="#">Contact</a>
+      </div>
+    </nav>
+
+    <!-- METADATA -->
+    <div class="meta-strip">
+      <div class="grp">
+        <div class="meta-col"><span class="lbl">Client</span><span class="val">FITAID</span></div>
+        <div class="meta-col"><span class="lbl">Discipline</span><span class="val">Social-First Creative</span></div>
+        <div class="meta-col"><span class="lbl">Year</span><span class="val">May 2026</span></div>
+      </div>
+      <div class="meta-col" style="text-align:right">
+        <span class="lbl">Case 001</span>
+        <span class="val">Featured</span>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" data-fire="hero">
+      <div class="hero-left">
+        <div class="hero__eyebrow-row reveal">
+          <span class="dot"></span>
+          <span class="eyebrow">Best post &middot; May 2026 &middot; Engagement vs brand baseline</span>
+        </div>
+
+        <div class="hero__number" id="hero-num-wrap">
+          <span class="hero__plus">+</span>
+          <span class="hero__digits" id="hero-digits"><span>0</span><span>,</span><span>0</span><span>0</span><span>0</span></span>
+          <span class="hero__suffix">%</span>
+          <span class="hero__sticker" id="hero-sticker">Banger!</span>
+        </div>
+
+        <h2 class="hero__headline reveal">Hunkfruit, Gollum, and the gym&nbsp;crush.</h2>
+        <p class="hero__sub reveal">One AI-generated Gollum did more for the brand than a quarter of polished product&nbsp;shots.</p>
+        <p class="hero__meta reveal">May 2026 monthly drop &middot; Trailing 90-day brand average &middot; FITAID 1st-party&nbsp;data</p>
+      </div>
+
+      <div class="hero-right reveal">
+        <div class="poster">
+          <span class="poster__tag">Best post &middot; May 2026</span>
+          <div class="poster__stand-in">
+            AI Gollum clutching a FITAID Recovery can
+            <span>Image placeholder &middot; swap for final</span>
+          </div>
+          <span class="poster__precious">My Precious</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: Hunkfruit, Gollum, and the gym crush -->
+    <section class="section" data-fire="grid">
+      <div class="section__title-block">
+        <div>
+          <div class="label reveal">FITAID</div>
+          <h3 class="ttl reveal">Hunkfruit, Gollum,<br>and the gym crush.</h3>
+        </div>
+        <p class="body reveal">A functional-beverage brand swapped polished product photography for AI-generated absurdity. The category didn't see it&nbsp;coming.</p>
+      </div>
+
+      <div class="nine">
+        <!-- Row 1: pop culture images -->
+        <div class="tile img reveal" style="transition-delay:60ms">
+          <div class="stand">Homer Simpson clutching a FITAID can</div>
+          <div class="stand-lbl">Image placeholder</div>
+        </div>
+        <div class="tile img reveal" style="transition-delay:120ms; background:#3a1a14">
+          <div class="stand" style="color:#fdb38c">Terminator emerging from flames with a FITAID</div>
+          <div class="stand-lbl" style="color:#fdb38c">Image placeholder</div>
+        </div>
+        <div class="tile img reveal" style="transition-delay:180ms; background:#241a16; color:var(--lc-pink-1)">
+          <div class="stand" style="color:var(--lc-pink-1); font-family:var(--lc-display); font-variation-settings:'opsz' 48,'wght' 700; font-weight:700; font-size:14px; line-height:1.2; max-width:90%; text-transform:uppercase; text-shadow:1.5px 1.5px 0 var(--lc-plum)">Originally called Hunkfruit because one sip can make your gym crush stop avoiding eye contact.</div>
+        </div>
+
+        <!-- Row 2: editorial -->
+        <div class="tile tile-stevia reveal" style="transition-delay:240ms">
+          <div class="tape">Stevia was invented by a guy named Steve.</div>
+          <div class="name-tag">Steve</div>
+        </div>
+        <div class="tile cream tile-gym reveal" style="transition-delay:300ms">
+          <div class="word">GYM</div>
+          <div class="pron">noun [ c ] &middot; us informal</div>
+          <div class="def">A place where you go to meet other people also named Jim.</div>
+        </div>
+        <div class="tile cream tile-overheard reveal" style="transition-delay:360ms">
+          <div class="ovr">Overheard at the gym</div>
+          <span class="q-mark">&ldquo;</span>
+          <div class="body">Who are you flexing for?</div>
+          <span class="q-mark btm">&rdquo;</span>
+          <div class="body" style="margin-top:10px">Your mom.</div>
+        </div>
+
+        <!-- Row 3: reviews + photoshop -->
+        <div class="tile review reveal" style="transition-delay:420ms">
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="who">
+            <div class="avatar"></div>
+            <div><div class="name">Phil McCrackin</div><div class="role">FITAID customer</div></div>
+          </div>
+          <div class="body">My dentist tried to sue me for not having enough cavities. I told him I switched to zero-sugar FITAID and then we high-fived. Plot twist: he wasn't a dentist. Just some guy with his fingers in my mouth.</div>
+          <div class="posted">Posted on</div>
+          <div class="src">Google</div>
+        </div>
+        <div class="tile tile-photoshop reveal" style="transition-delay:480ms">
+          <div class="ovr">Overheard at the gym</div>
+          <span class="q-mark">&ldquo;</span>
+          <div class="body">I'm just going to photoshop my legs as my arms and post it.</div>
+          <span class="q-mark btm">&rdquo;</span>
+        </div>
+        <div class="tile review reveal" style="transition-delay:540ms">
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="who">
+            <div class="avatar"></div>
+            <div><div class="name">Mike Rotch</div><div class="role">Professional Bodybuilder</div></div>
+          </div>
+          <div class="body">I cracked open a Zero Sugar, put on Shania Twain's "Man! I Feel Like A Woman!" and chugged. Could feel the monkfruit pulsing through my veins unlocking muscles I didn't know I had. Thanks, Zero Sugar.</div>
+          <div class="posted">Posted on</div>
+          <div class="src yelp">yelp</div>
+        </div>
+      </div>
+
+      <div class="nine-foot reveal">
+        <span>9 visual series &middot; 9 selections &middot; May 2026</span>
+        <span>All work made by Loose Cannon for FITAID, May 2026</span>
+      </div>
+    </section>
+
+    <!-- SECTION: The brief, decoded -->
+    <section class="section" data-fire="brief">
+      <div class="brief">
+        <div class="left">
+          <div class="label reveal">The brief, decoded</div>
+          <h3 class="ttl reveal">
+            <span>Stop selling performance.</span>
+            <span>Start being funny.</span>
+          </h3>
+        </div>
+        <div class="right">
+          <p class="reveal">FITAID's category is crowded with brands shouting about ingredients, electrolytes, and "elite performance." The actual person drinking the can doesn't care. They're <span class="underline">scrolling between sets</span>, looking for something funny.</p>
+          <p class="reveal">So we stopped writing copy that explained the product. We made jokes the product could sit inside of &mdash; AI-generated absurdity (Gollum, Homer, Terminator) alongside text-first editorial series that read like dictionary pages, fake Google reviews, and overheard gym dialogue.</p>
+          <p class="reveal">The unifying logic: <span class="em">every post had to make sense on its own.</span> No caption-dependence. No "swipe to learn more." If the image and the joke didn't land in 1.5 seconds of stopped-scroll, it didn't&nbsp;ship.</p>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="reveal">
+          <h4 class="ttl">Pop culture</h4>
+          <div class="sub">Hyperreal AI &middot; Image-first</div>
+          <p class="body">Gollum, Homer, Terminator &mdash; beloved characters caught in the act of being FITAID drinkers. No explanation given.</p>
+        </div>
+        <div class="reveal" style="transition-delay:80ms">
+          <h4 class="ttl">Gym myths</h4>
+          <div class="sub">Editorial &middot; Photo + tabloid type</div>
+          <p class="body">Three-part myth series, each post a one-liner. "Originally called Hunkfruit." Most-screenshot series of the&nbsp;month.</p>
+        </div>
+        <div class="reveal" style="transition-delay:160ms">
+          <h4 class="ttl">Fake reviews</h4>
+          <div class="sub">UI mock &middot; Phil McCrackin et al.</div>
+          <p class="body">Five-star Google reviews from customers with bad-pun names. The format does the work. The names sell&nbsp;it.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: The receipts (stats trio) -->
+    <section class="section" data-fire="stats">
+      <div class="section__title-block">
+        <div>
+          <div class="label reveal">30 days from first drop</div>
+          <h3 class="ttl reveal">The receipts.</h3>
+        </div>
+        <p class="body reveal">First-party data, May 2026. Three metrics that moved the needle &mdash; engagement, follower growth, and DTC conversion lift.</p>
+      </div>
+
+      <div class="stats-trio">
+
+        <!-- +218% RING -->
+        <div class="trio-cell">
+          <div class="trio-vis">
+            <svg viewBox="0 0 130 130">
+              <circle class="r1-track" cx="65" cy="65" r="50" fill="none" stroke="#270c1d" stroke-width="0.75" stroke-opacity="0.3" stroke-dasharray="314.16" stroke-dashoffset="314.16" transform="rotate(-90 65 65)"/>
+              <circle class="r1-base" cx="65" cy="65" r="44" fill="none" stroke="#fbafdf" stroke-width="18" stroke-dasharray="276.46" stroke-dashoffset="276.46" transform="rotate(-90 65 65)"/>
+              <g class="v-wrap"><g transform="translate(1.5 1)"><circle class="r1-v" cx="65" cy="65" r="44" fill="none" stroke="url(#ht-v-sm)" stroke-width="18" stroke-dasharray="276.46" stroke-dashoffset="276.46" transform="rotate(-90 65 65)"/></g></g>
+              <circle class="r1-p" cx="65" cy="65" r="44" fill="none" stroke="url(#ht-p-sm)" stroke-width="18" stroke-dasharray="276.46" stroke-dashoffset="276.46" transform="rotate(-90 65 65)"/>
+            </svg>
+          </div>
+          <div class="trio-num"><span class="r1-num"><span>+</span><span>0</span><span>0</span><span>0</span></span><sup>%</sup></div>
+          <p class="trio-cap reveal">Overall account engagement vs trailing 90&nbsp;days</p>
+          <p class="trio-src reveal">Instagram, 1st-party</p>
+        </div>
+
+        <!-- 3.4× BAR CHART -->
+        <div class="trio-cell">
+          <div class="trio-vis">
+            <svg viewBox="0 0 130 130">
+              <line x1="12" y1="103" x2="118" y2="103" stroke="#270c1d" stroke-width="1"/>
+              <g class="b-prior" style="transform-origin:38px 103px; transform:scaleY(0); will-change:transform">
+                <rect x="22" y="79" width="32" height="24" fill="#270c1d" rx="3"/>
+              </g>
+              <g class="b-base" style="transform-origin:90px 103px; transform:scaleY(0); will-change:transform">
+                <rect x="74" y="22" width="32" height="81" fill="#fbafdf" rx="3"/>
+              </g>
+              <g class="b-v" style="transform-origin:90px 103px; transform:scaleY(0); will-change:transform">
+                <g transform="translate(1.5 1)"><rect x="74" y="22" width="32" height="81" fill="url(#ht-v-sm)" rx="3"/></g>
+              </g>
+              <g class="b-p" style="transform-origin:90px 103px; transform:scaleY(0); will-change:transform">
+                <rect x="74" y="22" width="32" height="81" fill="url(#ht-p-sm)" rx="3"/>
+                <rect x="74" y="22" width="32" height="81" fill="none" stroke="#270c1d" stroke-width="1" rx="3"/>
+              </g>
+              <g font-family="'DM Sans',sans-serif" font-size="8" font-weight="600" fill="#270c1d" letter-spacing="0.8">
+                <text x="38" y="118" text-anchor="middle" opacity="0.7">PRIOR</text>
+                <text x="90" y="118" text-anchor="middle">CURRENT</text>
+              </g>
+            </svg>
+          </div>
+          <div class="trio-num"><span class="b-num"><span>0</span><span>.</span><span>0</span></span><sup>&times;</sup></div>
+          <p class="trio-cap reveal">Follower growth rate vs prior&nbsp;month</p>
+          <p class="trio-src reveal">Net new follows</p>
+        </div>
+
+        <!-- +47% RING -->
+        <div class="trio-cell">
+          <div class="trio-vis">
+            <svg viewBox="0 0 130 130">
+              <circle class="r2-track" cx="65" cy="65" r="50" fill="none" stroke="#270c1d" stroke-width="0.75" stroke-opacity="0.3" stroke-dasharray="314.16" stroke-dashoffset="314.16" transform="rotate(-90 65 65)"/>
+              <circle class="r2-base" cx="65" cy="65" r="44" fill="none" stroke="#fbafdf" stroke-width="18" stroke-dasharray="276.46" stroke-dashoffset="276.46" transform="rotate(-90 65 65)"/>
+              <g class="v-wrap"><g transform="translate(1.5 1)"><circle class="r2-v" cx="65" cy="65" r="44" fill="none" stroke="url(#ht-v-sm)" stroke-width="18" stroke-dasharray="276.46" stroke-dashoffset="276.46" transform="rotate(-90 65 65)"/></g></g>
+              <circle class="r2-p" cx="65" cy="65" r="44" fill="none" stroke="url(#ht-p-sm)" stroke-width="18" stroke-dasharray="276.46" stroke-dashoffset="276.46" transform="rotate(-90 65 65)"/>
+            </svg>
+          </div>
+          <div class="trio-num"><span class="r2-num"><span>+</span><span>0</span><span>0</span></span><sup>%</sup></div>
+          <p class="trio-cap reveal">DTC conversion lift on social-attributed&nbsp;traffic</p>
+          <p class="trio-src reveal">Shopify &middot; Meta attribution</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- QUOTE -->
+    <section class="quote-block" data-fire="quote">
+      <div class="quote-row">
+        <span class="quote-mark-big reveal">&ldquo;</span>
+        <div>
+          <p class="quote-text reveal">First agency we've worked with that pitched us a Gollum and was&nbsp;right.</p>
+          <p class="quote-attr reveal">
+            Placeholder &mdash; FITAID team<br>
+            <span class="role">Marketing Director, FITAID</span>
+          </p>
+        </div>
+      </div>
+      <span class="mic-drop" id="mic-drop">Mic drop.</span>
+    </section>
+
+    <!-- CREDITS -->
+    <div class="credits">
+      <div class="col reveal"><div class="lbl">Strategy + Concept</div><div class="val">Briana Brugh</div></div>
+      <div class="col reveal" style="transition-delay:80ms"><div class="lbl">Creative Direction + Design</div><div class="val">Noah Charnow</div></div>
+      <div class="col reveal" style="transition-delay:160ms"><div class="lbl">AI Image Generation</div><div class="val">Loose Cannon Co.</div></div>
+      <div class="col reveal" style="transition-delay:240ms"><div class="lbl">Client Team</div><div class="val">FITAID social</div></div>
+    </div>
+
+    <!-- UP NEXT -->
+    <section class="upnext" data-fire="upnext">
+      <div class="lbl reveal">Up next</div>
+      <div class="ttl-row reveal">
+        <h3 class="ttl-text">Shit Bags.</h3>
+        <span class="arrow">&rarr;</span>
+      </div>
+      <div class="meta-row reveal">
+        <span>Case 002 &middot; Performance Creative</span>
+        <span>Ads that get past the polite scroll</span>
+      </div>
+    </section>
+
+    <!-- BIG FOOTER MARK -->
+    <section class="big-foot" data-fire="bigfoot">
+      <h2 class="big-foot-mark reveal">Loose Cannon.</h2>
+    </section>
+
+    <!-- FOOTER COLS -->
+    <div class="foot-cols">
+      <div class="col">
+        <div class="lbl">Studio</div>
+        <p class="tagline">Social-first creative for brands tired of looking like everyone else. San Diego, working everywhere.</p>
+      </div>
+      <div class="col">
+        <div class="lbl">Studio</div>
+        <ul><li>Work</li><li>Services</li><li>About</li><li>Journal</li></ul>
+      </div>
+      <div class="col">
+        <div class="lbl">Shop</div>
+        <ul><li>All products</li><li>New</li></ul>
+      </div>
+      <div class="col">
+        <div class="lbl">Contact</div>
+        <ul><li>Start a project</li><li>Instagram</li><li>TikTok</li><li>LinkedIn</li></ul>
+      </div>
+    </div>
+
+    <div class="foot-meta">
+      <span>&copy; Loose Cannon Co.</span>
+      <span>San Diego &nbsp;//&nbsp; Working everywhere</span>
+    </div>
+
+  </div>
+
+<script>
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ns = 'http://www.w3.org/2000/svg';
+
+  function slotRoll(targets, startTime, perDigitDelay) {
+    if (reduce) {
+      targets.forEach(function(t){ t.el.textContent = t.value; });
+      return;
+    }
+    targets.forEach(function(t, i){
+      var stopAt = startTime + i * perDigitDelay;
+      var iv = setInterval(function(){ t.el.textContent = Math.floor(Math.random() * 10); }, 45);
+      setTimeout(function(){
+        clearInterval(iv);
+        t.el.textContent = t.value;
+        t.el.style.transform = 'scale(1.22)';
+        setTimeout(function(){ t.el.style.transform = 'scale(1)'; }, 120);
+      }, stopAt);
+    });
+  }
+
+  function drawStroke(el, target, dur, delay) {
+    delay = delay || 0;
+    if (reduce) { el.style.strokeDashoffset = target; return; }
+    setTimeout(function(){
+      el.style.transition = 'stroke-dashoffset ' + dur + 'ms cubic-bezier(0.25, 0.7, 0.3, 1)';
+      el.style.strokeDashoffset = target;
+    }, delay);
+  }
+
+  function spawnShrapnel(originX, originY, container) {
+    if (reduce) return;
+    var count = 10 + Math.floor(Math.random() * 4);
+    for (var i = 0; i < count; i++) {
+      var angle = (-Math.PI * 0.5) + (Math.random() - 0.5) * Math.PI * 1.1;
+      var velocity = 90 + Math.random() * 140;
+      var size = 6 + Math.random() * 7;
+      var isViolet = i % 3 === 0;
+      var svg = document.createElementNS(ns, 'svg');
+      svg.setAttribute('width', size);
+      svg.setAttribute('height', size);
+      svg.setAttribute('viewBox', '0 0 20 20');
+      svg.style.cssText = 'position:absolute;left:' + (originX - size/2) + 'px;top:' + (originY - size/2) + 'px;pointer-events:none;z-index:20;will-change:transform,opacity';
+      var c = document.createElementNS(ns, 'circle');
+      c.setAttribute('cx', '10'); c.setAttribute('cy', '10'); c.setAttribute('r', '9');
+      c.setAttribute('fill', isViolet ? '#b14aff' : '#270c1d');
+      c.setAttribute('fill-opacity', isViolet ? '0.6' : '0.9');
+      svg.appendChild(c);
+      container.appendChild(svg);
+      var vx = Math.cos(angle) * velocity, vy = Math.sin(angle) * velocity;
+      var t0 = performance.now(), dur = 620 + Math.random() * 240;
+      (function(el, vx, vy, t0, dur){
+        function step(now) {
+          var e = (now - t0) / 1000;
+          if (e * 1000 > dur) { el.remove(); return; }
+          el.style.transform = 'translate(' + (vx * e) + 'px,' + (vy * e + 0.5 * 420 * e * e) + 'px) scale(' + (1 - e * 0.45) + ')';
+          el.style.opacity = 1 - (e * 1000 / dur);
+          requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      })(svg, vx, vy, t0, dur);
+    }
+  }
+
+  function attachMagnetic(sticker, baseRot, maxPull, radius) {
+    var animating = false, inField = false;
+    function update(e) {
+      if (animating) return;
+      var r = sticker.getBoundingClientRect();
+      var cx = r.left + r.width/2, cy = r.top + r.height/2;
+      var dx = e.clientX - cx, dy = e.clientY - cy;
+      var d = Math.sqrt(dx*dx + dy*dy);
+      if (d < radius) {
+        inField = true;
+        var s = (radius - d) / radius;
+        var px = (dx / Math.max(d, 1)) * maxPull * s;
+        var py = (dy / Math.max(d, 1)) * maxPull * s;
+        var rot = baseRot + (dx / 140) * 5 * s;
+        sticker.style.transition = 'transform 90ms ease-out';
+        sticker.style.transform = 'translate(' + px + 'px,' + py + 'px) rotate(' + rot + 'deg) scale(' + (1 + 0.05 * s) + ')';
+      } else if (inField) {
+        inField = false;
+        sticker.style.transition = 'transform 320ms cubic-bezier(0.3, 1.4, 0.4, 1)';
+        sticker.style.transform = 'rotate(' + baseRot + 'deg) scale(1)';
+      }
+    }
+    document.addEventListener('mousemove', update);
+    sticker.setAnimating = function(v){ animating = v; };
+  }
+
+  function stickerSlam(el, baseRot) {
+    el.setAnimating && el.setAnimating(true);
+    el.style.transition = 'transform 400ms cubic-bezier(0.18, 1.8, 0.3, 1)';
+    el.style.transform = 'rotate(' + (baseRot + 3) + 'deg) scale(1.08)';
+    setTimeout(function(){
+      el.style.transition = 'transform 220ms ease-out';
+      el.style.transform = 'rotate(' + (baseRot - 3) + 'deg) scale(0.97)';
+      setTimeout(function(){
+        el.style.transition = 'transform 240ms cubic-bezier(0.4, 1.2, 0.4, 1)';
+        el.style.transform = 'rotate(' + baseRot + 'deg) scale(1)';
+        setTimeout(function(){ el.setAnimating && el.setAnimating(false); }, 260);
+      }, 220);
+    }, 400);
+  }
+
+  // ===== HERO
+  function runHero() {
+    var plus = document.querySelector('.hero__plus');
+    var pct = document.querySelector('.hero__suffix');
+    var sticker = document.querySelector('#hero-sticker');
+    var numWrap = document.querySelector('#hero-num-wrap');
+    var digits = document.querySelector('#hero-digits').querySelectorAll('span');
+
+    plus.style.transition = 'none'; plus.style.opacity = 0; plus.style.transform = 'scale(0.6)';
+    pct.style.transition = 'none'; pct.style.opacity = 0; pct.style.transform = 'scale(0.6)';
+    sticker.style.transition = 'none'; sticker.style.transform = 'rotate(-11deg) scale(0)';
+    digits.forEach(function(d){ if (d.textContent !== ',') d.textContent = '0'; });
+
+    setTimeout(function(){
+      plus.style.transition = 'opacity 280ms ease-out, transform 320ms cubic-bezier(0.2, 1.6, 0.3, 1)';
+      plus.style.opacity = 1; plus.style.transform = 'scale(1)';
+    }, 300);
+
+    slotRoll([
+      { el: digits[0], value: '2' },
+      { el: digits[2], value: '4' },
+      { el: digits[3], value: '0' },
+      { el: digits[4], value: '0' }
+    ], 440, 180);
+
+    setTimeout(function(){
+      pct.style.transition = 'opacity 280ms ease-out, transform 340ms cubic-bezier(0.2, 1.7, 0.3, 1)';
+      pct.style.opacity = 1; pct.style.transform = 'scale(1)';
+    }, 1320);
+
+    setTimeout(function(){
+      stickerSlam(sticker, -11);
+      setTimeout(function(){
+        var sr = sticker.getBoundingClientRect();
+        var cr = numWrap.getBoundingClientRect();
+        spawnShrapnel(sr.left + sr.width/2 - cr.left, sr.top + sr.height/2 - cr.top, numWrap);
+      }, 280);
+    }, 1500);
+  }
+
+  // ===== STATS TRIO
+  function runStats() {
+    var r1v = document.querySelector('.r1-v'), r1p = document.querySelector('.r1-p'),
+        r1t = document.querySelector('.r1-track'), r1b = document.querySelector('.r1-base');
+    var r2v = document.querySelector('.r2-v'), r2p = document.querySelector('.r2-p'),
+        r2t = document.querySelector('.r2-track'), r2b = document.querySelector('.r2-base');
+    var bPrior = document.querySelector('.b-prior'), bBase = document.querySelector('.b-base'),
+        bV = document.querySelector('.b-v'), bP = document.querySelector('.b-p');
+    var r1nums = document.querySelectorAll('.r1-num > span');
+    var r2nums = document.querySelectorAll('.r2-num > span');
+    var bnums = document.querySelectorAll('.b-num > span');
+    var vWraps = document.querySelectorAll('.v-wrap');
+    var C = 2 * Math.PI * 44, Ctr = 2 * Math.PI * 50;
+
+    [r1v, r1p, r1b, r2v, r2p, r2b].forEach(function(el){ el.style.transition = 'none'; el.style.strokeDashoffset = C; });
+    [r1t, r2t].forEach(function(el){ el.style.transition = 'none'; el.style.strokeDashoffset = Ctr; });
+    [bPrior, bBase, bV, bP].forEach(function(el){ el.style.transition = 'none'; el.style.transform = 'scaleY(0)'; });
+    vWraps.forEach(function(w){ w.classList.remove('idle'); });
+    [r1nums, r2nums, bnums].forEach(function(arr){
+      arr.forEach(function(n){ if (n.textContent !== '.' && n.textContent !== '+') n.textContent = '0'; });
+    });
+
+    drawStroke(r1t, 0, 300, 0);
+    drawStroke(r2t, 0, 300, 180);
+
+    setTimeout(function(){
+      r1b.style.transition = 'stroke-dashoffset 1000ms cubic-bezier(0.25, 0.7, 0.3, 1)';
+      r1b.style.strokeDashoffset = C * (1 - 0.92);
+      r1v.style.transition = 'stroke-dashoffset 1000ms cubic-bezier(0.25, 0.7, 0.3, 1)';
+      r1v.style.strokeDashoffset = C * (1 - 0.92);
+      setTimeout(function(){
+        r1p.style.transition = 'stroke-dashoffset 1000ms cubic-bezier(0.25, 0.7, 0.3, 1)';
+        r1p.style.strokeDashoffset = C * (1 - 0.92);
+      }, 220);
+    }, 280);
+
+    setTimeout(function(){ bPrior.style.transition = 'transform 480ms cubic-bezier(0.2, 1.5, 0.3, 1)'; bPrior.style.transform = 'scaleY(1)'; }, 420);
+    setTimeout(function(){
+      bBase.style.transition = 'transform 950ms cubic-bezier(0.22, 0.7, 0.3, 1)';
+      bBase.style.transform = 'scaleY(1)';
+      bV.style.transition = 'transform 950ms cubic-bezier(0.22, 0.7, 0.3, 1)';
+      bV.style.transform = 'scaleY(1)';
+    }, 820);
+    setTimeout(function(){ bP.style.transition = 'transform 950ms cubic-bezier(0.22, 0.7, 0.3, 1)'; bP.style.transform = 'scaleY(1)'; }, 1040);
+
+    setTimeout(function(){
+      r2b.style.transition = 'stroke-dashoffset 1000ms cubic-bezier(0.25, 0.7, 0.3, 1)';
+      r2b.style.strokeDashoffset = C * (1 - 0.47);
+      r2v.style.transition = 'stroke-dashoffset 1000ms cubic-bezier(0.25, 0.7, 0.3, 1)';
+      r2v.style.strokeDashoffset = C * (1 - 0.47);
+      setTimeout(function(){
+        r2p.style.transition = 'stroke-dashoffset 1000ms cubic-bezier(0.25, 0.7, 0.3, 1)';
+        r2p.style.strokeDashoffset = C * (1 - 0.47);
+      }, 220);
+    }, 520);
+
+    setTimeout(function(){ slotRoll([{el:r1nums[1],value:'2'},{el:r1nums[2],value:'1'},{el:r1nums[3],value:'8'}], 600, 150); r1nums[0].textContent = '+'; }, 1080);
+    setTimeout(function(){ slotRoll([{el:bnums[0],value:'3'},{el:bnums[2],value:'4'}], 600, 150); }, 1300);
+    setTimeout(function(){ slotRoll([{el:r2nums[1],value:'4'},{el:r2nums[2],value:'7'}], 600, 150); r2nums[0].textContent = '+'; }, 1320);
+
+    setTimeout(function(){ vWraps.forEach(function(w){ w.classList.add('idle'); }); }, 2800);
+  }
+
+  // ===== QUOTE
+  function runQuote() {
+    var sticker = document.querySelector('#mic-drop');
+    sticker.style.transition = 'none'; sticker.style.transform = 'rotate(8deg) scale(0)';
+    setTimeout(function(){ stickerSlam(sticker, 8); }, 600);
+  }
+
+  // ===== INTERSECTION OBSERVER
+  var fired = {};
+  function fireSection(name) {
+    if (fired[name]) return;
+    fired[name] = true;
+    if (name === 'hero') runHero();
+    if (name === 'stats') runStats();
+    if (name === 'quote') runQuote();
+  }
+
+  function revealIn(section) {
+    var items = section.querySelectorAll('.reveal');
+    items.forEach(function(el, i){
+      setTimeout(function(){ el.classList.add('in'); }, i * 60);
+    });
+  }
+
+  var sections = document.querySelectorAll('[data-fire]');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) {
+          revealIn(e.target);
+          fireSection(e.target.dataset.fire);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
+    sections.forEach(function(s){ io.observe(s); });
+  } else {
+    sections.forEach(function(s){ revealIn(s); fireSection(s.dataset.fire); });
+  }
+
+  // Sticker interactions
+  var heroSticker = document.querySelector('#hero-sticker');
+  var micDrop = document.querySelector('#mic-drop');
+  attachMagnetic(heroSticker, -11, 8, 180);
+  attachMagnetic(micDrop, 8, 7, 160);
+  document.querySelector('.hero').addEventListener('mouseenter', function(){
+    if (fired['hero']) stickerSlam(heroSticker, -11);
+  });
+  document.querySelector('.quote-block').addEventListener('mouseenter', function(){
+    if (fired['quote']) stickerSlam(micDrop, 8);
+  });
+})();
+</script>
+
+</body>
+</html>
