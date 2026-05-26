@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef } from "react";
 
 import { Sticker, type StickerHandle } from "@/components/Sticker/Sticker";
 import { prefersReducedMotion } from "@/lib/motion";
+import { slotRoll } from "@/lib/slotRoll";
 
 import styles from "./HeroNumber.module.css";
 
@@ -77,22 +78,10 @@ export function HeroNumber({ prefix, digits, suffix, sticker }: HeroNumberProps)
       el.style.transform = "scale(1)";
     };
 
-    const slotRoll = (start: number, per: number) => {
-      targets.forEach((t, i) => {
-        const stopAt = start + i * per;
-        const iv = window.setInterval(() => {
-          t.el.textContent = String(Math.floor(Math.random() * 10));
-        }, 45);
-        timers.push(iv);
-        after(stopAt, () => {
-          window.clearInterval(iv);
-          t.el.textContent = t.value;
-          t.el.style.transform = "scale(1.22)";
-          after(120, () => {
-            t.el.style.transform = "scale(1)";
-          });
-        });
-      });
+    const roll = (start: number, per: number) => {
+      slotRoll(targets, { startTime: start, perDigitDelay: per }).forEach((id) =>
+        timers.push(id),
+      );
     };
 
     const runIntro = () => {
@@ -100,7 +89,7 @@ export function HeroNumber({ prefix, digits, suffix, sticker }: HeroNumberProps)
         t.el.textContent = "0";
       });
       if (prefixRef.current) after(prefixAt, () => popIn(prefixRef.current!));
-      slotRoll(startTime, perDigitDelay);
+      roll(startTime, perDigitDelay);
       if (suffixRef.current) after(suffixAt, () => popIn(suffixRef.current!));
       after(stickerAt, () => stickerRef.current?.slam());
     };
@@ -109,7 +98,7 @@ export function HeroNumber({ prefix, digits, suffix, sticker }: HeroNumberProps)
     const scheduleReRoll = () => {
       const delay = 8000 + Math.random() * 4000; // 8-12s
       after(delay, () => {
-        if (visibleRef.current && !prefersReducedMotion()) slotRoll(0, 70);
+        if (visibleRef.current && !prefersReducedMotion()) roll(0, 70);
         scheduleReRoll();
       });
     };

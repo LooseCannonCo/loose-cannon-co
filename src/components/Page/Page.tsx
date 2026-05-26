@@ -1,5 +1,6 @@
 import "@/styles/reveal.css";
 
+import { HalftoneDefs } from "@/components/HalftoneDefs/HalftoneDefs";
 import { cn } from "@/lib/utils";
 
 import { RevealMount } from "./RevealMount";
@@ -14,6 +15,7 @@ export interface PageProps {
 export function Page({ children, className }: PageProps) {
   return (
     <div className={cn(styles.page, className)}>
+      <HalftoneDefs />
       <RevealMount />
       {children}
     </div>
