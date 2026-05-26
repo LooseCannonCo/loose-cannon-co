@@ -1,0 +1,35 @@
+.metaStrip {
+  padding: 16px 0 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.grp {
+  display: flex;
+  gap: 36px;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.right {
+  text-align: right;
+}
+
+.lbl {
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.55;
+}
+
+.val {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+}

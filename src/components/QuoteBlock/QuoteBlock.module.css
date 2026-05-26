@@ -1,0 +1,68 @@
+.quoteBlock {
+  position: relative;
+  padding: 96px 0 32px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 22px;
+  align-items: flex-start;
+  max-width: 1000px;
+}
+
+.markBig {
+  display: inline-block;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-hero-number), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: 52px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--lc-plum);
+  transform: translateY(0.42em);
+}
+
+.text {
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: 44px;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+.attr {
+  margin: 28px 0 0;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+.role {
+  font-weight: 400;
+  opacity: 0.65;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-size: 11px;
+}
+
+.micDrop {
+  position: absolute;
+  top: 56px;
+  right: 80px;
+  z-index: 5;
+}
+
+@media (max-width: 900px) {
+  .text {
+    font-size: 28px;
+  }
+  .micDrop {
+    top: 16px;
+    right: 16px;
+  }
+}

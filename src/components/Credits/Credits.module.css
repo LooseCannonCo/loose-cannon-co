@@ -1,0 +1,29 @@
+.credits {
+  padding: 36px 0 32px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+.lbl {
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+
+.val {
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" 24, "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 900px) {
+  .credits {
+    grid-template-columns: 1fr 1fr;
+  }
+}
