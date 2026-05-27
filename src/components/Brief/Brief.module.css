@@ -66,7 +66,7 @@
   font-weight: var(--lc-weight-display);
   font-size: 28px;
   line-height: 1;
-  color: var(--lc-violet);
+  color: var(--lc-plum);
   margin-bottom: 10px;
 }
 
@@ -92,6 +92,16 @@
   margin: 0;
   font-size: 13px;
   line-height: 1.55;
+}
+
+.colStat {
+  margin: 10px 0 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" 24, "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  color: var(--lc-plum);
 }
 
 @media (max-width: 900px) {

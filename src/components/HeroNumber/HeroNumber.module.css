@@ -33,9 +33,14 @@
 }
 
 .heroSticker {
+  /* Tucked into the bottom-right negative space: anchored to the RIGHT of the
+     whole number (left: 100%) so it sits adjacent to, never on top of, any
+     digit/prefix/suffix. Because .number is inline-flex (auto width) this scales
+     to 3-, 4-, and 6-digit numbers without occluding anything. */
   position: absolute;
-  bottom: -10px;
-  right: -20px;
+  left: 100%;
+  bottom: 8px;
+  margin-left: 8px;
   z-index: 5;
 }
 
@@ -46,9 +51,17 @@
   .affix {
     font-size: 36px;
   }
+  /* The narrow mobile column has no room to the right, so the sticker drops into
+     reserved negative space directly below the number (still no digit overlap). */
+  .number {
+    margin-bottom: 72px;
+  }
   .heroSticker {
-    bottom: -6px;
-    right: -8px;
+    left: auto;
+    right: 0;
+    top: 100%;
+    bottom: auto;
+    margin-left: 0;
   }
 }
 

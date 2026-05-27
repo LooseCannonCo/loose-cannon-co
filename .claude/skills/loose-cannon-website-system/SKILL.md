@@ -49,6 +49,14 @@ The minute we add iconography we look like a Spotify Wrapped trying to be edgy. 
 
 Pink screens are not new brand colors — they are screened densities of LC brand pink (single-ink-at-different-densities defense for the strict 2-color rule). Violet bleed reads as a printing artifact, not a third brand color.
 
+Violet is NEVER used as a standalone fill color for text, numbers, borders, or UI elements. It only appears as a printing artifact, in one of two specific treatments:
+
+1. Offset registration bleed: violet sits behind plum halftone elements with translate(1.5px, 1px) and 60-65% opacity, part of the print-registration animation system.
+
+2. Escaped-ink residue: violet appears as standalone dots in the permanent halftone splatter and slam shrapnel particles, mixed roughly 50/50 with plum, at low opacity (0.42-0.62 for splatter).
+
+If violet appears anywhere outside these two printing-artifact treatments, it's wrong. Change it to plum.
+
 ## Typography system
 
 ```css
@@ -201,6 +209,7 @@ Every LC case study page assembles from this skeleton, in this order. Each secti
 
 3. HERO
    Left:  eyebrow with dot + Number (148px digits + 60px $ and suffix) with Banger! sticker tucked into bottom-right of last digit
+          (Tucked into the bottom-right corner AREA, meaning the negative space adjacent to the last digit, never overlapping any digit, prefix, or suffix. The number must always read cleanly.)
           + Headline (54px Bricolage opsz 72 weight 700)
           + Subhead (17px DM Sans)
           + Meta line (11px DM Sans 600 uppercase, max 1-2 lines)

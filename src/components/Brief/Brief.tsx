@@ -6,6 +6,8 @@ export interface BriefBreakdownItem {
   title: string;
   sub?: string;
   body: string;
+  /** Punchy stat line, used by the three-step variant. */
+  stat?: string;
 }
 
 export interface BriefProps {
@@ -60,11 +62,14 @@ export function Brief({
           {breakdown.map((item, i) => (
             <div key={i} data-reveal>
               {breakdownVariant === "steps" ? (
-                <div className={styles.stepNum}>{i + 1}</div>
+                <div className={styles.stepNum}>
+                  {String(i + 1).padStart(2, "0")}
+                </div>
               ) : null}
               <h4 className={styles.colTtl}>{item.title}</h4>
               {item.sub ? <div className={styles.colSub}>{item.sub}</div> : null}
               <p className={styles.colBody}>{item.body}</p>
+              {item.stat ? <p className={styles.colStat}>{item.stat}</p> : null}
             </div>
           ))}
         </div>

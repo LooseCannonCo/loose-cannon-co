@@ -1,0 +1,71 @@
+.section {
+  padding: var(--lc-section-pad-y) 0 0;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.ad {
+  position: relative;
+  border: 1.25px solid var(--lc-plum);
+  background: linear-gradient(155deg, #0a0805, #231a14);
+  color: var(--lc-pink-1);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+}
+
+.platform {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.name {
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" 24, "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: 14px;
+}
+
+.placeholder {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.5;
+}
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 12px;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.55;
+}
+
+@media (max-width: 900px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+}

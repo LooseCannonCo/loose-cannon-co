@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 import styles from "./NineGrid.module.css";
 
-export type TileKind = "image" | "editorial" | "review";
+export type TileKind = "image" | "editorial" | "review" | "placeholder";
 export type TileTone = "pink" | "dark" | "cream";
 
 export interface NineTile {
@@ -22,6 +22,7 @@ const KIND_LABEL: Record<TileKind, string> = {
   image: "Image placeholder",
   editorial: "Editorial",
   review: "Review",
+  placeholder: "Placeholder",
 };
 
 /**

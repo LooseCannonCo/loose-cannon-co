@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3010",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrate:case-studies": "node --env-file=.env.local --import tsx scripts/migrate-case-studies.ts"
   },
   "dependencies": {
     "@portabletext/react": "^6.2.0",
@@ -26,6 +27,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.35",
     "sanity": "^3.99.0",
+    "tsx": "^4.22.3",
     "typescript": "^5"
   }
 }
