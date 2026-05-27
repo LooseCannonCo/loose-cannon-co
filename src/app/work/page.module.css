@@ -1,0 +1,77 @@
+.header {
+  position: relative;
+  padding: 56px 0 40px;
+}
+
+.eyebrowRow {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 20px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  background: var(--lc-plum);
+  flex: none;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--lc-plum);
+}
+
+/* "Work." with the print-registration treatment: a violet copy offset behind
+   the solid plum word (registration bleed), not an outline or stroke. */
+.headline {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-display-xl), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(80px, 13vw, 160px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.ink {
+  position: relative;
+  z-index: 1;
+  color: var(--lc-plum);
+}
+
+.bleed {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  color: var(--lc-violet);
+  opacity: 0.62;
+  transform: translate(1.5px, 1px);
+}
+
+.subhead {
+  position: relative;
+  z-index: 1;
+  margin: 20px 0 0;
+  max-width: 480px;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  padding-top: 8px;
+}

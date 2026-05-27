@@ -1,0 +1,139 @@
+.row {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 40px;
+  align-items: center;
+  padding: 56px 32px;
+  margin: 0 -32px;
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+  transition: background 200ms ease;
+}
+
+/* Hairline only BETWEEN rows, never above the first row (no header divider). */
+.row + .row {
+  border-top: 1px solid rgba(39, 12, 29, 0.12);
+}
+
+.row:hover {
+  background: var(--lc-pink-2);
+}
+
+.left {
+  position: relative;
+}
+
+.eyebrow {
+  margin-bottom: 14px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--lc-plum);
+}
+
+.clientWrap {
+  position: relative;
+  display: inline-block;
+}
+
+.client {
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-hero-number), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(56px, 9vw, 116px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: var(--lc-plum);
+}
+
+.sticker {
+  position: absolute;
+  top: -8px;
+  right: -18px;
+  z-index: 5;
+}
+
+.meta {
+  margin: 14px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--lc-plum);
+}
+
+.preview {
+  margin: 10px 0 0;
+  max-width: 420px;
+  font-size: 15px;
+  line-height: 1.5;
+  opacity: 0.75;
+  text-wrap: pretty;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.number {
+  display: inline-flex;
+  align-items: flex-start;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-hero-number), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  letter-spacing: -0.045em;
+  line-height: 0.82;
+  font-variant-numeric: tabular-nums;
+  color: var(--lc-plum);
+}
+
+.affix {
+  font-size: clamp(36px, 5vw, 56px);
+  padding-top: 10px;
+  display: inline-block;
+}
+
+.digits {
+  font-size: clamp(80px, 11vw, 140px);
+  display: inline-flex;
+}
+
+.digits > span {
+  display: inline-block;
+  transform-origin: center;
+  transition: transform 0.18s cubic-bezier(0.2, 1.5, 0.3, 1);
+}
+
+@media (max-width: 900px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 40px 20px;
+    margin: 0 -20px;
+  }
+  .right {
+    justify-content: flex-start;
+  }
+  .client {
+    font-size: clamp(48px, 14vw, 80px);
+  }
+  .digits {
+    font-size: clamp(64px, 18vw, 104px);
+  }
+  .affix {
+    font-size: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .digits > span {
+    transition: none;
+  }
+}

@@ -1,12 +1,18 @@
 import { groq } from "next-sanity";
 import type { SanityImageSource } from "@sanity/image-url";
 
-/** Lightweight list for the work index (built later). */
-export const getAllCaseStudies = groq`*[_type == "caseStudy"] | order(caseNumber asc){
+/** List for the work index. Sorting is done client-side (featured, year, case). */
+export const getAllCaseStudies = groq`*[_type == "caseStudy"]{
   "slug": slug.current,
   client,
+  discipline,
+  year,
   caseNumber,
-  discipline
+  featured,
+  "prefix": hero.prefix,
+  "digits": hero.digits,
+  "suffix": hero.suffix,
+  "headline": hero.headline
 }`;
 
 /** Full case study by slug, with the up-next reference dereferenced. */
@@ -141,6 +147,12 @@ export interface CaseStudy {
 export interface CaseStudyListItem {
   slug: string;
   client: string;
-  caseNumber: string;
   discipline: string;
+  year: string;
+  caseNumber: string;
+  featured?: boolean;
+  prefix?: string;
+  digits?: string;
+  suffix?: string;
+  headline?: string;
 }
