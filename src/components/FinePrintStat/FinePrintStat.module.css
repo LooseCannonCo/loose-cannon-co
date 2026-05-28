@@ -1,0 +1,82 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.eyebrowRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  background: var(--lc-plum);
+  flex: none;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--lc-plum);
+}
+
+/* Number container governs the type scale; the digit owns the bleed pseudo. */
+.numberBox {
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-hero-number), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(120px, 16vw, 200px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--lc-plum);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The bleed is the ::before of the digit, always "0" (the final state), so it
+   pops together with the ink on settle and doesn't desync during the roll. */
+.digit {
+  position: relative;
+  display: inline-block;
+  transform-origin: center;
+  transition: transform 0.18s cubic-bezier(0.2, 1.5, 0.3, 1);
+}
+
+.digit::before {
+  content: "0";
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  color: var(--lc-violet);
+  opacity: 0.62;
+  transform: translate(1.5px, 1px);
+}
+
+.caption {
+  margin: 0;
+  max-width: 320px;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+@media (max-width: 900px) {
+  /* Mobile hero-number rule from the skill responsive section. */
+  .numberBox {
+    font-size: 84px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .digit {
+    transition: none;
+  }
+}

@@ -15,6 +15,20 @@ export const getAllCaseStudies = groq`*[_type == "caseStudy"]{
   "headline": hero.headline
 }`;
 
+/** Featured cases for the home page: featured DESC, then year DESC, limit 2. */
+export const getFeaturedCaseStudies = groq`*[_type == "caseStudy" && featured == true] | order(featured desc, year desc)[0...2]{
+  "slug": slug.current,
+  client,
+  discipline,
+  year,
+  caseNumber,
+  featured,
+  "prefix": hero.prefix,
+  "digits": hero.digits,
+  "suffix": hero.suffix,
+  "headline": hero.headline
+}`;
+
 /** Full case study by slug, with the up-next reference dereferenced. */
 export const getCaseStudyBySlug = groq`*[_type == "caseStudy" && slug.current == $slug][0]{
   ...,

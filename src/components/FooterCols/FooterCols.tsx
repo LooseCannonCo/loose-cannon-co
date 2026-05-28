@@ -9,7 +9,7 @@ export function FooterCols() {
         <div className={styles.lbl}>Studio</div>
         <p className={styles.tagline}>
           Social-first creative for brands tired of looking like everyone else.
-          San Diego, working everywhere.
+          Working everywhere.
         </p>
       </div>
       <div className={styles.col}>

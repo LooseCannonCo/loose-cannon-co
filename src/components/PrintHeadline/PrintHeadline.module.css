@@ -1,0 +1,29 @@
+.headline {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-hero-number), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-wrap: pretty;
+}
+
+.ink {
+  position: relative;
+  z-index: 1;
+  display: block;
+  color: var(--lc-plum);
+}
+
+.bleed {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  display: block;
+  color: var(--lc-violet);
+  opacity: 0.62;
+  transform: translate(1.5px, 1px);
+}

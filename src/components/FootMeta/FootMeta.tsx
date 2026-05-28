@@ -5,7 +5,7 @@ export function FootMeta() {
   return (
     <div className={styles.footMeta}>
       <span>© Loose Cannon Co.</span>
-      <span>San Diego&nbsp;&nbsp;//&nbsp;&nbsp;Working everywhere</span>
+      <span>Working everywhere</span>
     </div>
   );
 }

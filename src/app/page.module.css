@@ -1,0 +1,242 @@
+/* Shared eyebrow row */
+.eyebrowRow {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 20px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  background: var(--lc-plum);
+  flex: none;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--lc-plum);
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  padding: 48px 0 80px;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+}
+
+/* Stacked headline lines; the sticker shares the last line's row so it anchors
+   to the end of "Built to actually perform." regardless of line widths. */
+.heroHeadlineWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.heroLastLine {
+  display: inline-flex;
+  align-items: center;
+}
+
+.heroHeadline {
+  font-size: clamp(40px, 6.5vw, 76px);
+  line-height: 1;
+}
+
+.subhead {
+  position: relative;
+  z-index: 1;
+  margin: 24px 0 0;
+  max-width: 540px;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+.ctaRow {
+  position: relative;
+  z-index: 1;
+  margin-top: 32px;
+}
+
+.heroSticker {
+  /* Sits right after the last line, overlapping the period of "perform." by a
+     few px (the -8/+6deg rotation adds visual overlap). Tunable. */
+  margin-left: -6px;
+  z-index: 5;
+}
+
+/* Generic section */
+.section {
+  padding: 80px 0 0;
+}
+
+.sectionTitle {
+  margin: 0 0 32px;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(36px, 5vw, 46px);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+/* Featured work */
+.workList {
+  display: flex;
+  flex-direction: column;
+}
+
+.linkRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 28px;
+}
+
+.inlineLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--lc-body);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--lc-plum);
+  text-decoration: none;
+  transition: opacity 160ms ease;
+}
+
+.inlineLink:hover {
+  opacity: 0.65;
+}
+
+/* Services */
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.serviceNum {
+  margin-bottom: 12px;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: 56px;
+  line-height: 1;
+  color: var(--lc-plum);
+}
+
+.serviceTitle {
+  margin: 0 0 8px;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-display-sm), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(19px, 2.4vw, 23px);
+  letter-spacing: -0.01em;
+  color: var(--lc-plum);
+}
+
+.serviceDesc {
+  margin: 0;
+  max-width: 280px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+/* Closing CTA */
+.closing {
+  position: relative;
+  padding: 80px 0;
+}
+
+/* Mirrors the services "Three things" 3-col grid so the Fine Print block's
+   left edge sits on the same vertical line as the "03 / Campaigns" column. */
+.closingContent {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  align-items: center;
+}
+
+/* Headline + CTA span the first two columns; FinePrintStat lands in column 3. */
+.closingLeft {
+  grid-column: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+/* Reset the hero-shared ctaRow margin so the closingLeft gap is the only space. */
+.closingLeft .ctaRow {
+  margin-top: 0;
+}
+
+/* Stacked lines; widened (no cap) so line 1 stays on a single line. */
+.closingHeadlineWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.closingHeadline {
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  /* Cap to its grid span so it cannot bleed into column 3. Lines that exceed
+     the cap wrap within the headline; the bleed tracks the same box. */
+  max-width: 100%;
+}
+
+/* "Let's go." + sticker share a row so the sticker anchors to the end of the
+   (short) last line regardless of copy, overlapping its period by ~12px. */
+.closingLastLine {
+  display: inline-flex;
+  align-items: center;
+}
+
+.closingSticker {
+  /* Slid right so it only kisses the period of "go." (rotation adds visual
+     overlap); the word "go" stays fully readable. Tunable. */
+  margin-left: 6px;
+  z-index: 5;
+}
+
+@media (max-width: 900px) {
+  .servicesGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .closingContent {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .heroSticker {
+    margin-left: -4px;
+  }
+  .closingSticker {
+    margin-left: 2px;
+  }
+  .serviceDesc {
+    max-width: none;
+  }
+}

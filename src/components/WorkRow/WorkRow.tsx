@@ -27,6 +27,9 @@ export interface WorkRowProps {
   suffix?: string;
   headline?: string;
   index: number;
+  /** Render the per-row sticker. Default true; the home page hides it to keep
+   *  the page sticker budget at two (hero + closing CTA). */
+  showSticker?: boolean;
 }
 
 export function WorkRow({
@@ -40,6 +43,7 @@ export function WorkRow({
   suffix,
   headline,
   index,
+  showSticker = true,
 }: WorkRowProps) {
   const chars = useMemo(
     () => digits.split("").map((ch) => ({ ch, isDigit: /[0-9]/.test(ch) })),
@@ -147,14 +151,16 @@ export function WorkRow({
         <div className={styles.eyebrow}>Case {caseNumber}</div>
         <div className={styles.clientWrap}>
           <h2 className={styles.client}>{client}.</h2>
-          <Sticker
-            ref={stickerRef}
-            text={sticker.text}
-            angle={sticker.angle}
-            variant="corner"
-            initiallyHidden
-            className={styles.sticker}
-          />
+          {showSticker ? (
+            <Sticker
+              ref={stickerRef}
+              text={sticker.text}
+              angle={sticker.angle}
+              variant="corner"
+              initiallyHidden
+              className={styles.sticker}
+            />
+          ) : null}
         </div>
         <div className={styles.meta}>
           {discipline} · {displayYear}
