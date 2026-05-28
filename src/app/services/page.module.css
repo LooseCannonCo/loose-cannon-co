@@ -1,0 +1,256 @@
+/* Shared eyebrow row */
+.eyebrowRow {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 20px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  background: var(--lc-plum);
+  flex: none;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--lc-plum);
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  padding: 48px 0 80px;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+}
+
+.heroHeadlineWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.heroLastLine {
+  display: inline-flex;
+  align-items: center;
+}
+
+.heroHeadline {
+  font-size: clamp(40px, 6.5vw, 76px);
+  line-height: 1;
+}
+
+.subhead {
+  position: relative;
+  z-index: 1;
+  margin: 24px 0 0;
+  max-width: 540px;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+.ctaRow {
+  position: relative;
+  z-index: 1;
+  margin-top: 32px;
+}
+
+.heroSticker {
+  margin-left: -6px;
+  z-index: 5;
+}
+
+/* Generic section */
+.section {
+  padding: 80px 0 0;
+}
+
+.sectionTitle {
+  margin: 0 0 32px;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(36px, 5vw, 46px);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+/* 01 — PAID SOCIAL (gets the most vertical room: bigger numeral, bigger title,
+   wider description, generous gaps). */
+.leadBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.leadNum {
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: 72px;
+  line-height: 1;
+  color: var(--lc-plum);
+}
+
+.leadTitle {
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(36px, 5vw, 46px);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+.leadDesc {
+  margin: 0;
+  max-width: 620px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+/* Inline deliverables list, no pills, no boxes. Used by 01, 02, 03. */
+.deliverables {
+  margin: 0;
+  max-width: 720px;
+  font-family: var(--lc-body);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+/* 02 + 03 — smaller treatment than 01, 2-col grid. */
+.expansionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 60px;
+  align-items: start;
+}
+
+.expCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.expNum {
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: 48px;
+  line-height: 1;
+  color: var(--lc-plum);
+}
+
+.expTitle {
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" 48, "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(22px, 2.8vw, 28px);
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+.expDesc {
+  margin: 0;
+  max-width: 480px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+/* HOW IT WORKS — 3-col grid, same column count/gap as the ClosingCTA grid so
+   the dry-stat lockup below lines up with the "03" column above it. */
+.howGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  align-items: start;
+}
+
+.howCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.howNum {
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: 56px;
+  line-height: 1;
+  color: var(--lc-plum);
+}
+
+.howTitle {
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-display-sm), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(19px, 2.4vw, 23px);
+  letter-spacing: -0.01em;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+.howDesc {
+  margin: 0;
+  max-width: 280px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+@media (max-width: 900px) {
+  .expansionGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .howGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .heroSticker {
+    margin-left: -4px;
+  }
+  .leadDesc,
+  .expDesc,
+  .howDesc,
+  .deliverables {
+    max-width: none;
+  }
+}

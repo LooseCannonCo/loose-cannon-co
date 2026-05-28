@@ -3,7 +3,7 @@ import { Footer } from "@/components/Footer/Footer";
 import { Nav } from "@/components/Nav/Nav";
 import { Page } from "@/components/Page/Page";
 import { PrintHeadline } from "@/components/PrintHeadline/PrintHeadline";
-import { FinePrintStat } from "@/components/FinePrintStat/FinePrintStat";
+import { ClosingCTA } from "@/components/ClosingCTA/ClosingCTA";
 import { Splatter } from "@/components/Splatter/Splatter";
 import { Sticker } from "@/components/Sticker/Sticker";
 import { WorkRow } from "@/components/WorkRow/WorkRow";
@@ -132,36 +132,17 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* CLOSING CTA */}
-      <section className={styles.closing}>
-        <Splatter count={5} seed={3} excludeCenter />
-        <div className={styles.closingContent}>
-          <div className={styles.closingLeft}>
-            <div className={styles.closingHeadlineWrap}>
-              <PrintHeadline as="h2" className={styles.closingHeadline}>
-                Got a brand that needs
-                <br />
-                to do something?
-              </PrintHeadline>
-              <span className={styles.closingLastLine}>
-                <PrintHeadline as="span" className={styles.closingHeadline}>
-                  Let&apos;s go.
-                </PrintHeadline>
-                <Sticker
-                  text="Off the charts!"
-                  angle={-8}
-                  variant="hero"
-                  className={styles.closingSticker}
-                />
-              </span>
-            </div>
-            <div className={styles.ctaRow}>
-              <Button href="/contact">Start a project</Button>
-            </div>
-          </div>
-          <FinePrintStat />
-        </div>
-      </section>
+      <ClosingCTA
+        headlineTop={
+          <>
+            Got a brand that needs
+            <br />
+            to do something?
+          </>
+        }
+        headlineLast="Let's go."
+        sticker={{ text: "Off the charts!", angle: -8 }}
+      />
 
       <Footer />
     </Page>
