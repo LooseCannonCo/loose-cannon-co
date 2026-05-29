@@ -57,3 +57,12 @@ select {
   font: inherit;
   color: inherit;
 }
+
+/* Flippy hide-behind: elements opt in (via class or data-attribute) to occlude
+   Flippy. Flippy sits at z-index 30; opted-in elements get z-index 40 plus a
+   stacking-context anchor so the index actually applies. */
+.flippy-hide-behind,
+[data-flippy-hide-behind="true"] {
+  position: relative;
+  z-index: 40;
+}

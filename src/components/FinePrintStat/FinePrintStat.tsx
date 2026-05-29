@@ -93,7 +93,7 @@ export function FinePrintStat() {
         <span className={styles.dot} aria-hidden="true" />
         <span className={styles.eyebrow}>The fine print</span>
       </div>
-      <div className={styles.numberBox}>
+      <div className={`${styles.numberBox} flippy-hide-behind`}>
         <span ref={digitRef} className={styles.digit}>
           0
         </span>

@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, DM_Sans } from "next/font/google";
 import Script from "next/script";
 import { Suspense } from "react";
 
+import { Flippy } from "@/components/Flippy/Flippy";
 import { MetaPixelRouteTracker } from "@/components/MetaPixel/MetaPixelRouteTracker";
 
 import "@/styles/globals.css";
@@ -68,6 +69,9 @@ fbq('track', 'PageView');
           <MetaPixelRouteTracker />
         </Suspense>
         {children}
+        {/* Flippy is mounted once at the root so he survives every route
+            change. Position is fixed, pointer-events: none. */}
+        <Flippy />
       </body>
     </html>
   );

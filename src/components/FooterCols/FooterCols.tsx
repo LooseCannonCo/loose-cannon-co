@@ -4,7 +4,7 @@ import styles from "./FooterCols.module.css";
  *  Placeholder copy for now (ported from the reference case studies). */
 export function FooterCols() {
   return (
-    <div className={styles.footCols}>
+    <div className={`${styles.footCols} flippy-hide-behind`}>
       <div className={styles.col}>
         <div className={styles.lbl}>Studio</div>
         <p className={styles.tagline}>

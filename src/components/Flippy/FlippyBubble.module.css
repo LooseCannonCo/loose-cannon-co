@@ -1,0 +1,58 @@
+/* Cartoon balloon: lumpy organic shape via asymmetric border-radius, thick
+   plum stroke, cream fill. Wrapper origin is Flippy's feet; bubble sits
+   above-right of his head, tail aimed down-left toward his mouth. */
+.bubble {
+  position: absolute;
+  bottom: 122px;
+  left: 26px;
+  padding: 12px 16px;
+  background: var(--lc-cream);
+  border: 3px solid var(--lc-plum);
+  /* Lumpy: per-corner horizontal/vertical radii diverge so no two corners
+     match, giving a hand-drawn organic outline. */
+  border-radius: 28px 38px 22px 32px / 24px 28px 36px 22px;
+  font-family: var(--lc-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--lc-plum);
+  white-space: normal;
+  text-wrap: pretty;
+  max-width: 220px;
+  pointer-events: none;
+  transform-origin: 30% 110%;
+}
+
+.text {
+  display: inline-block;
+}
+
+/* Cartoon tail: two stacked triangles. Outline triangle sits behind the
+   bubble's bottom edge and forms the plum border. Fill triangle sits over the
+   outline (slightly smaller + offset up) and overlaps the bubble's border so
+   the tail reads as continuous with the bubble. Pointed down-left at Flippy. */
+.tailOutline {
+  position: absolute;
+  bottom: -18px;
+  left: 18px;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 16px solid transparent;
+  border-top: 22px solid var(--lc-plum);
+  transform: rotate(-12deg);
+  transform-origin: top center;
+}
+
+.tailFill {
+  position: absolute;
+  bottom: -10px;
+  left: 22px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 16px solid var(--lc-cream);
+  transform: rotate(-12deg);
+  transform-origin: top center;
+}
