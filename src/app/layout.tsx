@@ -8,8 +8,9 @@ import { MetaPixelRouteTracker } from "@/components/MetaPixel/MetaPixelRouteTrac
 
 import "@/styles/globals.css";
 
-// TODO: replace with real Meta Pixel ID before launch (Noah).
-const METAPIXEL_ID = "XXXXXXXXXXXXXXX";
+// Drop the real ID into the NEXT_PUBLIC_META_PIXEL_ID env var in Netlify.
+// Absent → no script, no init, no fire. Pixel cleanly no-ops.
+const METAPIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -40,9 +41,11 @@ export default function RootLayout({
       <body>
         {/* Meta Pixel base: standard fbevents.js bootstrap + initial PageView.
             Subsequent client-side route changes fire PageView via the tracker
-            below. */}
-        <Script id="meta-pixel-base" strategy="afterInteractive">
-          {`
+            below. Gated on the env var so absent ID renders nothing. */}
+        {METAPIXEL_ID ? (
+          <>
+            <Script id="meta-pixel-base" strategy="afterInteractive">
+              {`
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -53,21 +56,23 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '${METAPIXEL_ID}');
 fbq('track', 'PageView');
-          `}
-        </Script>
-        <noscript>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src={`https://www.facebook.com/tr?id=${METAPIXEL_ID}&ev=PageView&noscript=1`}
-            alt=""
-          />
-        </noscript>
-        <Suspense fallback={null}>
-          <MetaPixelRouteTracker />
-        </Suspense>
+              `}
+            </Script>
+            <noscript>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                height="1"
+                width="1"
+                style={{ display: "none" }}
+                src={`https://www.facebook.com/tr?id=${METAPIXEL_ID}&ev=PageView&noscript=1`}
+                alt=""
+              />
+            </noscript>
+            <Suspense fallback={null}>
+              <MetaPixelRouteTracker />
+            </Suspense>
+          </>
+        ) : null}
         {children}
         {/* Flippy is mounted once at the root so he survives every route
             change. Position is fixed, pointer-events: none. */}

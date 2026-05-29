@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Netlify Forms detection mirror</title>
+  </head>
+  <body>
+    <!--
+      Static mirror of the React form at /contact, used by Netlify's build-time
+      form detection. Field name attributes here MUST match the live form
+      exactly or submissions will not attribute. Do not edit unless the live
+      form in src/app/contact/page.tsx changes.
+    -->
+    <form
+      name="contact-intake"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      hidden
+    >
+      <input type="hidden" name="form-name" value="contact-intake" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="projectType" />
+      <input type="text" name="budget" />
+      <textarea name="message"></textarea>
+      <input name="bot-field" />
+    </form>
+  </body>
+</html>
