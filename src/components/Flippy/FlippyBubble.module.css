@@ -1,0 +1,38 @@
+.bubble {
+  position: absolute;
+  /* Wrapper origin = Flippy's feet. SVG is 110px tall (head ~110 above feet)
+     and 66px wide (centered on origin). Position bubble above-right of head. */
+  bottom: 122px;
+  left: 28px;
+  padding: 10px 14px;
+  background: var(--lc-cream);
+  border: 1.5px solid var(--lc-plum);
+  border-radius: 3px;
+  font-family: var(--lc-body);
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--lc-plum);
+  white-space: normal;
+  text-wrap: pretty;
+  max-width: 220px;
+  pointer-events: none;
+  box-shadow: 1.5px 1.5px 0 rgba(177, 74, 255, 0.35);
+}
+
+.text {
+  display: block;
+}
+
+/* Small tail/pointer angled toward Flippy's head (down-left of the bubble). */
+.tail {
+  position: absolute;
+  bottom: -7px;
+  left: 12px;
+  width: 11px;
+  height: 11px;
+  background: var(--lc-cream);
+  border-right: 1.5px solid var(--lc-plum);
+  border-bottom: 1.5px solid var(--lc-plum);
+  transform: rotate(45deg);
+}

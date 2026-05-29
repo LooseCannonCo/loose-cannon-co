@@ -1,0 +1,60 @@
+/* Top-level wrapper rides the cursor. Zero-size, fixed, never intercepts
+   pointer events, sits above body content but below sticky nav + modals. */
+.wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  z-index: 30;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Body is anchored so its bottom-center sits at the wrapper origin (his feet
+   are at the cursor). transform-origin is the same point so scale/rotate
+   pivots around his feet, not his middle. */
+.body {
+  position: absolute;
+  left: -33px;
+  top: -110px;
+  width: 66px;
+  height: 110px;
+  transform-origin: 50% 100%;
+}
+
+.breath {
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 100%;
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+
+/* Static fallback: mobile + reduced-motion. Bottom-right corner, tappable. */
+.staticWrap {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.staticTap {
+  pointer-events: auto;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  display: block;
+}
+
+.staticTap img {
+  display: block;
+  user-select: none;
+}

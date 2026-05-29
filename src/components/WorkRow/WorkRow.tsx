@@ -146,6 +146,7 @@ export function WorkRow({
       href={`/work/${slug}`}
       className={styles.row}
       onMouseEnter={handleEnter}
+      data-flippy-react="work"
     >
       <div className={styles.left}>
         <div className={styles.eyebrow}>Case {caseNumber}</div>
@@ -168,7 +169,7 @@ export function WorkRow({
         {preview ? <p className={styles.preview}>{preview}</p> : null}
       </div>
 
-      <div className={styles.right}>
+      <div className={`${styles.right} flippy-hide-behind`}>
         <span className={styles.number}>
           {prefix ? <span className={styles.affix}>{prefix}</span> : null}
           <span className={styles.digits}>

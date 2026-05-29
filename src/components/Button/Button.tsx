@@ -31,9 +31,15 @@ export function Button({
     </>
   );
   const klass = cn(styles.button, styles[variant], className);
-  if (href) return <a href={href} className={klass}>{inner}</a>;
+  if (href) {
+    return (
+      <a href={href} className={klass} data-flippy-react="cta">
+        {inner}
+      </a>
+    );
+  }
   return (
-    <button type={type ?? "button"} className={klass}>
+    <button type={type ?? "button"} className={klass} data-flippy-react="cta">
       {inner}
     </button>
   );

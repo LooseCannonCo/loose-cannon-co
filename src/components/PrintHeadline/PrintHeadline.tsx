@@ -21,7 +21,7 @@ export function PrintHeadline({
   className,
 }: PrintHeadlineProps) {
   return (
-    <Tag className={cn(styles.headline, className)}>
+    <Tag className={cn(styles.headline, "flippy-hide-behind", className)}>
       <span className={styles.bleed} aria-hidden="true">
         {children}
       </span>
