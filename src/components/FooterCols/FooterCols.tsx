@@ -3,14 +3,27 @@ import Link from "next/link";
 import styles from "./FooterCols.module.css";
 
 /**
- * Footer columns: studio tagline + secondary nav + contact link.
+ * Footer columns: studio tagline + secondary nav + contact + socials.
  *
  * Shop column intentionally omitted until /shop ships in Phase F. To restore,
- * add a third column with { label: "Shop" } and link entries to /shop, /shop/new.
+ * add a column with { label: "Shop" } and link entries to /shop, /shop/new.
  *
- * Journal link and the IG / TikTok / LinkedIn social links are also held until
- * the routes and real URLs exist. Don't re-add as dead text.
+ * Journal link held until the route exists. No TikTok (no account); only the
+ * three live socials below.
  */
+
+const SOCIALS: { label: string; href: string }[] = [
+  { label: "Instagram", href: "https://www.instagram.com/loose_cannon_co/" },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=61589750844482",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/loose-cannon-co",
+  },
+];
+
 export function FooterCols() {
   return (
     <div className={`${styles.footCols} flippy-hide-behind`}>
@@ -41,6 +54,13 @@ export function FooterCols() {
           <li>
             <Link href="/contact">Start a project</Link>
           </li>
+          {SOCIALS.map((s) => (
+            <li key={s.label}>
+              <a href={s.href} target="_blank" rel="noopener noreferrer">
+                {s.label}
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
