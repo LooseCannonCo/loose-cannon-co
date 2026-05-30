@@ -14,10 +14,7 @@ import styles from "./FooterCols.module.css";
 
 const SOCIALS: { label: string; href: string }[] = [
   { label: "Instagram", href: "https://www.instagram.com/loose_cannon_co/" },
-  {
-    label: "Facebook",
-    href: "https://www.facebook.com/profile.php?id=61589750844482",
-  },
+  { label: "Facebook", href: "https://www.facebook.com/loosecannonco/" },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/company/loose-cannon-co",
