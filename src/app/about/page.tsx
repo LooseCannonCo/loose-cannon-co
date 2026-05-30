@@ -15,12 +15,13 @@ import {
 
 import styles from "./page.module.css";
 
+//   = non-breaking space, used on the trailing word pair to prevent a
+// one-word widow at the end of each paragraph.
 const NOAH_BIO =
-  "Fifteen years of brand and creative direction at Fitbit, Google, Huckberry, Heath Ceramics, Chrome Industries, and Sol Republic. Runs the creative side of Loose Cannon. The parts that have to look good are his.";
+  "The world's best creative mind this world has ever seen in the world. Noah, for some reason, is good at creative stuff. But other than that, he's pretty much worthless. A true idiot savant. He started as a graphic designer 15+ years ago but is now a one-man creative army. Don't mess with him.";
 
-// Placeholder. Noah finalizes.
 const BRIANA_BIO =
-  "[Bio placeholder. One paragraph in the same voice as Noah's bio. Cover where she's worked, what she runs at Loose Cannon, and why the paid social side is hers. Noah to finalize.]";
+  "Best yapper in the bizz. Briana can market anything. She's literally obsessed with Nicolas Cage, and that's what makes her so good at her job. Anything she touches goes viral. She's been in the game for 10+ years, marketing all sorts of crap that you've probably bought at one point or another.";
 
 export default async function AboutPage() {
   const featured =
@@ -74,17 +75,21 @@ export default async function AboutPage() {
         <div className={styles.foundersGrid}>
           <div className={styles.founderCol}>
             <div className={styles.founderNum}>01</div>
-            <h3 className={styles.founderName}>Noah Charnow.</h3>
+            <h3 className={styles.founderName}>
+              Noah&nbsp;(Brand&nbsp;Daddy)&nbsp;Charnow
+            </h3>
             <div className={styles.founderRole}>
-              Creative direction · Brand systems
+              Creative Director of &quot;What If We Just Did This?&quot;
             </div>
             <p className={styles.founderBio}>{NOAH_BIO}</p>
           </div>
           <div className={styles.founderCol}>
             <div className={styles.founderNum}>02</div>
-            <h3 className={styles.founderName}>Briana Brugh.</h3>
+            <h3 className={styles.founderName}>
+              Briana&nbsp;(Yapper)&nbsp;Brugh
+            </h3>
             <div className={styles.founderRole}>
-              Performance creative · Paid social
+              Head of Strategies That Actually Work
             </div>
             <p className={styles.founderBio}>{BRIANA_BIO}</p>
           </div>
