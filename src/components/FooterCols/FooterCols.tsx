@@ -1,7 +1,16 @@
+import Link from "next/link";
+
 import styles from "./FooterCols.module.css";
 
-/** 4-column footer: studio tagline + studio links + shop links + contact links.
- *  Placeholder copy for now (ported from the reference case studies). */
+/**
+ * Footer columns: studio tagline + secondary nav + contact link.
+ *
+ * Shop column intentionally omitted until /shop ships in Phase F. To restore,
+ * add a third column with { label: "Shop" } and link entries to /shop, /shop/new.
+ *
+ * Journal link and the IG / TikTok / LinkedIn social links are also held until
+ * the routes and real URLs exist. Don't re-add as dead text.
+ */
 export function FooterCols() {
   return (
     <div className={`${styles.footCols} flippy-hide-behind`}>
@@ -15,26 +24,23 @@ export function FooterCols() {
       <div className={styles.col}>
         <div className={styles.lbl}>Studio</div>
         <ul>
-          <li>Work</li>
-          <li>Services</li>
-          <li>About</li>
-          <li>Journal</li>
-        </ul>
-      </div>
-      <div className={styles.col}>
-        <div className={styles.lbl}>Shop</div>
-        <ul>
-          <li>All products</li>
-          <li>New</li>
+          <li>
+            <Link href="/work">Work</Link>
+          </li>
+          <li>
+            <Link href="/services">Services</Link>
+          </li>
+          <li>
+            <Link href="/about">About</Link>
+          </li>
         </ul>
       </div>
       <div className={styles.col}>
         <div className={styles.lbl}>Contact</div>
         <ul>
-          <li>Start a project</li>
-          <li>Instagram</li>
-          <li>TikTok</li>
-          <li>LinkedIn</li>
+          <li>
+            <Link href="/contact">Start a project</Link>
+          </li>
         </ul>
       </div>
     </div>
