@@ -1,7 +1,9 @@
 "use client";
 
+import type { SanityImageSource } from "@sanity/image-url";
 import { useEffect, useMemo, useRef } from "react";
 
+import { CaseImage } from "@/components/CaseImage/CaseImage";
 import { Sticker, type StickerHandle } from "@/components/Sticker/Sticker";
 import { prefersReducedMotion } from "@/lib/motion";
 import { slotRoll } from "@/lib/slotRoll";
@@ -26,6 +28,9 @@ export interface WorkRowProps {
   digits?: string;
   suffix?: string;
   headline?: string;
+  /** Sanity cover image. Falls back to the on-brand halftone placeholder if
+   *  absent so every row reads as intentional print design. */
+  coverImage?: SanityImageSource;
   index: number;
   /** Render the per-row sticker. Default true; the home page hides it to keep
    *  the page sticker budget at two (hero + closing CTA). */
@@ -42,6 +47,7 @@ export function WorkRow({
   digits = "",
   suffix,
   headline,
+  coverImage,
   index,
   showSticker = true,
 }: WorkRowProps) {
@@ -148,6 +154,14 @@ export function WorkRow({
       onMouseEnter={handleEnter}
       data-flippy-react="work"
     >
+      <CaseImage
+        image={coverImage}
+        alt={`${client} cover`}
+        aspect="4-3"
+        width={600}
+        className={styles.cover}
+      />
+
       <div className={styles.left}>
         <div className={styles.eyebrow}>Case {caseNumber}</div>
         <div className={styles.clientWrap}>

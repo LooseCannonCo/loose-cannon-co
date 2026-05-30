@@ -1,0 +1,79 @@
+/* Outer frame. Plum 1.5px border with an offset violet registration bleed
+   behind via ::before. Same treatment whether the frame contains a real image
+   or the halftone print swatch placeholder. */
+.frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  background: var(--lc-pink-0);
+  border: 1.5px solid var(--lc-plum);
+  overflow: hidden;
+}
+
+/* Violet registration bleed. Sits BEHIND the frame, offset 1.5/1, opacity 0.62
+   per the locked skill values for offset registration. The frame's own border
+   stays plum; the violet shows just enough at the edges to read as misregistered
+   ink, not a stroke. */
+.frame::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  border: 1.5px solid var(--lc-violet);
+  opacity: 0.62;
+  transform: translate(1.5px, 1px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.aspect43 {
+  aspect-ratio: 4 / 3;
+}
+
+.aspect169 {
+  aspect-ratio: 16 / 9;
+}
+
+.aspect11 {
+  aspect-ratio: 1 / 1;
+}
+
+.aspect34 {
+  aspect-ratio: 3 / 4;
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Placeholder fills the frame with the pink-1 + halftone treatment. */
+.placeholder {
+  /* Sits at canvas tone so the halftone dots read against the LC pink-1 base. */
+}
+
+.halftone {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Registration crosshair sits in the top-right corner of the placeholder. */
+.regMark {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+}
+
+@media (max-width: 900px) {
+  .regMark {
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+  }
+}

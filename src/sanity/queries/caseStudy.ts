@@ -9,6 +9,7 @@ export const getAllCaseStudies = groq`*[_type == "caseStudy"]{
   year,
   caseNumber,
   featured,
+  coverImage,
   "prefix": hero.prefix,
   "digits": hero.digits,
   "suffix": hero.suffix,
@@ -23,6 +24,7 @@ export const getFeaturedCaseStudies = groq`*[_type == "caseStudy" && featured ==
   year,
   caseNumber,
   featured,
+  coverImage,
   "prefix": hero.prefix,
   "digits": hero.digits,
   "suffix": hero.suffix,
@@ -165,6 +167,7 @@ export interface CaseStudyListItem {
   year: string;
   caseNumber: string;
   featured?: boolean;
+  coverImage?: SanityImageSource;
   prefix?: string;
   digits?: string;
   suffix?: string;

@@ -55,6 +55,18 @@ export const caseStudy = defineType({
       validation: (r) => r.required(),
     }),
 
+    // ── Cover ─────────────────────────────────────────────────────────────
+    // Thumbnail used in case row listings on /work and the home featured-work
+    // section. Separate from hero.artifact (which is the full poster used on
+    // the case study detail page). Optional: row falls back to an on-brand
+    // halftone print swatch when empty.
+    defineField({
+      name: "coverImage",
+      title: "Cover image (case row thumbnail)",
+      type: "image",
+      options: { hotspot: true },
+    }),
+
     // ── Hero ──────────────────────────────────────────────────────────────
     defineField({
       name: "hero",

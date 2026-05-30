@@ -118,6 +118,7 @@ export default async function AboutPage() {
               digits={c.digits}
               suffix={c.suffix}
               headline={c.headline}
+              coverImage={c.coverImage}
             />
           ))}
         </div>

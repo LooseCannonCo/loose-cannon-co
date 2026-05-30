@@ -97,6 +97,7 @@ export default async function Home() {
               digits={c.digits}
               suffix={c.suffix}
               headline={c.headline}
+              coverImage={c.coverImage}
             />
           ))}
         </div>

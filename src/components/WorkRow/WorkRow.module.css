@@ -1,6 +1,9 @@
 .row {
   display: grid;
-  grid-template-columns: 2fr 3fr;
+  /* cover (1.1) | text (1.7) | number (2.4). Stat column stays the widest so
+     the big digits remain the visual punch; cover is a real visual panel
+     without crowding the stat. */
+  grid-template-columns: 1.1fr 1.7fr 2.4fr;
   gap: 40px;
   align-items: center;
   padding: 56px 32px;
@@ -9,6 +12,10 @@
   color: inherit;
   text-decoration: none;
   transition: background 200ms ease;
+}
+
+.cover {
+  align-self: center;
 }
 
 /* Hairline only BETWEEN rows, never above the first row (no header divider). */
@@ -114,9 +121,12 @@
 @media (max-width: 900px) {
   .row {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 22px;
     padding: 40px 20px;
     margin: 0 -20px;
+  }
+  .cover {
+    max-width: 320px;
   }
   .right {
     justify-content: flex-start;
