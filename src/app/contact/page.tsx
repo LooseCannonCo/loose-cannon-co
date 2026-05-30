@@ -49,7 +49,12 @@ const REASSURANCE = [
   },
 ];
 
-// Netlify Forms accepts URL-encoded POSTs to "/" with form-name in the body.
+// Netlify Forms accepts URL-encoded POSTs with form-name in the body. We post
+// to the static mirror at /__forms.html (not /) so the @netlify/plugin-nextjs
+// runtime doesn't intercept the request and route it to Next before Netlify's
+// form processor sees it.
+const NETLIFY_FORM_ENDPOINT = "/__forms.html";
+
 function encode(data: Record<string, string>): string {
   return Object.entries(data)
     .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
@@ -76,14 +81,18 @@ export default function ContactPage() {
     });
 
     try {
-      const res = await fetch("/", {
+      const res = await fetch(NETLIFY_FORM_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: encode(payload),
       });
-      if (!res.ok) throw new Error(`Form POST failed: ${res.status}`);
+      if (!res.ok) {
+        setStatus("error");
+        return;
+      }
 
       // Meta Pixel Lead event. Guarded so SSR and pixel-not-loaded both no-op.
+      // Only fires after Netlify accepted the submission.
       if (typeof window !== "undefined" && window.fbq) {
         window.fbq("track", "Lead", {
           content_name: "Contact intake",
