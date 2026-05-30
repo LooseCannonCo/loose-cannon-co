@@ -69,7 +69,7 @@ export default async function WorkIndex() {
             digits={c.digits}
             suffix={c.suffix}
             headline={c.headline}
-            coverImage={c.coverImage}
+            coverImage={c.coverImage ?? c.posterImage}
           />
         ))}
       </div>

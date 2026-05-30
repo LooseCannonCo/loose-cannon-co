@@ -1,0 +1,72 @@
+.section {
+  padding: 80px 0 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.cell {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Frame matches CaseImage: plum border + offset violet registration bleed
+   behind via ::before. Aspect locked to 4:5 (source images are 1080x1350). */
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: var(--lc-pink-0);
+  border: 1.5px solid var(--lc-plum);
+  overflow: hidden;
+}
+
+.frame::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  border: 1.5px solid var(--lc-violet);
+  opacity: 0.62;
+  transform: translate(1.5px, 1px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Source images are 4:5; intrinsic width/height fills the frame exactly with
+   no crop. object-fit: contain is the safety net for any off-ratio uploads
+   (letterboxes onto the pink-0 canvas, never crops). */
+.img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.caption {
+  font-family: var(--lc-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}

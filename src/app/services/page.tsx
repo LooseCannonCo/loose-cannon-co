@@ -132,7 +132,7 @@ export default async function ServicesPage() {
             digits={smolotov.digits}
             suffix={smolotov.suffix}
             headline={smolotov.headline}
-            coverImage={smolotov.coverImage}
+            coverImage={smolotov.coverImage ?? smolotov.posterImage}
           />
         ) : null}
       </section>

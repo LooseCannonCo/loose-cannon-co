@@ -1,7 +1,9 @@
 import { groq } from "next-sanity";
 import type { SanityImageSource } from "@sanity/image-url";
 
-/** List for the work index. Sorting is done client-side (featured, year, case). */
+/** List for the work index. Sorting is done client-side (featured, year, case).
+ *  posterImage projects heroVideo.posterImage to the top level so case cards
+ *  can fall back to it when coverImage is empty. */
 export const getAllCaseStudies = groq`*[_type == "caseStudy"]{
   "slug": slug.current,
   client,
@@ -10,6 +12,7 @@ export const getAllCaseStudies = groq`*[_type == "caseStudy"]{
   caseNumber,
   featured,
   coverImage,
+  "posterImage": heroVideo.posterImage,
   "prefix": hero.prefix,
   "digits": hero.digits,
   "suffix": hero.suffix,
@@ -25,15 +28,22 @@ export const getFeaturedCaseStudies = groq`*[_type == "caseStudy" && featured ==
   caseNumber,
   featured,
   coverImage,
+  "posterImage": heroVideo.posterImage,
   "prefix": hero.prefix,
   "digits": hero.digits,
   "suffix": hero.suffix,
   "headline": hero.headline
 }`;
 
-/** Full case study by slug, with the up-next reference dereferenced. */
+/** Full case study by slug. heroVideo is projected with the file asset URL +
+ *  MIME type dereferenced so the case page can render a <video> directly. */
 export const getCaseStudyBySlug = groq`*[_type == "caseStudy" && slug.current == $slug][0]{
   ...,
+  heroVideo {
+    "fileUrl": file.asset->url,
+    "mimeType": file.asset->mimeType,
+    posterImage
+  },
   upNext{
     descriptor,
     psLine,
@@ -143,6 +153,18 @@ export interface UpNextData {
   } | null;
 }
 
+export interface GalleryItemData {
+  image: SanityImageSource;
+  alt?: string;
+  caption?: string;
+}
+
+export interface HeroVideoData {
+  fileUrl?: string;
+  mimeType?: string;
+  posterImage?: SanityImageSource;
+}
+
 export interface CaseStudy {
   _id: string;
   client: string;
@@ -151,6 +173,9 @@ export interface CaseStudy {
   caseNumber: string;
   featured?: boolean;
   slug?: { current?: string };
+  coverImage?: SanityImageSource;
+  heroVideo?: HeroVideoData;
+  gallery?: GalleryItemData[];
   hero?: CaseStudyHero;
   brief?: CaseStudyBrief;
   contentSection?: ContentSectionData;
@@ -168,6 +193,9 @@ export interface CaseStudyListItem {
   caseNumber: string;
   featured?: boolean;
   coverImage?: SanityImageSource;
+  /** Projected from heroVideo.posterImage; used as the card fallback when
+   *  coverImage is empty. */
+  posterImage?: SanityImageSource;
   prefix?: string;
   digits?: string;
   suffix?: string;

@@ -67,6 +67,61 @@ export const caseStudy = defineType({
       options: { hotspot: true },
     }),
 
+    // ── Hero video (optional, for motion-led cases like Smolotov) ─────────
+    // When set, the case detail hero renders this as muted/loop/autoplay/
+    // playsinline video using posterImage as the poster. Card thumbnails fall
+    // back to posterImage when coverImage is empty.
+    defineField({
+      name: "heroVideo",
+      title: "Hero video (optional, motion-led cases)",
+      type: "object",
+      fields: [
+        defineField({
+          name: "file",
+          title: "Video file (mp4)",
+          type: "file",
+          options: { accept: "video/mp4" },
+        }),
+        defineField({
+          name: "posterImage",
+          title: "Poster image (also used as card thumbnail fallback)",
+          type: "image",
+          options: { hotspot: true },
+        }),
+      ],
+    }),
+
+    // ── Gallery ───────────────────────────────────────────────────────────
+    // Arbitrary set of post/asset images. FITAID uses this for the social
+    // post grid. Each entry is an image with optional alt + caption.
+    defineField({
+      name: "gallery",
+      title: "Gallery (social posts, additional assets)",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          fields: [
+            defineField({
+              name: "image",
+              type: "image",
+              options: { hotspot: true },
+              validation: (r) => r.required(),
+            }),
+            defineField({ name: "alt", title: "Alt text", type: "string" }),
+            defineField({
+              name: "caption",
+              title: "Caption (short, optional)",
+              type: "string",
+            }),
+          ],
+          preview: {
+            select: { media: "image", title: "caption", subtitle: "alt" },
+          },
+        }),
+      ],
+    }),
+
     // ── Hero ──────────────────────────────────────────────────────────────
     defineField({
       name: "hero",

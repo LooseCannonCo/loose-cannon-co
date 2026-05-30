@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import { BarComparison } from "@/components/BarComparison/BarComparison";
 import { Brief, type BriefBreakdownItem } from "@/components/Brief/Brief";
+import { CaseGallery } from "@/components/CaseGallery/CaseGallery";
 import { Credits } from "@/components/Credits/Credits";
 import { Footer } from "@/components/Footer/Footer";
 import { Hero } from "@/components/Hero/Hero";
@@ -48,24 +49,71 @@ const artifactPlaceholderStyle: React.CSSProperties = {
   lineHeight: 1.5,
 };
 
-function renderArtifact(hero: CaseStudy["hero"]): React.ReactNode {
+const heroMediaStyle: React.CSSProperties = {
+  width: "100%",
+  display: "block",
+  boxShadow: "8px 8px 0 var(--lc-plum)",
+  border: "2px solid var(--lc-plum)",
+};
+
+/**
+ * Hero artifact render chain, in order of preference:
+ *   1. heroVideo (muted/loop/autoplay/playsinline + poster)
+ *   2. coverImage
+ *   3. legacy hero.artifact image (backward compat)
+ *   4. cream placeholder swatch
+ */
+function renderArtifact(
+  hero: CaseStudy["hero"],
+  heroVideo: CaseStudy["heroVideo"],
+  coverImage: CaseStudy["coverImage"],
+): React.ReactNode {
+  if (heroVideo?.fileUrl) {
+    const posterUrl = heroVideo.posterImage
+      ? urlFor(heroVideo.posterImage).width(900).auto("format").url()
+      : undefined;
+    return (
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        poster={posterUrl}
+        style={heroMediaStyle}
+      >
+        <source
+          src={heroVideo.fileUrl}
+          type={heroVideo.mimeType ?? "video/mp4"}
+        />
+      </video>
+    );
+  }
+
+  if (coverImage) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={urlFor(coverImage).width(900).auto("format").url()}
+        alt={hero?.artifactCaption ?? ""}
+        style={heroMediaStyle}
+      />
+    );
+  }
+
   const art = hero?.artifact;
   const hasImage = Boolean((art as { asset?: unknown } | undefined)?.asset);
   if (hasImage && art) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src={urlFor(art).width(900).url()}
+        src={urlFor(art).width(900).auto("format").url()}
         alt={hero?.artifactCaption ?? ""}
-        style={{
-          width: "100%",
-          display: "block",
-          boxShadow: "8px 8px 0 var(--lc-plum)",
-          border: "2px solid var(--lc-plum)",
-        }}
+        style={heroMediaStyle}
       />
     );
   }
+
   return (
     <div style={artifactPlaceholderStyle}>
       {hero?.artifactCaption ?? "Artifact"}
@@ -100,7 +148,18 @@ export default async function CaseStudyPage({
   });
   if (!doc) notFound();
 
-  const { hero, brief, contentSection, statsTrio, quote, credits, upNext } = doc;
+  const {
+    hero,
+    brief,
+    contentSection,
+    statsTrio,
+    quote,
+    credits,
+    upNext,
+    coverImage,
+    heroVideo,
+    gallery,
+  } = doc;
 
   const breakdown: BriefBreakdownItem[] | undefined =
     brief?.breakdown?.items?.map((it) => ({
@@ -139,7 +198,7 @@ export default async function CaseStudyPage({
           headline={hero.headline ?? ""}
           subhead={hero.subhead ?? ""}
           meta={hero.meta ?? ""}
-          artifact={renderArtifact(hero)}
+          artifact={renderArtifact(hero, heroVideo, coverImage)}
           artifactSticker={
             hero.artifactSticker?.text
               ? {
@@ -176,6 +235,8 @@ export default async function CaseStudyPage({
           }))}
         />
       ) : null}
+
+      {gallery && gallery.length > 0 ? <CaseGallery items={gallery} /> : null}
 
       {statsTrio ? (
         <StatsTrio
