@@ -12,6 +12,11 @@ import "@/styles/globals.css";
 // Absent → no script, no init, no fire. Pixel cleanly no-ops.
 const METAPIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
+// Self-hosted via next/font/google: no render-block, no layout shift, font
+// files served from the same origin. display: swap = fallback shown until
+// the font is ready, then a single swap.
+// Weights trimmed to only what tokens.css actually consumes (Bricolage 700
+// for display, DM Sans 400 for body + 600 for eyebrow/caption/source).
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
   weight: ["700"],
@@ -21,7 +26,7 @@ const display = Bricolage_Grotesque({
 
 const body = DM_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "600"],
   variable: "--font-body",
   display: "swap",
 });

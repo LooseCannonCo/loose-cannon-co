@@ -71,7 +71,7 @@ function renderArtifact(
 ): React.ReactNode {
   if (heroVideo?.fileUrl) {
     const posterUrl = heroVideo.posterImage
-      ? urlFor(heroVideo.posterImage).width(900).auto("format").url()
+      ? urlFor(heroVideo.posterImage).width(900).quality(70).auto("format").url()
       : undefined;
     return (
       <video
@@ -93,11 +93,14 @@ function renderArtifact(
 
   if (coverImage) {
     return (
+      // Above-the-fold LCP candidate: eager load + high fetch priority.
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src={urlFor(coverImage).width(900).auto("format").url()}
+        src={urlFor(coverImage).width(900).quality(70).auto("format").url()}
         alt={hero?.artifactCaption ?? ""}
         style={heroMediaStyle}
+        loading="eager"
+        fetchPriority="high"
       />
     );
   }
@@ -106,11 +109,14 @@ function renderArtifact(
   const hasImage = Boolean((art as { asset?: unknown } | undefined)?.asset);
   if (hasImage && art) {
     return (
+      // Above-the-fold LCP candidate: eager load + high fetch priority.
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src={urlFor(art).width(900).auto("format").url()}
+        src={urlFor(art).width(900).quality(70).auto("format").url()}
         alt={hero?.artifactCaption ?? ""}
         style={heroMediaStyle}
+        loading="eager"
+        fetchPriority="high"
       />
     );
   }

@@ -42,7 +42,7 @@ export function CaseImage({
   const aspectClass = ASPECT_CLASS[aspect];
 
   if (image) {
-    let builder = urlFor(image).width(width).fit("crop").auto("format");
+    let builder = urlFor(image).width(width).quality(70).fit("crop").auto("format");
     if (height) builder = builder.height(height);
     const src = builder.url();
     return (

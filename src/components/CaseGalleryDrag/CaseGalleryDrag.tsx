@@ -186,7 +186,7 @@ export function CaseGalleryDrag({
         aria-label={`Image gallery, ${items.length} items`}
       >
         {items.map((item, i) => {
-          const src = urlFor(item.image).width(960).auto("format").url();
+          const src = urlFor(item.image).width(960).quality(70).auto("format").url();
           return (
             <div
               key={i}

@@ -24,7 +24,7 @@ export function CaseGallery({ items, eyebrow = "The work" }: CaseGalleryProps) {
       <SectionEyebrow>{eyebrow}</SectionEyebrow>
       <div className={styles.grid}>
         {items.map((item, i) => {
-          const src = urlFor(item.image).width(720).auto("format").url();
+          const src = urlFor(item.image).width(720).quality(70).auto("format").url();
           return (
             <figure key={i} className={styles.cell}>
               <div className={styles.frame}>

@@ -95,8 +95,17 @@ export const Sticker = forwardRef<StickerHandle, StickerProps>(function Sticker(
   useImperativeHandle(ref, () => ({ slam }), [slam]);
 
   // Magnetic pull: within MAGNETIC_RADIUS the pill eases toward the cursor.
+  // Gated on prefersReducedMotion AND touch / coarse-pointer devices so the
+  // global mousemove listener never attaches on phones or screen-reader
+  // accessibility modes.
   useEffect(() => {
     if (prefersReducedMotion()) return;
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(pointer: coarse), (hover: none)").matches
+    ) {
+      return;
+    }
     const pill = pillRef.current;
     if (!pill) return;
 
