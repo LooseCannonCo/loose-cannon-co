@@ -138,8 +138,16 @@
   --lc-slam-3: 240ms;
   --lc-plum-chase: 220ms;
   --lc-violet-breath: 4.2s;
-  --lc-reveal-stagger: 60ms;
   --lc-slot-roll-interval: 45ms;
+
+  /* ── Section reveal (one canonical set, consumed by reveal.css) ────────
+   * Each [data-reveal-section] child element fades + rises into place
+   * when the section crosses the IntersectionObserver threshold.
+   * The stagger BETWEEN children is owned by JS (STAGGER_MS in
+   * src/lib/useReveal.ts) and is not duplicated here. */
+  --lc-reveal-distance: 20px;
+  --lc-reveal-duration: 550ms;
+  --lc-reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
   --lc-magnetic-radius: 180px;
   --lc-magnetic-pull: 8px;
   --lc-sticker-rot-min: -14deg;

@@ -2,8 +2,12 @@
 
 import { useEffect } from "react";
 
-/** Stagger between revealed elements within a section (skill: 60ms). */
-const STAGGER_MS = 60;
+/**
+ * Stagger between revealed children within a section. Single source of truth
+ * for this value (JS-only, not duplicated in tokens.css). Distance, duration,
+ * and easing are tokenized in src/styles/tokens.css and consumed by reveal.css.
+ */
+const STAGGER_MS = 70;
 
 /**
  * Section reveal system. Mount once at the page level (inside a client

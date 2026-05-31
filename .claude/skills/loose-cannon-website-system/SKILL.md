@@ -148,7 +148,21 @@ After settle, violet bleed elements animate `transform: translate(0.8px, 0.5px)`
 
 ### Section reveals
 
-IntersectionObserver triggers at 0.2 threshold, `rootMargin: '0px 0px -10% 0px'`. Reveals stagger 60ms between elements within a section. One-shot. once revealed, observer unobserves.
+Each major section is tagged `data-reveal-section`; its content children (eyebrow, headline, body, list items, grid cells) are tagged `data-reveal`. IntersectionObserver in `src/lib/useReveal.ts` watches every section and, when it crosses the threshold, reveals the section's children in document order, staggered. The section itself does NOT translate; only the children fade and rise. One-shot. once revealed, the observer unobserves so nothing re-animates on scroll back up.
+
+Canonical values, single source of truth, no duplicates:
+
+| Property | Value | Defined in |
+|---|---|---|
+| Distance | `translateY(20px)` to 0 | `--lc-reveal-distance` in `src/styles/tokens.css`, consumed by `src/styles/reveal.css` |
+| Opacity | 0 to 1 | `src/styles/reveal.css` |
+| Duration | 550ms (opacity + transform) | `--lc-reveal-duration` in `src/styles/tokens.css` |
+| Easing | `cubic-bezier(0.16, 1, 0.3, 1)` | `--lc-reveal-ease` in `src/styles/tokens.css` |
+| Stagger between children | 70ms | `STAGGER_MS` in `src/lib/useReveal.ts` (JS-only, not duplicated in tokens) |
+| Threshold | 0.2 | `src/lib/useReveal.ts` |
+| rootMargin | `"0px 0px -10% 0px"` | `src/lib/useReveal.ts` |
+
+`prefers-reduced-motion: reduce` snaps every `[data-reveal]` straight to its final state with no transform, no transition, no stagger. Content is fully readable, just static.
 
 ### Reduced motion
 
