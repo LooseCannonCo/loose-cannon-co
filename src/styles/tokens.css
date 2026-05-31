@@ -49,13 +49,16 @@
    * contrasting spacing reads as chapters with breathing room between them
    * and tight groupings inside them. */
   /* Between major chapters (hero, brief, content, stats, quote, credits,
-     up next, big footer mark). Apply once per chapter as top-pad. */
-  --lc-space-chapter: clamp(120px, 16vh, 240px);
+     up next, big footer mark). Apply once per chapter as top-pad.
+     Width-driven (vw, not vh) so the rhythm matches the type ramp and stays
+     stable across window heights, browser chrome, and screenshot tools. */
+  --lc-space-chapter: clamp(120px, 10vw, 200px);
   /* Between parts that belong to the SAME chapter (brief body to its 3-col
-     breakdown, stats title block to its trio). */
-  --lc-space-sub: clamp(48px, 6vh, 80px);
+     breakdown, stats title block to its trio). Width-driven, same reason. */
+  --lc-space-sub: clamp(48px, 5vw, 80px);
   /* Inside a single block: eyebrow to title (tight), title to body (loose).
-     Range is 12 to 28; tight at 16, loose at 24. */
+     Fixed values, never viewport-driven. Range is 12 to 28; tight at 16,
+     loose at 24. */
   --lc-space-intra-tight: 16px;
   --lc-space-intra: 24px;
 
