@@ -260,9 +260,9 @@ Every LC case study page assembles from this skeleton, in this order. Each secti
      tiles sized via clamp(280px, 36vw, 477px), so roughly 2.5 tiles show
      across the 1320px container with a peek of the next at the right edge as
      the drag affordance. Tiles render the image clean (no caption overlay).
-     Each tile gets a red top registration bar (~40% width, 4px), a plum
-     1.5px border, and an 8px offset plum drop-shadow (the print-mis
-     registration block treatment, same technique as the hero artifact).
+     Each tile gets a plum 1.5px border and an 8px offset plum drop-shadow
+     (the print-misregistration block treatment, same technique as the hero
+     artifact).
      Head row above the scroller: eyebrow-style "DRAG ←→" cue on the left,
      live "NN / NN" counter on the right in tabular-nums. The counter
      updates as the active tile (tile center closest to scroller center)

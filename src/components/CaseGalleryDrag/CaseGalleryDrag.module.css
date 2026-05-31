@@ -84,16 +84,6 @@
   outline-offset: 4px;
 }
 
-/* Red top registration bar: a real print artifact, ~40% width of the tile,
-   sits a notch above the framed image. */
-.regBar {
-  display: block;
-  height: 4px;
-  width: 38%;
-  background: var(--lc-red);
-  margin-bottom: 12px;
-}
-
 /* Plum border frame with offset plum drop-shadow (same print-misregistration
    technique as the hero artifact). Aspect locked 4:5 to match the source
    images (1080x1350). */

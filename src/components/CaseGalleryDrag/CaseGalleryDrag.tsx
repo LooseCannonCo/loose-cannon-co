@@ -192,7 +192,6 @@ export function CaseGalleryDrag({ items }: CaseGalleryDragProps) {
               aria-roledescription="slide"
               aria-label={item.alt ?? `Image ${i + 1} of ${items.length}`}
             >
-              <span className={styles.regBar} aria-hidden="true" />
               <div className={styles.frame}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
