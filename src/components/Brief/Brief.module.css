@@ -10,22 +10,27 @@
 }
 
 .label {
-  font-size: 10px;
-  letter-spacing: 0.16em;
+  font-size: var(--lc-size-eyebrow);
+  letter-spacing: var(--lc-tracking-eyebrow);
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--lc-weight-eyebrow);
   opacity: 0.65;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
+/* Brief headline is statement-tier. Three short lines that punch ("Stop
+   selling chemicals. / Start being delicious."), so it sits above section
+   titles but below the hero number. text-wrap: balance is the widow backstop
+   when the copy doesn't fit perfectly into the explicit <br /> breaks. */
 .ttl {
   margin: 0;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-statement), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: 36px;
+  font-size: var(--lc-size-statement);
   letter-spacing: -0.025em;
-  line-height: 1.05;
+  line-height: 1.02;
+  text-wrap: balance;
 }
 
 .ttl span {
@@ -33,9 +38,10 @@
 }
 
 .right p {
-  margin: 0 0 16px;
-  font-size: 15px;
-  line-height: 1.6;
+  margin: 0 0 var(--lc-rhythm-tight);
+  font-size: var(--lc-size-body);
+  line-height: 1.55;
+  text-wrap: pretty;
 }
 
 .right p:last-child {
@@ -49,22 +55,22 @@
 }
 
 .right p strong {
-  font-weight: 600;
+  font-weight: var(--lc-weight-eyebrow);
 }
 
 .threeCol {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 40px;
-  margin-top: 48px;
-  padding-top: 32px;
+  margin-top: 56px;
+  padding-top: var(--lc-rhythm-mid);
 }
 
 .stepNum {
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" 96, "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-statement), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: 28px;
+  font-size: 32px;
   line-height: 1;
   color: var(--lc-plum);
   margin-bottom: 10px;
@@ -73,25 +79,28 @@
 .colTtl {
   margin: 0 0 6px;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" 48, "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-sub), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: 19px;
+  font-size: var(--lc-size-sub);
   letter-spacing: -0.01em;
+  line-height: 1.1;
+  text-wrap: balance;
 }
 
 .colSub {
-  font-size: 9px;
+  font-size: var(--lc-size-source);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--lc-weight-source);
   opacity: 0.6;
   margin-bottom: 10px;
 }
 
 .colBody {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--lc-size-body);
   line-height: 1.55;
+  text-wrap: pretty;
 }
 
 .colStat {
@@ -99,7 +108,7 @@
   font-family: var(--lc-display);
   font-variation-settings: "opsz" 24, "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: 14px;
+  font-size: var(--lc-size-caption);
   letter-spacing: -0.01em;
   color: var(--lc-plum);
 }
@@ -108,9 +117,6 @@
   .brief {
     grid-template-columns: 1fr;
     gap: 24px;
-  }
-  .ttl {
-    font-size: 30px;
   }
   .threeCol {
     grid-template-columns: 1fr;

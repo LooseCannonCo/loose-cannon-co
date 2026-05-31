@@ -2,9 +2,9 @@
   padding: 16px 0 28px;
   display: flex;
   justify-content: space-between;
-  font-size: 9px;
+  font-size: var(--lc-size-source);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--lc-weight-source);
   opacity: 0.55;
 }

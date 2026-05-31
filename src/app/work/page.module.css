@@ -20,24 +20,26 @@
 }
 
 .eyebrow {
-  font-size: 11px;
+  font-size: var(--lc-size-eyebrow);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--lc-weight-eyebrow);
   color: var(--lc-plum);
 }
 
 /* "Work." with the print-registration treatment: a violet copy offset behind
-   the solid plum word (registration bleed), not an outline or stroke. */
+   the solid plum word (registration bleed), not an outline or stroke. The
+   word is large but caps at the statement tier so the case rows below it
+   still own the visual hierarchy. */
 .headline {
   position: relative;
   z-index: 1;
   display: inline-block;
   margin: 0;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-display-xl), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-statement), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: clamp(80px, 13vw, 160px);
+  font-size: var(--lc-size-statement);
   line-height: 0.9;
   letter-spacing: -0.04em;
 }
@@ -62,9 +64,9 @@
   position: relative;
   z-index: 1;
   margin: 20px 0 0;
-  max-width: 480px;
-  font-size: 17px;
-  font-weight: 600;
+  max-width: 540px;
+  font-size: var(--lc-size-body);
+  font-weight: var(--lc-weight-eyebrow);
   line-height: 1.5;
   color: var(--lc-plum);
   text-wrap: pretty;

@@ -1,19 +1,17 @@
 .bigFoot {
-  padding: 96px 0 24px;
+  padding: var(--lc-section-pad-y) 0 24px;
   text-align: center;
 }
 
+/* The footer mega mark. Uses the dedicated mega ramp token (clamp 120, 16vw,
+   200). Single weight, upright Bricolage, opsz 96. */
 .mark {
   margin: 0;
   font-family: var(--lc-display);
-  /* opsz 96 is what gives Bricolage its display character; upright only. */
-  font-variation-settings: "opsz" var(--lc-opsz-display-xl), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
   font-style: normal;
-  /* Footer-mark-specific override of display-xl: the skill clamp (120,16vw,200)
-     forces "Loose Cannon." to wrap at tablet widths. This keeps it one line
-     and scales it down proportionally instead. */
-  font-size: clamp(40px, 9vw, 150px);
+  font-size: var(--lc-size-mega);
   letter-spacing: -0.05em;
   line-height: 0.9;
   white-space: nowrap;

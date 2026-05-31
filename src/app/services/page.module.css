@@ -16,17 +16,17 @@
 }
 
 .eyebrow {
-  font-size: 11px;
+  font-size: var(--lc-size-eyebrow);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--lc-weight-eyebrow);
   color: var(--lc-plum);
 }
 
 /* HERO */
 .hero {
   position: relative;
-  padding: 48px 0 80px;
+  padding: 48px 0 var(--lc-section-pad-y);
 }
 
 .heroContent {
@@ -46,26 +46,21 @@
 }
 
 .heroHeadline {
-  font-size: clamp(40px, 6.5vw, 76px);
+  font-size: var(--lc-size-statement);
   line-height: 1;
+  text-wrap: balance;
 }
 
 .subhead {
   position: relative;
   z-index: 1;
-  margin: 24px 0 0;
-  max-width: 540px;
-  font-size: 17px;
-  font-weight: 400;
+  margin: var(--lc-rhythm-mid) 0 0;
+  max-width: 620px;
+  font-size: var(--lc-size-body);
+  font-weight: var(--lc-weight-body);
   line-height: 1.5;
   color: var(--lc-plum);
   text-wrap: pretty;
-}
-
-.ctaRow {
-  position: relative;
-  z-index: 1;
-  margin-top: 32px;
 }
 
 .heroSticker {
@@ -75,22 +70,22 @@
 
 /* Generic section */
 .section {
-  padding: 80px 0 0;
+  padding: var(--lc-section-pad-y) 0 0;
 }
 
 .sectionTitle {
-  margin: 0 0 32px;
+  margin: 0 0 var(--lc-rhythm-mid);
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: clamp(36px, 5vw, 46px);
+  font-size: var(--lc-size-section-title);
   letter-spacing: -0.03em;
   line-height: 1;
   color: var(--lc-plum);
-  text-wrap: pretty;
+  text-wrap: balance;
 }
 
-/* 01 — PAID SOCIAL (gets the most vertical room: bigger numeral, bigger title,
+/* 01 PAID SOCIAL (gets the most vertical room: bigger numeral, bigger title,
    wider description, generous gaps). */
 .leadBlock {
   display: flex;
@@ -101,7 +96,7 @@
 
 .leadNum {
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-statement), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
   font-size: 72px;
   line-height: 1;
@@ -111,20 +106,20 @@
 .leadTitle {
   margin: 0;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: clamp(36px, 5vw, 46px);
+  font-size: var(--lc-size-section-title);
   letter-spacing: -0.03em;
   line-height: 1;
   color: var(--lc-plum);
-  text-wrap: pretty;
+  text-wrap: balance;
 }
 
 .leadDesc {
   margin: 0;
   max-width: 620px;
-  font-size: 16px;
-  font-weight: 400;
+  font-size: var(--lc-size-body);
+  font-weight: var(--lc-weight-body);
   line-height: 1.55;
   color: var(--lc-plum);
   text-wrap: pretty;
@@ -135,15 +130,15 @@
   margin: 0;
   max-width: 720px;
   font-family: var(--lc-body);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--lc-size-caption);
+  font-weight: var(--lc-weight-caption);
   line-height: 1.5;
   letter-spacing: 0.01em;
   color: var(--lc-plum);
   text-wrap: pretty;
 }
 
-/* 02 + 03 — smaller treatment than 01, 2-col grid. */
+/* 02 + 03 smaller treatment than 01, 2-col grid. */
 .expansionGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -160,7 +155,7 @@
 
 .expNum {
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
   font-size: 48px;
   line-height: 1;
@@ -170,26 +165,26 @@
 .expTitle {
   margin: 0;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" 48, "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-sub), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: clamp(22px, 2.8vw, 28px);
+  font-size: var(--lc-size-sub);
   letter-spacing: -0.015em;
   line-height: 1.05;
   color: var(--lc-plum);
-  text-wrap: pretty;
+  text-wrap: balance;
 }
 
 .expDesc {
   margin: 0;
   max-width: 480px;
-  font-size: 15px;
-  font-weight: 400;
+  font-size: var(--lc-size-body);
+  font-weight: var(--lc-weight-body);
   line-height: 1.5;
   color: var(--lc-plum);
   text-wrap: pretty;
 }
 
-/* HOW IT WORKS — 3-col grid, same column count/gap as the ClosingCTA grid so
+/* HOW IT WORKS: 3-col grid, same column count/gap as the ClosingCTA grid so
    the dry-stat lockup below lines up with the "03" column above it. */
 .howGrid {
   display: grid;
@@ -207,7 +202,7 @@
 
 .howNum {
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
   font-size: 56px;
   line-height: 1;
@@ -217,19 +212,19 @@
 .howTitle {
   margin: 0;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-display-sm), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-sub), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: clamp(19px, 2.4vw, 23px);
+  font-size: var(--lc-size-sub);
   letter-spacing: -0.01em;
   color: var(--lc-plum);
-  text-wrap: pretty;
+  text-wrap: balance;
 }
 
 .howDesc {
   margin: 0;
   max-width: 280px;
-  font-size: 15px;
-  font-weight: 400;
+  font-size: var(--lc-size-body);
+  font-weight: var(--lc-weight-body);
   line-height: 1.5;
   color: var(--lc-plum);
   text-wrap: pretty;

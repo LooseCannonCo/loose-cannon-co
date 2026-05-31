@@ -20,16 +20,16 @@
 }
 
 .lbl {
-  font-size: 9px;
-  letter-spacing: 0.16em;
+  font-size: var(--lc-size-source);
+  letter-spacing: var(--lc-tracking-eyebrow);
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--lc-weight-source);
   opacity: 0.55;
 }
 
 .val {
-  font-size: 10px;
+  font-size: var(--lc-size-source);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--lc-weight-eyebrow);
 }

@@ -1,6 +1,6 @@
 .quoteBlock {
   position: relative;
-  padding: 96px 0 32px;
+  padding: var(--lc-section-pad-y) 0 var(--lc-rhythm-mid);
 }
 
 .row {
@@ -14,40 +14,42 @@
 .markBig {
   display: inline-block;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-hero-number), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-statement), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: 52px;
+  font-size: 64px;
   line-height: 1;
   letter-spacing: -0.04em;
   color: var(--lc-plum);
   transform: translateY(0.42em);
 }
 
+/* Pull quote sits in the statement tier. Balanced wraps cut widows. */
 .text {
   margin: 0;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-statement), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: 44px;
+  font-size: var(--lc-size-statement);
   letter-spacing: -0.025em;
-  line-height: 1.05;
+  line-height: 1.04;
+  text-wrap: balance;
 }
 
 .attr {
   margin: 28px 0 0;
-  font-size: 10px;
-  letter-spacing: 0.14em;
+  font-size: var(--lc-size-source);
+  letter-spacing: var(--lc-tracking-source);
   text-transform: uppercase;
-  font-weight: 600;
-  opacity: 0.7;
+  font-weight: var(--lc-weight-source);
+  opacity: var(--lc-opacity-source);
 }
 
 .role {
-  font-weight: 400;
+  font-weight: var(--lc-weight-body);
   opacity: 0.65;
   text-transform: none;
   letter-spacing: 0.02em;
-  font-size: 11px;
+  font-size: var(--lc-size-eyebrow);
 }
 
 .micDrop {
@@ -58,9 +60,6 @@
 }
 
 @media (max-width: 900px) {
-  .text {
-    font-size: 28px;
-  }
   .micDrop {
     top: 16px;
     right: 16px;

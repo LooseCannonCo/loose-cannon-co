@@ -30,10 +30,10 @@
 }
 
 .platform {
-  font-size: 9px;
+  font-size: var(--lc-size-source);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--lc-weight-source);
   opacity: 0.75;
 }
 
@@ -41,14 +41,14 @@
   font-family: var(--lc-display);
   font-variation-settings: "opsz" 24, "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: 14px;
+  font-size: var(--lc-size-caption);
 }
 
 .placeholder {
-  font-size: 9px;
+  font-size: var(--lc-size-source);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--lc-weight-source);
   opacity: 0.5;
 }
 
@@ -57,10 +57,10 @@
   justify-content: space-between;
   gap: 16px;
   margin-top: 12px;
-  font-size: 9px;
+  font-size: var(--lc-size-source);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--lc-weight-source);
   opacity: 0.55;
 }
 

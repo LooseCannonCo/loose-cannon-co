@@ -12,10 +12,11 @@
   color: var(--lc-plum);
 }
 
-/* Prefix / suffix — 60px, start hidden, popped in by JS. */
+/* Prefix and suffix scale proportionally with the hero digits via em (about
+   36 percent of the digit cap height). Start hidden, popped in by JS. */
 .affix {
-  font-size: 60px;
-  padding-top: 14px;
+  font-size: 0.36em;
+  padding-top: 0.18em;
   display: inline-block;
   opacity: 0;
   transform: scale(0.6);
@@ -33,10 +34,10 @@
 }
 
 .heroSticker {
-  /* Tucked into the bottom-right negative space: anchored to the RIGHT of the
+  /* Tucked into the bottom-right negative space. Anchored to the RIGHT of the
      whole number (left: 100%) so it sits adjacent to, never on top of, any
-     digit/prefix/suffix. Because .number is inline-flex (auto width) this scales
-     to 3-, 4-, and 6-digit numbers without occluding anything. */
+     digit/prefix/suffix. Because .number is inline-flex, this scales to 3-,
+     4-, and 6-digit numbers without occluding anything. */
   position: absolute;
   left: 100%;
   bottom: 8px;
@@ -45,14 +46,8 @@
 }
 
 @media (max-width: 900px) {
-  .digits {
-    font-size: 84px;
-  }
-  .affix {
-    font-size: 36px;
-  }
-  /* The narrow mobile column has no room to the right, so the sticker drops into
-     reserved negative space directly below the number (still no digit overlap). */
+  /* The narrow mobile column has no room to the right, so the sticker drops
+     into reserved negative space directly below the number. */
   .number {
     margin-bottom: 72px;
   }

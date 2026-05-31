@@ -18,7 +18,7 @@
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  margin: 0 0 24px;
+  margin: 0 0 var(--lc-rhythm-tight);
 }
 
 .dot {
@@ -29,37 +29,42 @@
 }
 
 .eyebrow {
-  font-size: 11px;
+  font-size: var(--lc-size-eyebrow);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--lc-weight-eyebrow);
 }
 
+/* Hero headline sits in the section-title tier (not statement). The hero
+   NUMBER carries the visual punch on case study pages; the headline supports
+   it. Balanced wraps prevent widows. */
 .headline {
-  margin: 0 0 14px;
+  margin: 0 0 var(--lc-rhythm-tight);
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: 54px;
+  font-size: var(--lc-size-section-title);
   letter-spacing: -0.025em;
   line-height: 1.05;
-  max-width: 480px;
+  max-width: 520px;
+  text-wrap: balance;
   color: var(--lc-plum);
 }
 
 .sub {
   margin: 0 0 18px;
-  font-size: 17px;
+  font-size: var(--lc-size-body);
   line-height: 1.5;
-  max-width: 400px;
-  font-weight: 400;
+  max-width: 460px;
+  font-weight: var(--lc-weight-body);
+  text-wrap: pretty;
 }
 
 .meta {
   margin: 0;
-  font-size: 11px;
+  font-size: var(--lc-size-eyebrow);
   letter-spacing: 0.06em;
-  font-weight: 600;
+  font-weight: var(--lc-weight-eyebrow);
   text-transform: uppercase;
   max-width: 400px;
   line-height: 1.55;
@@ -94,9 +99,6 @@
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
-    gap: 32px;
-  }
-  .headline {
-    font-size: 38px;
+    gap: var(--lc-rhythm-mid);
   }
 }

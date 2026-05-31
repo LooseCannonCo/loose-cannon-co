@@ -33,10 +33,10 @@
 
 .eyebrow {
   margin-bottom: 14px;
-  font-size: 11px;
+  font-size: var(--lc-size-eyebrow);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--lc-weight-eyebrow);
   color: var(--lc-plum);
 }
 
@@ -45,15 +45,19 @@
   display: inline-block;
 }
 
+/* Client name on a row reads at statement scale: marquee feel, the case
+   name as the punch line of the row. Never larger than the row's hero
+   number. */
 .client {
   margin: 0;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-hero-number), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-statement), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: clamp(56px, 9vw, 116px);
+  font-size: var(--lc-size-statement);
   line-height: 0.9;
   letter-spacing: -0.03em;
   color: var(--lc-plum);
+  text-wrap: balance;
 }
 
 .sticker {
@@ -65,15 +69,16 @@
 
 .meta {
   margin: 14px 0 0;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--lc-size-caption);
+  font-weight: var(--lc-weight-caption);
   color: var(--lc-plum);
 }
 
 .preview {
   margin: 10px 0 0;
-  max-width: 420px;
-  font-size: 15px;
+  max-width: 460px;
+  font-size: var(--lc-size-body);
+  font-weight: var(--lc-weight-body);
   line-height: 1.5;
   opacity: 0.75;
   text-wrap: pretty;
@@ -89,6 +94,8 @@
   justify-content: flex-end;
 }
 
+/* The row's hero stat. Always the largest element in the row, sized off the
+   shared hero-number token. */
 .number {
   display: inline-flex;
   align-items: flex-start;
@@ -102,13 +109,13 @@
 }
 
 .affix {
-  font-size: clamp(36px, 5vw, 56px);
-  padding-top: 10px;
+  font-size: 0.4em;
+  padding-top: 0.18em;
   display: inline-block;
 }
 
 .digits {
-  font-size: clamp(80px, 11vw, 140px);
+  font-size: var(--lc-size-hero-number);
   display: inline-flex;
 }
 
@@ -130,15 +137,6 @@
   }
   .right {
     justify-content: flex-start;
-  }
-  .client {
-    font-size: clamp(48px, 14vw, 80px);
-  }
-  .digits {
-    font-size: clamp(64px, 18vw, 104px);
-  }
-  .affix {
-    font-size: 32px;
   }
 }
 

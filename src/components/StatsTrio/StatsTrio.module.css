@@ -11,30 +11,34 @@
 }
 
 .label {
-  font-size: 10px;
-  letter-spacing: 0.16em;
+  font-size: var(--lc-size-eyebrow);
+  letter-spacing: var(--lc-tracking-eyebrow);
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--lc-weight-eyebrow);
   opacity: 0.65;
   margin-bottom: 12px;
 }
 
+/* Section title scale: "The receipts." sits in the section-title tier, not
+   statement. Statement is reserved for marquee headlines + the pull quote. */
 .ttl {
   margin: 0;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: 42px;
+  font-size: var(--lc-size-section-title);
   letter-spacing: -0.03em;
   line-height: 1;
+  text-wrap: balance;
 }
 
 .body {
   margin: 0;
   padding-top: 12px;
-  font-size: 15px;
+  font-size: var(--lc-size-body);
   line-height: 1.55;
-  max-width: 500px;
+  max-width: 540px;
+  text-wrap: pretty;
 }
 
 .trio {
@@ -67,7 +71,7 @@
   font-family: var(--lc-display);
   font-variation-settings: "opsz" var(--lc-opsz-hero-number), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: 60px;
+  font-size: 64px;
   letter-spacing: -0.035em;
   line-height: 0.9;
   color: var(--lc-plum);
@@ -94,28 +98,26 @@
 
 .cap {
   margin: 0;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--lc-size-caption);
+  font-weight: var(--lc-weight-caption);
   line-height: 1.4;
   max-width: 220px;
+  text-wrap: pretty;
 }
 
 .src {
   margin: 0;
-  font-size: 9px;
-  letter-spacing: 0.14em;
+  font-size: var(--lc-size-source);
+  letter-spacing: var(--lc-tracking-source);
   text-transform: uppercase;
-  font-weight: 600;
-  opacity: 0.7;
+  font-weight: var(--lc-weight-source);
+  opacity: var(--lc-opacity-source);
 }
 
 @media (max-width: 900px) {
   .titleBlock {
     grid-template-columns: 1fr;
     gap: 16px;
-  }
-  .ttl {
-    font-size: 32px;
   }
   .trio {
     grid-template-columns: 1fr;

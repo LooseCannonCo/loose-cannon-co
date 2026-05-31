@@ -9,7 +9,7 @@ description: >
   Loose Cannon page, the new LC site, the case study system, stats trio,
   infographic for LC, hero stat for LC, sticker for LC, or any request that
   involves building or refining a Loose Cannon web page. Do NOT use for non-web
-  LC outputs (social posts, deck slides, print materials) — those go to
+  LC outputs (social posts, deck slides, print materials). those go to
   `loose-cannon-brand-guidelines`. Do NOT use for any non-LC project (FITAID
   social, Ayye, Meteor, HotRock, Noah's personal portfolio).
 ---
@@ -47,7 +47,7 @@ The minute we add iconography we look like a Spotify Wrapped trying to be edgy. 
 --lc-red:    #d9342c;
 ```
 
-Pink screens are not new brand colors — they are screened densities of LC brand pink (single-ink-at-different-densities defense for the strict 2-color rule). Violet bleed reads as a printing artifact, not a third brand color.
+Pink screens are not new brand colors. they are screened densities of LC brand pink (single-ink-at-different-densities defense for the strict 2-color rule). Violet bleed reads as a printing artifact, not a third brand color.
 
 Violet is NEVER used as a standalone fill color for text, numbers, borders, or UI elements. It only appears as a printing artifact, in one of two specific treatments:
 
@@ -64,26 +64,48 @@ If violet appears anywhere outside these two printing-artifact treatments, it's 
 --lc-body:    'DM Sans', system-ui, sans-serif;
 ```
 
-Loaded via Google Fonts (variable, opsz 12-96, wght 400-700). NEVER use italic Bricolage — italic loses the typeface's character. UPRIGHT only.
+Loaded via Google Fonts (variable, opsz 12 to 96, wght 400 to 700). NEVER use italic Bricolage, italic loses the typeface's character. UPRIGHT only.
 
-### Display sizes (the opsz 96 rule)
+The whole ramp is tokenized in `src/styles/tokens.css` as CSS custom properties (`--lc-size-*`, `--lc-opsz-*`). No case study component or page module should hardcode its own font size, opsz, or weight after this. Hierarchy comes from size and space only. No additional weights, no text-stroke, no outlined type. Display is always 700, body 400, eyebrow/caption/source 600.
 
-Any display type must use `font-variation-settings: "opsz" 96, "wght" 700` at large sizes — opsz 96 is what gives Bricolage its impactful character at display scale.
+### Display ramp (the opsz 96 rule)
 
-| Class | Size | opsz | Use |
-|---|---|---|---|
-| `.display-xl` | clamp(120px, 16vw, 200px) | 96 | Footer mark, full-page statements |
-| Hero number | 148px | 96 | The hero stat digits |
-| `.display-lg` | 54-58px | 72 | Hero headlines, big section titles |
-| `.display-md` | 42-48px | 48-72 | Section titles |
-| `.display-sm` | 19-24px | 24-48 | Tile headlines, step titles |
+Any display type at large sizes uses `font-variation-settings: "opsz" 96, "wght" 700`. Opsz 96 is what gives Bricolage its impactful character at display scale.
 
-### Body sizes
+| Tier | Token | Size | opsz | Use |
+|---|---|---|---|---|
+| Mega mark | `--lc-size-mega` | clamp(120px, 16vw, 200px) | 96 | Footer "Loose Cannon." mark only |
+| Hero number | `--lc-size-hero-number` | clamp(110px, 14vw, 168px) | 96 | The hero stat digits. Always the largest element on the page. Prefix and suffix scale proportionally (about 36 to 40 percent of the digit cap via em) |
+| Statement | `--lc-size-statement` | clamp(60px, 8vw, 104px) | 96 | Marquee section headlines (page-level hero headlines, Brief 3-line punch, UpNext case name) and the pull quote. Caps below the hero number on case study pages so the stat keeps the hierarchy |
+| Section title | `--lc-size-section-title` | clamp(38px, 5vw, 56px) | 72 | Section titles inside a section (StatsTrio "The receipts.", ClosingCTA, generic page section titles). Replaces the old display-lg + display-md tiers, collapsed |
+| Sub / tile head | `--lc-size-sub` | clamp(22px, 2.4vw, 30px) | 36 | Tile headlines, step titles, founder names, reassurance strip titles |
 
-- Body copy: 14-17px DM Sans 400
-- Eyebrow / metadata: 10-11px DM Sans 600 uppercase, letter-spacing 0.12-0.18em
-- Caption: 13px DM Sans 600
-- Source label: 9px DM Sans 600 uppercase, letter-spacing 0.14em, 70% opacity
+### Body ramp
+
+| Tier | Token | Size | Weight | Notes |
+|---|---|---|---|---|
+| Body | `--lc-size-body` | 19px | 400 | Primary reading copy (was 14 to 17, stepped up to 18 to 20) |
+| Caption | `--lc-size-caption` | 14px | 600 | Stat captions, deliverables lists, footer links |
+| Eyebrow / meta | `--lc-size-eyebrow` | 11px | 600 | Uppercase, letter-spacing 0.12 to 0.18em |
+| Source label | `--lc-size-source` | 10px | 600 | Uppercase, letter-spacing 0.14em, 70 percent opacity. Under stats trio cells |
+
+### Statement-tier scope
+
+"Statement" is the new tier between hero number and section title. Use it for:
+
+- Page-level hero headlines on home, about, services, contact, work index ("Small on purpose. / Senior by default.")
+- Brief decoded headline (the 3-line punch on case study pages)
+- Pull quote text in QuoteBlock
+- UpNext case name
+- WorkRow client name (the case row punch line)
+
+Do NOT use it for ordinary section titles. Section titles stay in the section-title tier so the page reads as a stat-led hierarchy on case pages and a headline-led hierarchy on cover pages, but the hero number is always the largest element when present.
+
+### Balanced wrapping (no widows or orphans)
+
+Every statement-tier and section-title headline takes `text-wrap: balance`. Manual `<br />` breaks are used where the line breaks carry meaning (two-line punch headlines, three-line brief headlines). Together: explicit breaks for the rhythm the line needs, balance as the backstop against widows.
+
+Body and preview copy use `text-wrap: pretty`.
 
 ### Number rendering
 
@@ -96,8 +118,8 @@ Animations run from a system grammar, not one-off effects. Every motion is a pri
 ### Print registration (the core technique)
 
 Every halftone breakout element animates in three layers:
-1. **Pink 1 base** (`#fbafdf`) — solid fill underneath
-2. **Violet bleed** (`#b14aff` at 60-65% opacity, offset by `translate(1.5px, 1px)`) — the registration miss
+1. **Pink 1 base** (`#fbafdf`). solid fill underneath
+2. **Violet bleed** (`#b14aff` at 60-65% opacity, offset by `translate(1.5px, 1px)`). the registration miss
 3. **Plum halftone** (`url(#ht-p-sm)` or `url(#ht-p)`) on top
 
 Timing: base + violet animate in **together**, plum chases **220ms behind**. This recreates the two-pass print effect where the violet ink lays down before the plum settles.
@@ -126,7 +148,7 @@ After settle, violet bleed elements animate `transform: translate(0.8px, 0.5px)`
 
 ### Section reveals
 
-IntersectionObserver triggers at 0.2 threshold, `rootMargin: '0px 0px -10% 0px'`. Reveals stagger 60ms between elements within a section. One-shot — once revealed, observer unobserves.
+IntersectionObserver triggers at 0.2 threshold, `rootMargin: '0px 0px -10% 0px'`. Reveals stagger 60ms between elements within a section. One-shot. once revealed, observer unobserves.
 
 ### Reduced motion
 
@@ -156,7 +178,7 @@ All animations respect `prefers-reduced-motion: reduce`. Reveals snap to final s
 
 ### Stats trio composition
 
-A standard case study has 3 chart cells. The three primitives should be **visually distinct from each other** within the trio. Don't put three bar comparisons next to each other — use different geometries. Example mixes that work:
+A standard case study has 3 chart cells. The three primitives should be **visually distinct from each other** within the trio. Don't put three bar comparisons next to each other. use different geometries. Example mixes that work:
 
 - Sparkline + bubble comparison + dot matrix
 - Sparkline + stacked proportion bar + area chart
@@ -192,9 +214,9 @@ Rules:
 
 ## Permanent halftone splatter (escaped ink)
 
-Every hero gets 3-4 small SVG dots scattered around the area, with deliberately "wrong" placement — top edge, middle nowhere-in-particular, off-edge-left. Mix of plum and violet, varied sizes (6-18px), low opacity (0.42-0.62). These persist forever (not just during the slam animation) and read as permanent visual residue. The page looks like something happened here.
+Every hero gets 3-4 small SVG dots scattered around the area, with deliberately "wrong" placement. top edge, middle nowhere-in-particular, off-edge-left. Mix of plum and violet, varied sizes (6-18px), low opacity (0.42-0.62). These persist forever (not just during the slam animation) and read as permanent visual residue. The page looks like something happened here.
 
-**Do not place splatter under the hero number** — at certain viewport widths it creates a "smudge" that looks like a UI bug. Edges and corners only.
+**Do not place splatter under the hero number**. at certain viewport widths it creates a "smudge" that looks like a UI bug. Edges and corners only.
 
 ## Case study page skeleton (locked)
 
@@ -262,10 +284,12 @@ Every LC case study page assembles from this skeleton, in this order. Each secti
 
 ## Layout rules
 
-- Max page width: 1320px, padding 0 32px (20px on mobile)
-- Section vertical padding: 80px top, last section 80px bottom
-- Section title block grid: 1.1fr 1.4fr, gap 48px
+- Max page width: 1320px (`--lc-page-max-width`), horizontal padding 32px desktop (`--lc-page-pad`), 20px mobile (`--lc-page-pad-mobile`)
+- Section vertical padding: `clamp(96px, 12vh, 160px)` via `--lc-section-pad-y`. The full top of every major section reads from this token; the closing CTA also uses it for bottom padding
+- Within-section rhythm tokens: `--lc-rhythm-tight: 16px` (eyebrow to title), `--lc-rhythm-mid: 32px` (title to body, body to body)
+- Section title block grid: `1.1fr 1.4fr` via `--lc-section-title-grid`, gap 48px via `--lc-section-gap`
 - No hard dividers between sections; vertical rhythm + eyebrows separate
+- Mobile breakpoint: hardcoded 900px in `@media` rules (the `--lc-bp-mobile` token is reference-only because CSS `@media` cannot consume custom properties)
 
 ## Voice for LC web pages
 
@@ -318,8 +342,8 @@ Single mobile breakpoint at `max-width: 900px`. Mobile rules:
 ## Source files
 
 The two reference implementations:
-- `loose-cannon-case-study-fitaid-v3.html` — Case 001, social-first creative
-- `loose-cannon-case-study-smolotov-v1.html` — Case 002, performance creative + paid media
+- `loose-cannon-case-study-fitaid-v3.html`. Case 001, social-first creative
+- `loose-cannon-case-study-smolotov-v1.html`. Case 002, performance creative + paid media
 
 Both files contain the complete system applied. Use them as the canonical reference when building new pages or porting to React.
 

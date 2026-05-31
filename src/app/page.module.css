@@ -16,17 +16,17 @@
 }
 
 .eyebrow {
-  font-size: 11px;
+  font-size: var(--lc-size-eyebrow);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--lc-weight-eyebrow);
   color: var(--lc-plum);
 }
 
 /* HERO */
 .hero {
   position: relative;
-  padding: 48px 0 80px;
+  padding: 48px 0 var(--lc-section-pad-y);
 }
 
 .heroContent {
@@ -35,7 +35,7 @@
 }
 
 /* Stacked headline lines; the sticker shares the last line's row so it anchors
-   to the end of "Built to actually perform." regardless of line widths. */
+   to the end of the last line regardless of line widths. */
 .heroHeadlineWrap {
   display: flex;
   flex-direction: column;
@@ -47,18 +47,19 @@
   align-items: center;
 }
 
+/* Page-level hero headline sits in the STATEMENT tier (marquee feel). */
 .heroHeadline {
-  font-size: clamp(40px, 6.5vw, 76px);
+  font-size: var(--lc-size-statement);
   line-height: 1;
 }
 
 .subhead {
   position: relative;
   z-index: 1;
-  margin: 24px 0 0;
+  margin: var(--lc-rhythm-mid) 0 0;
   max-width: 540px;
-  font-size: 17px;
-  font-weight: 400;
+  font-size: var(--lc-size-body);
+  font-weight: var(--lc-weight-body);
   line-height: 1.5;
   color: var(--lc-plum);
   text-wrap: pretty;
@@ -67,31 +68,29 @@
 .ctaRow {
   position: relative;
   z-index: 1;
-  margin-top: 32px;
+  margin-top: var(--lc-rhythm-mid);
 }
 
 .heroSticker {
-  /* Sits right after the last line, overlapping the period of "perform." by a
-     few px (the -8/+6deg rotation adds visual overlap). Tunable. */
   margin-left: -6px;
   z-index: 5;
 }
 
 /* Generic section */
 .section {
-  padding: 80px 0 0;
+  padding: var(--lc-section-pad-y) 0 0;
 }
 
 .sectionTitle {
-  margin: 0 0 32px;
+  margin: 0 0 var(--lc-rhythm-mid);
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: clamp(36px, 5vw, 46px);
+  font-size: var(--lc-size-section-title);
   letter-spacing: -0.03em;
   line-height: 1;
   color: var(--lc-plum);
-  text-wrap: pretty;
+  text-wrap: balance;
 }
 
 /* Featured work */
@@ -111,8 +110,8 @@
   align-items: center;
   gap: 8px;
   font-family: var(--lc-body);
-  font-weight: 600;
-  font-size: 15px;
+  font-weight: var(--lc-weight-caption);
+  font-size: var(--lc-size-caption);
   color: var(--lc-plum);
   text-decoration: none;
   transition: opacity 160ms ease;
@@ -122,7 +121,7 @@
   opacity: 0.65;
 }
 
-/* Services */
+/* Services teaser tiles */
 .servicesGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -132,7 +131,7 @@
 .serviceNum {
   margin-bottom: 12px;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-display-lg), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
   font-size: 56px;
   line-height: 1;
@@ -142,18 +141,20 @@
 .serviceTitle {
   margin: 0 0 8px;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-display-sm), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-sub), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: clamp(19px, 2.4vw, 23px);
+  font-size: var(--lc-size-sub);
   letter-spacing: -0.01em;
+  line-height: 1.1;
   color: var(--lc-plum);
+  text-wrap: balance;
 }
 
 .serviceDesc {
   margin: 0;
-  max-width: 280px;
-  font-size: 15px;
-  font-weight: 400;
+  max-width: 320px;
+  font-size: var(--lc-size-body);
+  font-weight: var(--lc-weight-body);
   line-height: 1.5;
   color: var(--lc-plum);
   text-wrap: pretty;
