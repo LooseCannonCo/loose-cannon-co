@@ -319,12 +319,27 @@ Every LC case study page assembles from this skeleton, in this order. Each secti
 
 ## Layout rules
 
-- Max page width: 1320px (`--lc-page-max-width`), horizontal padding 32px desktop (`--lc-page-pad`), 20px mobile (`--lc-page-pad-mobile`)
-- Section vertical padding: `clamp(96px, 12vh, 160px)` via `--lc-section-pad-y`. The full top of every major section reads from this token; the closing CTA also uses it for bottom padding
-- Within-section rhythm tokens: `--lc-rhythm-tight: 16px` (eyebrow to title), `--lc-rhythm-mid: 32px` (title to body, body to body)
-- Section title block grid: `1.1fr 1.4fr` via `--lc-section-title-grid`, gap 48px via `--lc-section-gap`
-- No hard dividers between sections; vertical rhythm + eyebrows separate
-- Mobile breakpoint: hardcoded 900px in `@media` rules (the `--lc-bp-mobile` token is reference-only because CSS `@media` cannot consume custom properties)
+- Max page width: 1320px (`--lc-page-max-width`), horizontal padding 32px desktop (`--lc-page-pad`), 20px mobile (`--lc-page-pad-mobile`).
+
+### Three-tier spacing scale
+
+Spacing is contrast-based, not uniform. Chapter breaks are large; within-chapter and intra-element gaps stay tight. Even spacing reads as uniform stacks. Contrasting spacing reads as chapters with breathing room between them and tight groupings inside them. The contrast is the system, not the headline numbers.
+
+| Tier | Token | Value | Use |
+|---|---|---|---|
+| Chapter break | `--lc-space-chapter` | `clamp(120px, 16vh, 240px)` | Top padding of every major case-study chapter: hero, brief decoded, content section (drag gallery / 3-up video / static gallery), optional hero chart, stats trio, quote, credits, up next, big footer mark. Apply once per chapter as top padding only. Chapters never bottom-pad themselves; the next chapter's top padding does the separation work. |
+| Sub-section gap | `--lc-space-sub` | `clamp(48px, 6vh, 80px)` | Between parts that belong to the SAME chapter. Examples: the brief body and its 3-column breakdown are one chapter so the gap between them is sub-section. A stats title block sits sub-section close to its trio. |
+| Intra-element | `--lc-space-intra-tight: 16px`, `--lc-space-intra: 24px` | 12 to 28 range | Inside a single block: eyebrow to title uses tight (16), title to body uses loose (24). Stay tight. |
+
+Apply by meaning, not blanket. The brief-decoded body plus its 3-column breakdown are one chapter, so a chapter break sits above the whole unit, a sub-section gap separates body from breakdown, intra-element gaps space the eyebrow / title / paragraphs.
+
+Legacy aliases preserved during migration: `--lc-section-pad-y` resolves to `--lc-space-chapter`, `--lc-rhythm-tight` to `--lc-space-intra-tight`, `--lc-rhythm-mid` to `--lc-space-intra`. New code consumes the meaning-named tokens; legacy callers get the new rhythm automatically.
+
+### Other layout primitives
+
+- Section title block grid: `1.1fr 1.4fr` via `--lc-section-title-grid`, gap 48px via `--lc-section-gap`.
+- No hard dividers between sections. The vertical rhythm and eyebrows separate.
+- Mobile breakpoint: hardcoded 900px in `@media` queries (the `--lc-bp-mobile` token is reference only because CSS `@media` cannot consume custom properties).
 
 ## Voice for LC web pages
 

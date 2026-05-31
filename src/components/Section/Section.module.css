@@ -1,18 +1,20 @@
 .section {
-  padding: var(--lc-section-pad-y) 0 0;
+  padding: var(--lc-space-chapter) 0 0;
   position: relative;
 }
 
 .last {
-  padding-bottom: var(--lc-section-pad-y);
+  padding-bottom: var(--lc-space-chapter);
 }
 
+/* Title block to its content is a sub-section pairing within a single
+   chapter, not a chapter break. */
 .titleBlock {
   display: grid;
   grid-template-columns: var(--lc-section-title-grid);
   gap: var(--lc-section-gap);
   align-items: start;
-  margin-bottom: var(--lc-section-gap);
+  margin-bottom: var(--lc-space-sub);
 }
 
 @media (max-width: 900px) {

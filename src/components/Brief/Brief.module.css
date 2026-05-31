@@ -1,5 +1,5 @@
 .section {
-  padding: var(--lc-section-pad-y) 0 0;
+  padding: var(--lc-space-chapter) 0 0;
 }
 
 .brief {
@@ -58,12 +58,13 @@
   font-weight: var(--lc-weight-eyebrow);
 }
 
+/* The 3-column breakdown belongs to the brief chapter, so the gap between
+   the body above and the breakdown below is sub-section, not chapter. */
 .threeCol {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 40px;
-  margin-top: 56px;
-  padding-top: var(--lc-rhythm-mid);
+  margin-top: var(--lc-space-sub);
 }
 
 .stepNum {

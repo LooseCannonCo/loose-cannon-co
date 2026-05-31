@@ -1,6 +1,8 @@
 .quoteBlock {
   position: relative;
-  padding: var(--lc-section-pad-y) 0 var(--lc-rhythm-mid);
+  /* Chapters provide only TOP padding. The next chapter (credits) provides
+     its own top, so no bottom padding here. */
+  padding: var(--lc-space-chapter) 0 0;
 }
 
 .row {

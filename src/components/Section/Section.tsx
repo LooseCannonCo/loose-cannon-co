@@ -6,7 +6,7 @@ export interface SectionProps {
   /** Optional title block (eyebrow + heading + intro), rendered in the
    *  1.1fr / 1.4fr grid above the section body and revealed on scroll. */
   titleBlock?: React.ReactNode;
-  /** Adds bottom padding — use on the final section before the footer. */
+  /** Adds bottom padding. Use on the final section before the footer. */
   last?: boolean;
   className?: string;
   children?: React.ReactNode;

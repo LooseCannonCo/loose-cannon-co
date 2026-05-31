@@ -1,5 +1,7 @@
+/* Credits is its own chapter, so its top padding is a full chapter break.
+   No bottom padding; UpNext provides its own chapter top. */
 .credits {
-  padding: var(--lc-rhythm-mid) 0;
+  padding: var(--lc-space-chapter) 0 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 40px;

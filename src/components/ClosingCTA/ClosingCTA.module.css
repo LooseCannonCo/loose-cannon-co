@@ -1,6 +1,7 @@
 .closing {
   position: relative;
-  padding: var(--lc-section-pad-y) 0;
+  /* Chapter top only. The footer mark below provides its own chapter top. */
+  padding: var(--lc-space-chapter) 0 0;
 }
 
 /* Mirrors the host page's 3-col grid so the Fine Print block lines up with the

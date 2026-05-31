@@ -1,5 +1,5 @@
 .section {
-  padding: var(--lc-section-pad-y) 0 0;
+  padding: var(--lc-space-chapter) 0 0;
 }
 
 .gallery {
