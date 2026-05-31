@@ -251,10 +251,38 @@ Every LC case study page assembles from this skeleton, in this order. Each secti
    Below: 3-col breakdown OR 3-step numbered breakdown
 
 5. CONTENT SECTION (case-specific)
-   Either:
-   - 9-grid editorial gallery (FITAID pattern: 9 tiles, mix of pop-culture / editorial / reviews)
-   - 3-up video gallery (Smolotov pattern: vertical / square / vertical Meta ads)
-   - Other case-specific content section
+   Three primitives, picked by content density. Selection rule lives in the
+   case study page render: count gallery items, dispatch to drag or static.
+   Six is the threshold for "scroll through them" density.
+
+   - Drag gallery (FITAID pattern, ~6+ image items).
+     Component: CaseGalleryDrag. Horizontal scroll-snap row with 4:5 portrait
+     tiles sized via clamp(280px, 36vw, 477px), so roughly 2.5 tiles show
+     across the 1320px container with a peek of the next at the right edge as
+     the drag affordance. Tiles render the image clean (no caption overlay).
+     Each tile gets a red top registration bar (~40% width, 4px), a plum
+     1.5px border, and an 8px offset plum drop-shadow (the print-mis
+     registration block treatment, same technique as the hero artifact).
+     Head row above the scroller: eyebrow-style "DRAG ←→" cue on the left,
+     live "NN / NN" counter on the right in tabular-nums. The counter
+     updates as the active tile (tile center closest to scroller center)
+     changes. Interaction: native horizontal scroll handles trackpad and
+     touch swipe; pointer events on top handle explicit mouse drag.
+     scroll-snap-type: x proximity guides tiles into position without
+     fighting the user. Accessibility: scroller is a tabbable region with
+     aria-label, each tile is tabbable with role="group"/aria-roledescription
+     ="slide", arrow keys jump to next/previous tile, Home/End jump to
+     first/last, focus ring is the pink-3 outline at 2px with 4px offset.
+     prefers-reduced-motion drops smooth scroll behavior to instant; the row
+     stays a usable scrollable region.
+
+   - Static grid gallery (4 or fewer image items).
+     Component: CaseGallery. 3-col responsive grid, no drag, captions
+     optional. Stacks to 2-col under 900px and 1-col under 600px.
+
+   - 3-up video gallery (Smolotov pattern, motion-led cases).
+     Component: ThreeUpVideo. Vertical / square / vertical Meta ads in a
+     3-col grid. Never converts to drag.
 
 6. OPTIONAL HERO CHART
    Full-bleed centerpiece chart (Smolotov has Shopify hockey stick; FITAID skips this)

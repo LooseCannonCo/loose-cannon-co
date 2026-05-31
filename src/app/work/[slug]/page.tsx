@@ -4,6 +4,7 @@ import { BackLink } from "@/components/BackLink/BackLink";
 import { BarComparison } from "@/components/BarComparison/BarComparison";
 import { Brief, type BriefBreakdownItem } from "@/components/Brief/Brief";
 import { CaseGallery } from "@/components/CaseGallery/CaseGallery";
+import { CaseGalleryDrag } from "@/components/CaseGalleryDrag/CaseGalleryDrag";
 import { Credits } from "@/components/Credits/Credits";
 import { Footer } from "@/components/Footer/Footer";
 import { Hero } from "@/components/Hero/Hero";
@@ -233,7 +234,17 @@ export default async function CaseStudyPage({
         <ThreeUpVideo videos={contentSection.videos ?? []} />
       ) : null}
 
-      {gallery && gallery.length > 0 ? <CaseGallery items={gallery} /> : null}
+      {/* Gallery dispatch: large collections (~6+) get the drag gallery
+          primitive (FITAID pattern). Small sets stay a static 3-col grid
+          (CaseGallery). Threshold is the "scroll through them" density
+          inflection. */}
+      {gallery && gallery.length > 0 ? (
+        gallery.length >= 6 ? (
+          <CaseGalleryDrag items={gallery} />
+        ) : (
+          <CaseGallery items={gallery} />
+        )
+      ) : null}
 
       {statsTrio ? (
         <StatsTrio

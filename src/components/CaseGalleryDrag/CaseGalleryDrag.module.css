@@ -1,0 +1,122 @@
+.section {
+  padding: var(--lc-section-pad-y) 0 0;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 20px;
+}
+
+/* Eyebrow-style drag cue, left-aligned. */
+.cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--lc-body);
+  font-size: var(--lc-size-eyebrow);
+  font-weight: var(--lc-weight-eyebrow);
+  letter-spacing: var(--lc-tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  opacity: 0.7;
+}
+
+/* Live counter, right-aligned. Tabular nums so the digits don't shift width
+   as the position changes. */
+.counter {
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" 24, "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: var(--lc-size-caption);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: var(--lc-plum);
+}
+
+/* Horizontal scroll-snap row. padding-bottom + padding-right reserve room for
+   the offset plum drop-shadow on the bottom and right edges of the tiles so
+   they don't get clipped by the overflow:auto box. cursor: grab is the mouse
+   affordance; .grabbing flips to grabbing during active drag. */
+.scroller {
+  display: flex;
+  gap: 32px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  padding: 4px 16px 16px 0;
+  cursor: grab;
+  outline: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.scroller:focus-visible {
+  outline: 2px solid var(--lc-pink-3);
+  outline-offset: 4px;
+}
+
+.grabbing {
+  cursor: grabbing;
+}
+
+/* Tile sizing: clamp targets ~477px at the 1320 container, so about 2.5
+   tiles + gap show across the content area with a peek of the next on the
+   right. On mobile the clamp floor (280px) keeps tiles substantial without
+   crowding. */
+.tile {
+  flex: 0 0 auto;
+  width: clamp(280px, 36vw, 477px);
+  scroll-snap-align: start;
+  outline: none;
+}
+
+.tile:focus-visible {
+  outline: 2px solid var(--lc-pink-3);
+  outline-offset: 4px;
+}
+
+/* Red top registration bar: a real print artifact, ~40% width of the tile,
+   sits a notch above the framed image. */
+.regBar {
+  display: block;
+  height: 4px;
+  width: 38%;
+  background: var(--lc-red);
+  margin-bottom: 12px;
+}
+
+/* Plum border frame with offset plum drop-shadow (same print-misregistration
+   technique as the hero artifact). Aspect locked 4:5 to match the source
+   images (1080x1350). */
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: var(--lc-pink-0);
+  border: 1.5px solid var(--lc-plum);
+  box-shadow: 8px 8px 0 var(--lc-plum);
+  overflow: hidden;
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  -webkit-user-drag: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroller {
+    scroll-behavior: auto;
+  }
+}
