@@ -1,3 +1,5 @@
+import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
+
 import styles from "./ThreeUpVideo.module.css";
 
 export interface VideoTile {
@@ -11,13 +13,21 @@ export interface ThreeUpVideoProps {
   videos: VideoTile[];
   footLeft?: string;
   footRight?: string;
+  /** Section eyebrow text. Defaults to "The work". */
+  eyebrow?: string;
 }
 
 /** Content section variant: a 3-up gallery of Meta ad videos. Renders labeled
  *  placeholders until video files are uploaded in Studio. */
-export function ThreeUpVideo({ videos, footLeft, footRight }: ThreeUpVideoProps) {
+export function ThreeUpVideo({
+  videos,
+  footLeft,
+  footRight,
+  eyebrow = "The work",
+}: ThreeUpVideoProps) {
   return (
     <section data-reveal-section className={styles.section}>
+      <SectionEyebrow>{eyebrow}</SectionEyebrow>
       <div className={styles.gallery}>
         {videos.map((v, i) => (
           <div

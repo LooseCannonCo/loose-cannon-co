@@ -1,0 +1,25 @@
+/* Canonical section eyebrow row. Square plum marker + uppercase text. The
+   intra-tight rhythm below it sits the eyebrow close to the title that
+   follows. */
+.row {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 var(--lc-space-intra-tight);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  background: var(--lc-plum);
+  flex: none;
+}
+
+.text {
+  font-family: var(--lc-body);
+  font-size: var(--lc-size-eyebrow);
+  font-weight: var(--lc-weight-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lc-plum);
+}

@@ -12,15 +12,6 @@
   margin-bottom: var(--lc-space-sub);
 }
 
-.label {
-  font-size: var(--lc-size-eyebrow);
-  letter-spacing: var(--lc-tracking-eyebrow);
-  text-transform: uppercase;
-  font-weight: var(--lc-weight-eyebrow);
-  opacity: 0.65;
-  margin-bottom: 12px;
-}
-
 /* Section title scale: "The receipts." sits in the section-title tier, not
    statement. Statement is reserved for marquee headlines + the pull quote. */
 .ttl {

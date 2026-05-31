@@ -1,3 +1,4 @@
+import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
 import { cn } from "@/lib/utils";
 
 import styles from "./Brief.module.css";
@@ -34,9 +35,7 @@ export function Brief({
     <section data-reveal-section className={styles.section}>
       <div className={styles.brief}>
         <div>
-          <div className={styles.label} data-reveal>
-            {eyebrow}
-          </div>
+          <SectionEyebrow>{eyebrow}</SectionEyebrow>
           <h3 className={styles.ttl} data-reveal>
             {headlineLines.map((line, i) => (
               <span key={i}>{line}</span>

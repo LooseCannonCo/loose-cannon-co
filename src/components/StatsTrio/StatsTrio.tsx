@@ -1,3 +1,5 @@
+import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
+
 import styles from "./StatsTrio.module.css";
 import { TrioNumber, type TrioNumberProps } from "./TrioNumber";
 
@@ -23,9 +25,7 @@ export function StatsTrio({ eyebrow, title, body, cells }: StatsTrioProps) {
     <section data-reveal-section className={styles.section}>
       <div className={styles.titleBlock}>
         <div>
-          <div className={styles.label} data-reveal>
-            {eyebrow}
-          </div>
+          <SectionEyebrow>{eyebrow}</SectionEyebrow>
           <h3 className={styles.ttl} data-reveal>
             {title}
           </h3>

@@ -7,39 +7,36 @@
   align-items: center;
 }
 
-/* Content sits above the splatter layer (z-index 0). */
-.left,
+/* Content sits above the splatter layer (z-index 0). The .left column gets a
+   higher z-index than .right so the Banger sticker that overflows the
+   bottom-right of the number into the column gap isn't painted over by the
+   hero image. */
+.left {
+  position: relative;
+  z-index: 2;
+}
+
 .right {
   position: relative;
   z-index: 1;
 }
 
+/* Hero-specific eyebrow override: bumps the bottom margin from the system
+   default (intra-tight, 16) to intra (24) because the eyebrow sits above a
+   giant number block and needs more breathing room. Structural styles (dot,
+   text, layout) live in SectionEyebrow.module.css. */
 .eyebrowRow {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  margin: 0 0 var(--lc-rhythm-tight);
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
-  background: var(--lc-plum);
-  flex: none;
-}
-
-.eyebrow {
-  font-size: var(--lc-size-eyebrow);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-weight: var(--lc-weight-eyebrow);
+  margin-bottom: var(--lc-space-intra);
 }
 
 /* Hero headline sits in the section-title tier (not statement). The hero
    NUMBER carries the visual punch on case study pages; the headline supports
-   it. Balanced wraps prevent widows. */
+   it. Balanced wraps prevent widows.
+   margin-bottom uses the intra-loose rhythm (24) so headline / subhead /
+   meta each sit clearly separated, with consistent breathing between them
+   while staying tight per the intra spec. */
 .headline {
-  margin: 0 0 var(--lc-rhythm-tight);
+  margin: 0 0 var(--lc-space-intra);
   font-family: var(--lc-display);
   font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
@@ -52,7 +49,7 @@
 }
 
 .sub {
-  margin: 0 0 18px;
+  margin: 0 0 var(--lc-space-intra);
   font-size: var(--lc-size-body);
   line-height: 1.5;
   max-width: 460px;

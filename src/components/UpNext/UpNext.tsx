@@ -1,3 +1,5 @@
+import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
+
 import styles from "./UpNext.module.css";
 
 export interface UpNextProps {
@@ -26,9 +28,7 @@ export function UpNext({
   return (
     <section data-reveal-section className={styles.wrap}>
       <a href={href} className={styles.upnext}>
-        <div className={styles.lbl} data-reveal>
-          Up next
-        </div>
+        <SectionEyebrow>Up next</SectionEyebrow>
         <div className={styles.ttlRow} data-reveal>
           <h3 className={styles.ttlText}>{title}</h3>
           <span className={styles.arrow} aria-hidden="true">

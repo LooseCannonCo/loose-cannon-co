@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
+import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
 import { Sticker, type StickerHandle } from "@/components/Sticker/Sticker";
 
 import styles from "./QuoteBlock.module.css";
@@ -58,6 +59,7 @@ export function QuoteBlock({
 
   return (
     <section ref={sectionRef} data-reveal-section className={styles.quoteBlock}>
+      <SectionEyebrow>Quote</SectionEyebrow>
       <div className={styles.row}>
         <span className={styles.markBig} data-reveal aria-hidden="true">
           {"“"}

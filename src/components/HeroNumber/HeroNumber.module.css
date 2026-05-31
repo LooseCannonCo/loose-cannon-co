@@ -1,12 +1,16 @@
 /* .number is the em base for both the digits and the prefix/suffix affixes.
    Setting font-size here means .affix can use a single em ratio (0.4em) and
    stay proportional to the digits across the full clamp range. The spec
-   target is 60px suffix to 148px digits, which is 0.405. */
+   target is 60px suffix to 148px digits, which is 0.405.
+
+   margin-bottom is 80px (not the intra rhythm) because the heroSticker hangs
+   ~50px below the number's bottom edge into negative space; the remaining
+   ~30px is intra-loose breathing room before the headline. */
 .number {
   position: relative;
   display: inline-flex;
   align-items: flex-start;
-  margin: 0 0 28px;
+  margin: 0 0 80px;
   font-family: var(--lc-display);
   font-variation-settings: "opsz" var(--lc-opsz-hero-number), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
@@ -39,30 +43,29 @@
   transition: transform 0.18s cubic-bezier(0.2, 1.5, 0.3, 1);
 }
 
+/* Tucked into the bottom-right negative space of the number block. Anchored
+   to the RIGHT edge of the number (right: 0) and hanging BELOW the bottom
+   (bottom: -50px), so the sticker lives entirely in the negative space
+   below the digits, never overlapping prefix, digits, or suffix, and
+   never extending rightward past the number into the hero image column.
+   The +6 deg rotation tilts the right corner up; the bottom-left corner
+   sits ~50px below the digit baseline. */
 .heroSticker {
-  /* Tucked into the bottom-right negative space. Anchored to the RIGHT of the
-     whole number (left: 100%) so it sits adjacent to, never on top of, any
-     digit/prefix/suffix. Because .number is inline-flex, this scales to 3-,
-     4-, and 6-digit numbers without occluding anything. */
   position: absolute;
-  left: 100%;
-  bottom: 8px;
-  margin-left: 8px;
+  right: 0;
+  bottom: -50px;
   z-index: 5;
 }
 
 @media (max-width: 900px) {
-  /* The narrow mobile column has no room to the right, so the sticker drops
-     into reserved negative space directly below the number. */
   .number {
+    /* On mobile, less hang needed since the sticker won't be competing with
+       a side-by-side hero image. */
     margin-bottom: 72px;
   }
   .heroSticker {
-    left: auto;
     right: 0;
-    top: 100%;
-    bottom: auto;
-    margin-left: 0;
+    bottom: -44px;
   }
 }
 

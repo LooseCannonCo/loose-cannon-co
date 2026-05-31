@@ -251,13 +251,13 @@ Every LC case study page assembles from this skeleton, in this order. Each secti
    nav and this strip in a slim row.
 
 3. HERO
-   Left:  eyebrow with dot + Number (digits at --lc-size-hero-number, prefix/suffix at 0.4em of the digit size so they scale across the clamp) with Banger! sticker tucked into bottom-right of last digit
-          (Tucked into the bottom-right corner AREA, meaning the negative space adjacent to the last digit, never overlapping any digit, prefix, or suffix. The number must always read cleanly.)
-          + Headline (54px Bricolage opsz 72 weight 700)
-          + Subhead (17px DM Sans)
-          + Meta line (11px DM Sans 600 uppercase, max 1-2 lines)
-   Right: Hero artifact (poster / video / image) with offset plum drop-shadow + corner sticker
-   Grid:  1fr 1fr, gap 60px, align-items: center, 3-4 splatter SVGs scattered
+   Left:  SectionEyebrow (canonical dot + 11px DM Sans 600 uppercase) + Number (digits at --lc-size-hero-number, prefix/suffix at 0.4em of the digit size so they scale across the clamp) with Banger! sticker hanging in the bottom-right negative space (right: 0, bottom: -50px) so the sticker sits entirely below the number's bottom edge, anchored to the number's right edge, never overlapping any digit, prefix, or suffix, never extending rightward past the column into the hero image area. The number's margin-bottom is 80px to reserve room for the sticker hang plus intra-loose breathing room above the headline. .left gets z-index 2 (above .right at z-index 1) so the sticker isn't painted over by the hero image when it overhangs slightly into the gap.
+          + Headline (section-title tier)
+          + Subhead (body tier)
+          + Meta line (eyebrow tier, uppercase tracked)
+   Block-to-block gap inside .left uses intra (24px): eyebrow to number wider via the Hero-specific eyebrowRow override, number to headline 80px (sticker hang + intra), headline to subhead 24px, subhead to meta 24px.
+   Right: Hero artifact (poster / video / image) with offset plum drop-shadow + corner sticker.
+   Grid:  1fr 1fr, gap 60px, align-items: center, 3-4 splatter SVGs scattered.
 
 4. BRIEF DECODED
    Left:  eyebrow + 3-line headline ("Stop selling X. / Start being Y.")
@@ -356,6 +356,27 @@ Legacy aliases preserved during migration: `--lc-section-pad-y` resolves to `--l
 - Section title block grid: `1.1fr 1.4fr` via `--lc-section-title-grid`, gap 48px via `--lc-section-gap`.
 - No hard dividers between sections. The vertical rhythm and eyebrows separate.
 - Mobile breakpoint: hardcoded 900px in `@media` queries (the `--lc-bp-mobile` token is reference only because CSS `@media` cannot consume custom properties).
+
+### Section eyebrows (wayfinding)
+
+Every major case-study section opens the same way: a `SectionEyebrow` at the top-left. Single source of truth in `src/components/SectionEyebrow/SectionEyebrow.tsx`; every chapter component imports and renders it (Hero, Brief, CaseGalleryDrag, CaseGallery, ThreeUpVideo, StatsTrio, QuoteBlock, Credits, UpNext). The page reads as a clear progression of chapters because they all begin with the same visual marker.
+
+Canonical eyebrow treatment, hardcoded in `SectionEyebrow.module.css`:
+
+- 7×7px solid plum square marker, top-left
+- 9px gap between marker and text
+- Text: 11px (`--lc-size-eyebrow`), DM Sans 600 (`--lc-weight-eyebrow`), uppercase, letter-spacing 0.12em, solid plum (full opacity, no half-tone)
+- Bottom margin defaults to `--lc-space-intra-tight` (16px); Hero overrides to `--lc-space-intra` (24px) because the giant hero number needs more breathing below the eyebrow
+
+Eyebrow content per section:
+- Hero: per-case eyebrow text from Sanity (`hero.eyebrow`)
+- Brief: from Sanity (`brief.eyebrow`)
+- StatsTrio: from Sanity (`statsTrio.eyebrow`)
+- CaseGalleryDrag / CaseGallery / ThreeUpVideo: defaults to "The work" via the `eyebrow` prop, overridable per case
+- QuoteBlock: "Quote" (hardcoded)
+- Credits: "Credits" (hardcoded)
+- UpNext: "Up next" (hardcoded)
+- BigFooterMark: no eyebrow (it's the brand sign-off, not a chapter)
 
 ## Voice for LC web pages
 

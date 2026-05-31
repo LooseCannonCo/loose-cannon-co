@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
 import { urlFor } from "@/sanity/image";
 import type { GalleryItemData } from "@/sanity/queries/caseStudy";
 
@@ -9,6 +10,8 @@ import styles from "./CaseGalleryDrag.module.css";
 
 export interface CaseGalleryDragProps {
   items: GalleryItemData[];
+  /** Section eyebrow text. Defaults to "The work" for case study content. */
+  eyebrow?: string;
 }
 
 const pad2 = (n: number) => n.toString().padStart(2, "0");
@@ -28,7 +31,10 @@ const pad2 = (n: number) => n.toString().padStart(2, "0");
  * focus ring uses pink-3. prefers-reduced-motion drops smooth scroll behavior
  * and the scroll-into-view animation.
  */
-export function CaseGalleryDrag({ items }: CaseGalleryDragProps) {
+export function CaseGalleryDrag({
+  items,
+  eyebrow = "The work",
+}: CaseGalleryDragProps) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const tileRefs = useRef<(HTMLDivElement | null)[]>([]);
   const dragRef = useRef<{
@@ -153,7 +159,8 @@ export function CaseGalleryDrag({ items }: CaseGalleryDragProps) {
   };
 
   return (
-    <section className={styles.section}>
+    <section data-reveal-section className={styles.section}>
+      <SectionEyebrow>{eyebrow}</SectionEyebrow>
       <div className={styles.head}>
         <span className={styles.cue}>
           <span aria-hidden="true">{"←→"}</span> Drag

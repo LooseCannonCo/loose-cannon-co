@@ -2,9 +2,13 @@
    No bottom padding; UpNext provides its own chapter top. */
 .credits {
   padding: var(--lc-space-chapter) 0 0;
+}
+
+.grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 40px;
+  margin-top: var(--lc-space-intra);
 }
 
 .lbl {
@@ -25,7 +29,7 @@
 }
 
 @media (max-width: 900px) {
-  .credits {
+  .grid {
     grid-template-columns: 1fr 1fr;
   }
 }

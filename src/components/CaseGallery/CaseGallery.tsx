@@ -1,3 +1,4 @@
+import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
 import { urlFor } from "@/sanity/image";
 import type { GalleryItemData } from "@/sanity/queries/caseStudy";
 
@@ -5,6 +6,8 @@ import styles from "./CaseGallery.module.css";
 
 export interface CaseGalleryProps {
   items: GalleryItemData[];
+  /** Section eyebrow text. Defaults to "The work". */
+  eyebrow?: string;
 }
 
 /**
@@ -14,10 +17,11 @@ export interface CaseGalleryProps {
  * Each frame gets the locked LC.co plum border + offset violet registration
  * bleed, matching CaseImage.
  */
-export function CaseGallery({ items }: CaseGalleryProps) {
+export function CaseGallery({ items, eyebrow = "The work" }: CaseGalleryProps) {
   if (!items || items.length === 0) return null;
   return (
-    <section className={styles.section}>
+    <section data-reveal-section className={styles.section}>
+      <SectionEyebrow>{eyebrow}</SectionEyebrow>
       <div className={styles.grid}>
         {items.map((item, i) => {
           const src = urlFor(item.image).width(720).auto("format").url();

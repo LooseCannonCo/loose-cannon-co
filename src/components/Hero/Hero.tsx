@@ -1,4 +1,5 @@
 import { HeroNumber, type HeroNumberProps } from "@/components/HeroNumber/HeroNumber";
+import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
 import { Splatter } from "@/components/Splatter/Splatter";
 import { Sticker } from "@/components/Sticker/Sticker";
 import { cn } from "@/lib/utils";
@@ -53,10 +54,7 @@ export function Hero({
       <Splatter count={4} excludeCenter />
 
       <div className={styles.left}>
-        <div className={styles.eyebrowRow} data-reveal>
-          <span className={styles.dot} aria-hidden="true" />
-          <span className={styles.eyebrow}>{eyebrow}</span>
-        </div>
+        <SectionEyebrow className={styles.eyebrowRow}>{eyebrow}</SectionEyebrow>
 
         <HeroNumber {...number} />
 

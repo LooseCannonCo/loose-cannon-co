@@ -10,15 +10,6 @@
   cursor: pointer;
 }
 
-.lbl {
-  font-size: var(--lc-size-source);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  font-weight: var(--lc-weight-source);
-  opacity: 0.7;
-  margin-bottom: 8px;
-}
-
 .ttlRow {
   display: flex;
   align-items: baseline;

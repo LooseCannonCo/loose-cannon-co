@@ -9,15 +9,6 @@
   align-items: start;
 }
 
-.label {
-  font-size: var(--lc-size-eyebrow);
-  letter-spacing: var(--lc-tracking-eyebrow);
-  text-transform: uppercase;
-  font-weight: var(--lc-weight-eyebrow);
-  opacity: 0.65;
-  margin-bottom: 12px;
-}
-
 /* Brief headline is statement-tier. Three short lines that punch ("Stop
    selling chemicals. / Start being delicious."), so it sits above section
    titles but below the hero number. text-wrap: balance is the widow backstop
