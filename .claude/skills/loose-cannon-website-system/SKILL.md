@@ -74,7 +74,7 @@ Any display type at large sizes uses `font-variation-settings: "opsz" 96, "wght"
 
 | Tier | Token | Size | opsz | Use |
 |---|---|---|---|---|
-| Mega mark | `--lc-size-mega` | clamp(120px, 16vw, 200px) | 96 | Footer "Loose Cannon." mark only |
+| Mega mark | `--lc-size-mega` | clamp(120px, 16vw, 200px) | 96 | Footer mark + FinePrintStat. BigFooterMark applies its own tighter clamp(36px, 9vw, 180px) so "Loose Cannon Co." holds on one line |
 | Hero number | `--lc-size-hero-number` | clamp(110px, 14vw, 168px) | 96 | The hero stat digits. Always the largest element on the page. Prefix and suffix scale proportionally (about 36 to 40 percent of the digit cap via em) |
 | Statement | `--lc-size-statement` | clamp(60px, 8vw, 104px) | 96 | Marquee section headlines (page-level hero headlines, Brief 3-line punch, UpNext case name) and the pull quote. Caps below the hero number on case study pages so the stat keeps the hierarchy |
 | Section title | `--lc-size-section-title` | clamp(38px, 5vw, 56px) | 72 | Section titles inside a section (StatsTrio "The receipts.", ClosingCTA, generic page section titles). Replaces the old display-lg + display-md tiers, collapsed |
@@ -280,7 +280,7 @@ Every LC case study page assembles from this skeleton, in this order. Each secti
     P.S. line top-right: "P.S. want this for your brand? Start a project →" (Bricolage 14px 400, 75% opacity)
 
 11. BIG FOOTER MARK
-    "Loose Cannon." at clamp(120px, 16vw, 200px), Bricolage opsz 96 weight 700, upright (never italic), centered
+    "Loose Cannon Co." at clamp(36px, 9vw, 180px), Bricolage opsz 96 weight 700, upright (never italic), centered. white-space: nowrap. The clamp is a footer-mark-specific override of the mega ramp (which still tops out at 200 for FinePrintStat's single "0" digit) because the longer string would overflow on wide desktop at 200px. "Co." must never orphan onto its own line at any viewport width.
 
 12. FOOTER COLS
     Studio tagline + Studio links + Shop links + Contact links

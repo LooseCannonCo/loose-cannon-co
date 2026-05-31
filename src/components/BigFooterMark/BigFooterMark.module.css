@@ -3,15 +3,19 @@
   text-align: center;
 }
 
-/* The footer mega mark. Uses the dedicated mega ramp token (clamp 120, 16vw,
-   200). Single weight, upright Bricolage, opsz 96. */
+/* The footer mega mark. Sized via a footer-mark-specific clamp (not the raw
+   --lc-size-mega 120/16vw/200 token) because "Loose Cannon Co." is longer
+   than the original "Loose Cannon." and the mega upper bound forced overflow
+   on wide desktop. white-space: nowrap is a hard guarantee that "Co." never
+   orphans on its own line; the clamp scales the type down at the bottom of
+   the range so the full string holds as one line from 320px viewports up. */
 .mark {
   margin: 0;
   font-family: var(--lc-display);
   font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
   font-style: normal;
-  font-size: var(--lc-size-mega);
+  font-size: clamp(36px, 9vw, 180px);
   letter-spacing: -0.05em;
   line-height: 0.9;
   white-space: nowrap;
