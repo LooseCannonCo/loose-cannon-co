@@ -325,13 +325,13 @@ Every LC case study page assembles from this skeleton, in this order. Each secti
 
 Spacing is contrast-based, not uniform. Chapter breaks are large; within-chapter and intra-element gaps stay tight. Even spacing reads as uniform stacks. Contrasting spacing reads as chapters with breathing room between them and tight groupings inside them. The contrast is the system, not the headline numbers.
 
-Vertical spacing is width-driven (vw), not height-driven. Two reasons. First, it matches how the type ramp scales, so type size and the surrounding rhythm move together. Second, vh-based vertical rhythm renders inconsistently across browser chromes, devtools heights, mobile address-bar collapse, and full-page screenshot tools (where the rendered viewport height differs from the live screen). vw-based rhythm stays stable across all of those.
+All three tiers are FIXED pixel values with a single mobile step at the 900px breakpoint. No viewport units. Earlier passes tried vh and vw clamps but both floored unpredictably (the vw chapter clamp pinned to its 120px lower bound at any viewport under 1200px, including standard laptop widths with devtools open), and full-page screenshot tools rendered at viewport heights that gave different vh results from the live screen. Fixed pixels with a mobile step is predictable across viewports and across screen vs. screenshot.
 
-| Tier | Token | Value | Use |
-|---|---|---|---|
-| Chapter break | `--lc-space-chapter` | `clamp(120px, 10vw, 200px)` | Top padding of every major case-study chapter: hero, brief decoded, content section (drag gallery / 3-up video / static gallery), optional hero chart, stats trio, quote, credits, up next, big footer mark. Apply once per chapter as top padding only. Chapters never bottom-pad themselves; the next chapter's top padding does the separation work. |
-| Sub-section gap | `--lc-space-sub` | `clamp(48px, 5vw, 80px)` | Between parts that belong to the SAME chapter. Examples: the brief body and its 3-column breakdown are one chapter so the gap between them is sub-section. A stats title block sits sub-section close to its trio. |
-| Intra-element | `--lc-space-intra-tight: 16px`, `--lc-space-intra: 24px` | Fixed (12 to 28 range) | Inside a single block: eyebrow to title uses tight (16), title to body uses loose (24). Never viewport-driven. Stay tight. |
+| Tier | Token | Desktop | Mobile (<=900px) | Use |
+|---|---|---|---|---|
+| Chapter break | `--lc-space-chapter` | 200px | 88px | Top padding of every major case-study chapter: hero, brief decoded, content section (drag gallery / 3-up video / static gallery), optional hero chart, stats trio, quote, credits, up next, big footer mark. Apply once per chapter as top padding only. Chapters never bottom-pad themselves; the next chapter's top padding does the separation work. |
+| Sub-section gap | `--lc-space-sub` | 72px | 40px | Between parts that belong to the SAME chapter. Examples: the brief body and its 3-column breakdown are one chapter so the gap between them is sub-section. A stats title block sits sub-section close to its trio. |
+| Intra-element | `--lc-space-intra-tight: 16px`, `--lc-space-intra: 24px` | 16 / 24 | 16 / 24 (no step) | Inside a single block: eyebrow to title uses tight (16), title to body uses loose (24). Never viewport-driven. Stay tight. |
 
 Apply by meaning, not blanket. The brief-decoded body plus its 3-column breakdown are one chapter, so a chapter break sits above the whole unit, a sub-section gap separates body from breakdown, intra-element gaps space the eyebrow / title / paragraphs.
 

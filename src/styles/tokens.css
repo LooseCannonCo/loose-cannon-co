@@ -47,18 +47,21 @@
    * Chapter breaks are large; within-chapter and intra-element gaps stay
    * tight. The contrast is the system: even spacing reads as uniform stacks,
    * contrasting spacing reads as chapters with breathing room between them
-   * and tight groupings inside them. */
+   * and tight groupings inside them.
+   *
+   * All three tiers are FIXED, no viewport units. Earlier passes used vw
+   * clamps but they floored at common laptop widths (any viewport under
+   * 1200px pinned the chapter clamp to its 120px lower bound), which made
+   * the rhythm both unstable across viewports and inconsistent between the
+   * live screen and full-page screenshot tools. Fixed pixels with a single
+   * mobile step at 900px is predictable across both. */
   /* Between major chapters (hero, brief, content, stats, quote, credits,
-     up next, big footer mark). Apply once per chapter as top-pad.
-     Width-driven (vw, not vh) so the rhythm matches the type ramp and stays
-     stable across window heights, browser chrome, and screenshot tools. */
-  --lc-space-chapter: clamp(120px, 10vw, 200px);
+     up next, big footer mark). Apply once per chapter as top padding. */
+  --lc-space-chapter: 200px;
   /* Between parts that belong to the SAME chapter (brief body to its 3-col
-     breakdown, stats title block to its trio). Width-driven, same reason. */
-  --lc-space-sub: clamp(48px, 5vw, 80px);
-  /* Inside a single block: eyebrow to title (tight), title to body (loose).
-     Fixed values, never viewport-driven. Range is 12 to 28; tight at 16,
-     loose at 24. */
+     breakdown, stats title block to its trio). */
+  --lc-space-sub: 72px;
+  /* Inside a single block: eyebrow to title (tight), title to body (loose). */
   --lc-space-intra-tight: 16px;
   --lc-space-intra: 24px;
 
@@ -141,4 +144,14 @@
   --lc-magnetic-pull: 8px;
   --lc-sticker-rot-min: -14deg;
   --lc-sticker-rot-max: 10deg;
+}
+
+/* Mobile step for the section rhythm. The intra-element tier (16/24) stays
+   fixed across all viewports. Only chapter break and sub-section gap step
+   down at the single mobile breakpoint. */
+@media (max-width: 900px) {
+  :root {
+    --lc-space-chapter: 88px;
+    --lc-space-sub: 40px;
+  }
 }
