@@ -1,3 +1,7 @@
+/* .number is the em base for both the digits and the prefix/suffix affixes.
+   Setting font-size here means .affix can use a single em ratio (0.4em) and
+   stay proportional to the digits across the full clamp range. The spec
+   target is 60px suffix to 148px digits, which is 0.405. */
 .number {
   position: relative;
   display: inline-flex;
@@ -6,24 +10,26 @@
   font-family: var(--lc-display);
   font-variation-settings: "opsz" var(--lc-opsz-hero-number), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
+  font-size: var(--lc-size-hero-number);
   letter-spacing: -0.045em;
   line-height: 0.82;
   font-variant-numeric: tabular-nums;
   color: var(--lc-plum);
 }
 
-/* Prefix and suffix scale proportionally with the hero digits via em (about
-   36 percent of the digit cap height). Start hidden, popped in by JS. */
+/* Prefix and suffix sit at 0.4em (about 40 percent of digit cap), padded down
+   so their baseline sits with the digits' cap rather than at the digit
+   baseline. Start hidden, popped in by JS. */
 .affix {
-  font-size: 0.36em;
-  padding-top: 0.18em;
+  font-size: 0.4em;
+  padding-top: 0.12em;
   display: inline-block;
   opacity: 0;
   transform: scale(0.6);
 }
 
 .digits {
-  font-size: var(--lc-size-hero-number);
+  font-size: 1em;
   display: inline-flex;
 }
 

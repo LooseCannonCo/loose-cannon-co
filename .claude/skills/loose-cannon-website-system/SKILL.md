@@ -224,13 +224,20 @@ Every LC case study page assembles from this skeleton, in this order. Each secti
 
 ```
 1. NAV
-   ← Back to work | Loose Cannon Co. | Work · Services · About · Shop · Contact
+   Loose Cannon Co. | Work · Services · About · Shop · Contact
+   The global nav does NOT carry a back link. On case study pages a
+   standalone contextual back link sits in its own slim row directly below
+   this nav and above the metadata strip below: left-aligned, sentence case,
+   weight 400, lower opacity. It reads as a return action, not a nav
+   destination. Mounted via the BackLink component.
 
 2. METADATA STRIP
    Client · Discipline · Year | Case 00X · Featured
+   On case study pages the contextual back link above sits between the global
+   nav and this strip in a slim row.
 
 3. HERO
-   Left:  eyebrow with dot + Number (148px digits + 60px $ and suffix) with Banger! sticker tucked into bottom-right of last digit
+   Left:  eyebrow with dot + Number (digits at --lc-size-hero-number, prefix/suffix at 0.4em of the digit size so they scale across the clamp) with Banger! sticker tucked into bottom-right of last digit
           (Tucked into the bottom-right corner AREA, meaning the negative space adjacent to the last digit, never overlapping any digit, prefix, or suffix. The number must always read cleanly.)
           + Headline (54px Bricolage opsz 72 weight 700)
           + Subhead (17px DM Sans)

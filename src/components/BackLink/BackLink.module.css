@@ -1,0 +1,29 @@
+.row {
+  padding: 10px 0 2px;
+}
+
+/* Lighter and smaller than the nav links. Nav links are 11px uppercase 600
+   tracked 0.12em; this is 11px sentence case 400 tracked 0.02em at 70%
+   opacity so the visual weight reads as a return action, not nav. */
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--lc-body);
+  font-size: var(--lc-size-eyebrow);
+  font-weight: var(--lc-weight-body);
+  letter-spacing: 0.02em;
+  color: var(--lc-plum);
+  opacity: 0.7;
+  text-decoration: none;
+  transition: opacity 160ms ease;
+}
+
+.back:hover {
+  opacity: 1;
+}
+
+.arrow {
+  display: inline-block;
+  font-family: var(--lc-body);
+}

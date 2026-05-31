@@ -7,24 +7,11 @@
   flex-wrap: wrap;
 }
 
-/* Brand cluster: optional back-link sits inline before the wordmark. */
 .brand {
   display: flex;
   align-items: baseline;
   gap: 16px;
   min-width: 0;
-}
-
-.back {
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-weight: 600;
-  opacity: 0.7;
-}
-
-.back:hover {
-  opacity: 1;
 }
 
 /* Wordmark: display family, single weight, stepped up from body scale to
@@ -43,10 +30,10 @@
   display: flex;
   align-items: center;
   gap: 22px;
-  font-size: 11px;
+  font-size: var(--lc-size-eyebrow);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: var(--lc-weight-eyebrow);
 }
 
 .nav a {

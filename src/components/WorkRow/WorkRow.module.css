@@ -94,14 +94,16 @@
   justify-content: flex-end;
 }
 
-/* The row's hero stat. Always the largest element in the row, sized off the
-   shared hero-number token. */
+/* The row's hero stat. Always the largest element in the row. .number sets
+   font-size to the hero-number token so .affix can size in em relative to
+   the digits (was sizing in em relative to inherited body, far too small). */
 .number {
   display: inline-flex;
   align-items: flex-start;
   font-family: var(--lc-display);
   font-variation-settings: "opsz" var(--lc-opsz-hero-number), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
+  font-size: var(--lc-size-hero-number);
   letter-spacing: -0.045em;
   line-height: 0.82;
   font-variant-numeric: tabular-nums;
@@ -110,12 +112,12 @@
 
 .affix {
   font-size: 0.4em;
-  padding-top: 0.18em;
+  padding-top: 0.12em;
   display: inline-block;
 }
 
 .digits {
-  font-size: var(--lc-size-hero-number);
+  font-size: 1em;
   display: inline-flex;
 }
 

@@ -2,20 +2,15 @@ import Link from "next/link";
 
 import styles from "./Nav.module.css";
 
-export interface NavProps {
-  /**
-   * Destination for the "← Back to work" link. Omit on the homepage. The link
-   * renders as a small eyebrow-scale label to the left of the wordmark.
-   */
-  backHref?: string;
-}
-
 /**
  * Public site nav. Wordmark left (also home link), nav links right.
  *
- * Shop is intentionally commented out until /shop ships in Phase F.
- * Restore the { label: "Shop", href: "/shop" } entry below when the route
- * exists, and add a matching column treatment in any footer audit.
+ * The nav no longer carries a "Back to work" link. Case study pages render
+ * a standalone contextual back link via the BackLink component, mounted in
+ * a slim row directly below the nav.
+ *
+ * Shop is intentionally commented out until /shop ships in Phase F. Restore
+ * the { label: "Shop", href: "/shop" } entry below when the route exists.
  */
 const LINKS: { label: string; href: string }[] = [
   { label: "Work", href: "/work" },
@@ -25,15 +20,10 @@ const LINKS: { label: string; href: string }[] = [
   { label: "Contact", href: "/contact" },
 ];
 
-export function Nav({ backHref }: NavProps) {
+export function Nav() {
   return (
     <nav className={styles.nav}>
       <div className={styles.brand}>
-        {backHref ? (
-          <Link href={backHref} className={styles.back}>
-            ← Back to work
-          </Link>
-        ) : null}
         <Link href="/" className={styles.wordmark}>
           Loose Cannon Co.
         </Link>

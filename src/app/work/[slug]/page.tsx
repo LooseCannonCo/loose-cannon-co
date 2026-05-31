@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 
+import { BackLink } from "@/components/BackLink/BackLink";
 import { BarComparison } from "@/components/BarComparison/BarComparison";
 import { Brief, type BriefBreakdownItem } from "@/components/Brief/Brief";
 import { CaseGallery } from "@/components/CaseGallery/CaseGallery";
@@ -170,7 +171,8 @@ export default async function CaseStudyPage({
 
   return (
     <Page>
-      <Nav backHref="/work" />
+      <Nav />
+      <BackLink href="/work" />
 
       <MetaStrip
         client={doc.client}
