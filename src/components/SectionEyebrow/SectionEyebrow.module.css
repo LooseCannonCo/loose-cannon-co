@@ -1,8 +1,15 @@
 /* Canonical section eyebrow row. Square plum marker + uppercase text. The
    intra-tight rhythm below it sits the eyebrow close to the title that
-   follows. */
+   follows.
+
+   display: flex (block-level) not inline-flex. width: fit-content keeps it
+   sized to its content. Together they guarantee the eyebrow always sits on
+   its own line above the next element, even when followed by another inline
+   or inline-block sibling (case studied: Work page header where headline is
+   inline-block, was rendering eyebrow beside the headline). */
 .row {
-  display: inline-flex;
+  display: flex;
+  width: fit-content;
   align-items: center;
   gap: 9px;
   margin: 0 0 var(--lc-space-intra-tight);

@@ -1,28 +1,3 @@
-/* Shared eyebrow row */
-.eyebrowRow {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  margin: 0 0 20px;
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
-  background: var(--lc-plum);
-  flex: none;
-}
-
-.eyebrow {
-  font-size: var(--lc-size-eyebrow);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-weight: var(--lc-weight-eyebrow);
-  color: var(--lc-plum);
-}
-
 /* HERO */
 .hero {
   position: relative;
@@ -70,7 +45,7 @@
 }
 
 .heroSticker {
-  margin-left: -6px;
+  margin-left: var(--lc-space-intra-tight);
   z-index: 5;
 }
 
@@ -113,6 +88,26 @@
   font-size: 72px;
   line-height: 1;
   color: var(--lc-plum);
+}
+
+/* Founder headshot: 4:5 portrait frame above the numeral. Plum 1.5px border
+   + offset plum drop-shadow matches the case study image treatment. Sits at
+   320px max width on desktop, scales fluidly on mobile. next/image fills
+   the frame with object-fit: cover so portrait crop is preserved. */
+.founderHeadshot {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 4 / 5;
+  border: 1.5px solid var(--lc-plum);
+  background: var(--lc-pink-0);
+  box-shadow: 8px 8px 0 var(--lc-plum);
+  overflow: hidden;
+  margin-bottom: var(--lc-space-intra);
+}
+
+.founderHeadshotImg {
+  object-fit: cover;
 }
 
 .founderName {
@@ -184,6 +179,6 @@
     max-width: none;
   }
   .heroSticker {
-    margin-left: -4px;
+    margin-left: var(--lc-space-intra-tight);
   }
 }

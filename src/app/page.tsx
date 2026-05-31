@@ -1,9 +1,10 @@
 import { Button } from "@/components/Button/Button";
+import { ClosingCTA } from "@/components/ClosingCTA/ClosingCTA";
 import { Footer } from "@/components/Footer/Footer";
 import { Nav } from "@/components/Nav/Nav";
 import { Page } from "@/components/Page/Page";
 import { PrintHeadline } from "@/components/PrintHeadline/PrintHeadline";
-import { ClosingCTA } from "@/components/ClosingCTA/ClosingCTA";
+import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
 import { Splatter } from "@/components/Splatter/Splatter";
 import { Sticker } from "@/components/Sticker/Sticker";
 import { WorkRow } from "@/components/WorkRow/WorkRow";
@@ -45,10 +46,7 @@ export default async function Home() {
       <section className={styles.hero}>
         <Splatter count={4} excludeCenter />
         <div className={styles.heroContent}>
-          <div className={styles.eyebrowRow}>
-            <span className={styles.dot} aria-hidden="true" />
-            <span className={styles.eyebrow}>Studio</span>
-          </div>
+          <SectionEyebrow>Studio</SectionEyebrow>
           <div className={styles.heroHeadlineWrap}>
             <PrintHeadline as="h1" className={styles.heroHeadline}>
               Social-first creative.
@@ -77,10 +75,7 @@ export default async function Home() {
 
       {/* FEATURED WORK */}
       <section className={styles.section}>
-        <div className={styles.eyebrowRow}>
-          <span className={styles.dot} aria-hidden="true" />
-          <span className={styles.eyebrow}>Recent receipts</span>
-        </div>
+        <SectionEyebrow>Recent receipts</SectionEyebrow>
         <h2 className={styles.sectionTitle}>The work.</h2>
         <div className={styles.workList}>
           {featured.map((c, i) => (
@@ -111,10 +106,7 @@ export default async function Home() {
 
       {/* SERVICES */}
       <section className={styles.section}>
-        <div className={styles.eyebrowRow}>
-          <span className={styles.dot} aria-hidden="true" />
-          <span className={styles.eyebrow}>What we do</span>
-        </div>
+        <SectionEyebrow>What we do</SectionEyebrow>
         <h2 className={styles.sectionTitle}>Three things.</h2>
         <div className={styles.servicesGrid}>
           {SERVICES.map((s) => (

@@ -1,28 +1,3 @@
-/* Shared eyebrow row */
-.eyebrowRow {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  margin: 0 0 20px;
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
-  background: var(--lc-plum);
-  flex: none;
-}
-
-.eyebrow {
-  font-size: var(--lc-size-eyebrow);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-weight: var(--lc-weight-eyebrow);
-  color: var(--lc-plum);
-}
-
 /* HERO */
 .hero {
   position: relative;
@@ -71,8 +46,10 @@
   margin-top: var(--lc-rhythm-mid);
 }
 
+/* Positive intra-tight margin so the sticker never overlaps the headline's
+   trailing punctuation. */
 .heroSticker {
-  margin-left: -6px;
+  margin-left: var(--lc-space-intra-tight);
   z-index: 5;
 }
 
@@ -166,7 +143,7 @@
     gap: 32px;
   }
   .heroSticker {
-    margin-left: -4px;
+    margin-left: var(--lc-space-intra-tight);
   }
   .serviceDesc {
     max-width: none;

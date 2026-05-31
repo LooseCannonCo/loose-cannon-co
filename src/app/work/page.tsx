@@ -1,6 +1,7 @@
 import { Footer } from "@/components/Footer/Footer";
 import { Nav } from "@/components/Nav/Nav";
 import { Page } from "@/components/Page/Page";
+import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
 import { Splatter } from "@/components/Splatter/Splatter";
 import { WorkRow } from "@/components/WorkRow/WorkRow";
 import { client } from "@/sanity/client";
@@ -40,10 +41,7 @@ export default async function WorkIndex() {
 
       <header className={styles.header}>
         <Splatter count={4} excludeCenter />
-        <div className={styles.eyebrowRow}>
-          <span className={styles.dot} aria-hidden="true" />
-          <span className={styles.eyebrow}>Receipts</span>
-        </div>
+        <SectionEyebrow>Receipts</SectionEyebrow>
         <h1 className={styles.headline}>
           <span className={styles.bleed} aria-hidden="true">
             Work.

@@ -1,9 +1,12 @@
+import Image from "next/image";
+
 import { Button } from "@/components/Button/Button";
 import { ClosingCTA } from "@/components/ClosingCTA/ClosingCTA";
 import { Footer } from "@/components/Footer/Footer";
 import { Nav } from "@/components/Nav/Nav";
 import { Page } from "@/components/Page/Page";
 import { PrintHeadline } from "@/components/PrintHeadline/PrintHeadline";
+import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
 import { Splatter } from "@/components/Splatter/Splatter";
 import { Sticker } from "@/components/Sticker/Sticker";
 import { WorkRow } from "@/components/WorkRow/WorkRow";
@@ -35,10 +38,7 @@ export default async function AboutPage() {
       <section className={styles.hero}>
         <Splatter count={4} excludeCenter />
         <div className={styles.heroContent}>
-          <div className={styles.eyebrowRow}>
-            <span className={styles.dot} aria-hidden="true" />
-            <span className={styles.eyebrow}>About</span>
-          </div>
+          <SectionEyebrow>About</SectionEyebrow>
           <div className={styles.heroHeadlineWrap}>
             <PrintHeadline as="h1" className={styles.heroHeadline}>
               Small on purpose.
@@ -67,13 +67,19 @@ export default async function AboutPage() {
 
       {/* FOUNDERS */}
       <section className={styles.section}>
-        <div className={styles.eyebrowRow}>
-          <span className={styles.dot} aria-hidden="true" />
-          <span className={styles.eyebrow}>The people</span>
-        </div>
+        <SectionEyebrow>The people</SectionEyebrow>
         <h2 className={styles.sectionTitle}>Two founders.</h2>
         <div className={styles.foundersGrid}>
           <div className={styles.founderCol}>
+            <div className={styles.founderHeadshot}>
+              <Image
+                src="/team/noah.jpg"
+                alt="Noah Charnow"
+                fill
+                sizes="(max-width: 900px) 80vw, 320px"
+                className={styles.founderHeadshotImg}
+              />
+            </div>
             <div className={styles.founderNum}>01</div>
             <h3 className={styles.founderName}>
               Noah&nbsp;(Brand&nbsp;Daddy)&nbsp;Charnow
@@ -84,6 +90,15 @@ export default async function AboutPage() {
             <p className={styles.founderBio}>{NOAH_BIO}</p>
           </div>
           <div className={styles.founderCol}>
+            <div className={styles.founderHeadshot}>
+              <Image
+                src="/team/briana.jpg"
+                alt="Briana Brugh"
+                fill
+                sizes="(max-width: 900px) 80vw, 320px"
+                className={styles.founderHeadshotImg}
+              />
+            </div>
             <div className={styles.founderNum}>02</div>
             <h3 className={styles.founderName}>
               Briana&nbsp;(Yapper)&nbsp;Brugh
@@ -98,10 +113,7 @@ export default async function AboutPage() {
 
       {/* PROOF */}
       <section className={styles.section}>
-        <div className={styles.eyebrowRow}>
-          <span className={styles.dot} aria-hidden="true" />
-          <span className={styles.eyebrow}>Recent receipts</span>
-        </div>
+        <SectionEyebrow>Recent receipts</SectionEyebrow>
         <h2 className={styles.sectionTitle}>The work that ran.</h2>
         <div className={styles.workList}>
           {featured.map((c, i) => (

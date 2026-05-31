@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer/Footer";
 import { Nav } from "@/components/Nav/Nav";
 import { Page } from "@/components/Page/Page";
 import { PrintHeadline } from "@/components/PrintHeadline/PrintHeadline";
+import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
 import { Splatter } from "@/components/Splatter/Splatter";
 import { Sticker } from "@/components/Sticker/Sticker";
 
@@ -116,17 +117,14 @@ export default function ContactPage() {
       <section className={styles.hero}>
         <Splatter count={4} excludeCenter />
         <div className={styles.heroContent}>
-          <div className={styles.eyebrowRow}>
-            <span className={styles.dot} aria-hidden="true" />
-            <span className={styles.eyebrow}>Contact</span>
-          </div>
+          <SectionEyebrow>Contact</SectionEyebrow>
           <div className={styles.heroHeadlineWrap}>
             <PrintHeadline as="h1" className={styles.heroHeadline}>
-              Tell us what you&apos;re working on.
+              Tell us what you&apos;re working&nbsp;on.
             </PrintHeadline>
             <span className={styles.heroLastLine}>
               <PrintHeadline as="span" className={styles.heroHeadline}>
-                We&apos;ll write back fast.
+                We&apos;ll write back&nbsp;fast.
               </PrintHeadline>
               <Sticker
                 text="Banger!"
@@ -145,12 +143,9 @@ export default function ContactPage() {
 
       {/* THE FORM (or confirmation after success) */}
       <section className={styles.section}>
-        <div className={styles.eyebrowRow}>
-          <span className={styles.dot} aria-hidden="true" />
-          <span className={styles.eyebrow}>
-            {status === "sent" ? "Received" : "The form"}
-          </span>
-        </div>
+        <SectionEyebrow>
+          {status === "sent" ? "Received" : "The form"}
+        </SectionEyebrow>
 
         {status === "sent" ? (
           <div className={styles.confirm}>

@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer/Footer";
 import { Nav } from "@/components/Nav/Nav";
 import { Page } from "@/components/Page/Page";
 import { PrintHeadline } from "@/components/PrintHeadline/PrintHeadline";
+import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
 import { Splatter } from "@/components/Splatter/Splatter";
 import { Sticker } from "@/components/Sticker/Sticker";
 import { WorkRow } from "@/components/WorkRow/WorkRow";
@@ -64,17 +65,14 @@ export default async function ServicesPage() {
       <section className={styles.hero}>
         <Splatter count={4} excludeCenter />
         <div className={styles.heroContent}>
-          <div className={styles.eyebrowRow}>
-            <span className={styles.dot} aria-hidden="true" />
-            <span className={styles.eyebrow}>Services</span>
-          </div>
+          <SectionEyebrow>Services</SectionEyebrow>
           <div className={styles.heroHeadlineWrap}>
             <PrintHeadline as="h1" className={styles.heroHeadline}>
-              Ads that don&apos;t look like ads.
+              Ads that don&apos;t look like&nbsp;ads.
             </PrintHeadline>
             <span className={styles.heroLastLine}>
               <PrintHeadline as="span" className={styles.heroHeadline}>
-                And convert anyway.
+                And convert&nbsp;anyway.
               </PrintHeadline>
               <Sticker
                 text="Next level!"
@@ -96,10 +94,7 @@ export default async function ServicesPage() {
 
       {/* 01: Paid social (the lead offer, gets the most vertical room) */}
       <section className={styles.section}>
-        <div className={styles.eyebrowRow}>
-          <span className={styles.dot} aria-hidden="true" />
-          <span className={styles.eyebrow}>What we lead with</span>
-        </div>
+        <SectionEyebrow>What we lead with</SectionEyebrow>
         <div className={styles.leadBlock}>
           <div className={styles.leadNum}>01</div>
           <h2 className={styles.leadTitle}>Paid social.</h2>
@@ -115,10 +110,7 @@ export default async function ServicesPage() {
 
       {/* Proof anchor: Smolotov */}
       <section className={styles.section}>
-        <div className={styles.eyebrowRow}>
-          <span className={styles.dot} aria-hidden="true" />
-          <span className={styles.eyebrow}>The receipt</span>
-        </div>
+        <SectionEyebrow>The receipt</SectionEyebrow>
         {smolotov ? (
           <WorkRow
             index={0}
@@ -139,10 +131,7 @@ export default async function ServicesPage() {
 
       {/* And once it's working: 02 + 03 */}
       <section className={styles.section}>
-        <div className={styles.eyebrowRow}>
-          <span className={styles.dot} aria-hidden="true" />
-          <span className={styles.eyebrow}>And once it&apos;s working</span>
-        </div>
+        <SectionEyebrow>And once it&apos;s working</SectionEyebrow>
         <div className={styles.expansionGrid}>
           {EXPANSION.map((s) => (
             <div key={s.num} className={styles.expCol}>
@@ -157,10 +146,7 @@ export default async function ServicesPage() {
 
       {/* HOW IT WORKS */}
       <section className={styles.section}>
-        <div className={styles.eyebrowRow}>
-          <span className={styles.dot} aria-hidden="true" />
-          <span className={styles.eyebrow}>How it works</span>
-        </div>
+        <SectionEyebrow>How it works</SectionEyebrow>
         <h2 className={styles.sectionTitle}>Three steps.</h2>
         <div className={styles.howGrid}>
           {HOW_IT_WORKS.map((step) => (
