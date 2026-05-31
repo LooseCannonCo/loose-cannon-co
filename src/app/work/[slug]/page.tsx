@@ -8,7 +8,6 @@ import { Footer } from "@/components/Footer/Footer";
 import { Hero } from "@/components/Hero/Hero";
 import { MetaStrip } from "@/components/MetaStrip/MetaStrip";
 import { Nav } from "@/components/Nav/Nav";
-import { NineGrid, type NineTile } from "@/components/NineGrid/NineGrid";
 import { Page } from "@/components/Page/Page";
 import { QuoteBlock } from "@/components/QuoteBlock/QuoteBlock";
 import { RingFill } from "@/components/RingFill/RingFill";
@@ -224,16 +223,12 @@ export default async function CaseStudyPage({
         />
       ) : null}
 
+      {/* Content section: ThreeUpVideo for motion-led cases (Smolotov),
+          CaseGallery for image-led cases (FITAID). The legacy NineGrid that
+          rendered "IMAGE PLACEHOLDER / EDITORIAL / REVIEW" tile labels was
+          removed; gallery is the single image content section now. */}
       {contentSection?.type === "threeUpVideo" ? (
         <ThreeUpVideo videos={contentSection.videos ?? []} />
-      ) : contentSection ? (
-        <NineGrid
-          tiles={(contentSection.tiles ?? []).map<NineTile>((t) => ({
-            label: t.label ?? "",
-            kind: t.kind,
-            tone: t.tone,
-          }))}
-        />
       ) : null}
 
       {gallery && gallery.length > 0 ? <CaseGallery items={gallery} /> : null}
