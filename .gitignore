@@ -39,3 +39,6 @@ next-env.d.ts
 # local working artifacts (reference mockup + asset bundle, not site code)
 /loose-cannon-ayye-case-v15.html
 /02_OUTPUT_AYYE.zip
+/Ayye_Wordmark_Black.svg
+/ayye-case-sanity-content.md
+/loose-cannon-about-zine-v7.html
