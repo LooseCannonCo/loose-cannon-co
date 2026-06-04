@@ -2,15 +2,48 @@
   padding: var(--lc-space-chapter) 0 0;
 }
 
+/* Count-adaptive, always centered on the page. Three videos fill the row as a
+   three-up; one or two render centered at the same tile scale (capped width +
+   auto side margins) instead of left-aligned with an empty slot. */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   align-items: start;
+  justify-content: center;
+}
+
+.gallery[data-count="3"] {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.gallery[data-count="2"] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 66%;
+  margin-inline: auto;
+}
+
+.gallery[data-count="1"] {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 33%;
+  margin-inline: auto;
+}
+
+/* Uploaded video fills its tile; the platform/label overlay sits on top. */
+.video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Grid cell: video frame + caption below it. */
+.item {
+  min-width: 0;
 }
 
 .ad {
   position: relative;
+  width: 100%;
   border: 1.25px solid var(--lc-plum);
   background: linear-gradient(155deg, #0a0805, #231a14);
   color: var(--lc-pink-1);
@@ -19,14 +52,13 @@
   overflow: hidden;
 }
 
-.overlay {
-  position: absolute;
-  top: 12px;
-  left: 12px;
+/* Caption below each video (the frame itself stays clean). Muted platform
+   eyebrow, video title beneath, matching the page's caption treatment. */
+.caption {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  text-align: left;
+  margin-top: 12px;
 }
 
 .platform {
@@ -34,7 +66,8 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: var(--lc-weight-source);
-  opacity: 0.75;
+  color: var(--lc-plum);
+  opacity: 0.6;
 }
 
 .name {
@@ -42,14 +75,20 @@
   font-variation-settings: "opsz" 24, "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
   font-size: var(--lc-size-caption);
+  color: var(--lc-plum);
 }
 
+/* Centered "VIDEO PLACEHOLDER" tag inside the dark tile. Sized to caption
+   tier (14px) and bumped to 0.7 opacity so it remains legible at desktop
+   tile dimensions (~400x500px each in the 3-col grid), where the prior
+   10px / 0.5 opacity read as an empty black rectangle. Same treatment now
+   reads as intentional and pending across all viewports. */
 .placeholder {
-  font-size: var(--lc-size-source);
-  letter-spacing: 0.14em;
+  font-size: var(--lc-size-caption);
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  font-weight: var(--lc-weight-source);
-  opacity: 0.5;
+  font-weight: var(--lc-weight-caption);
+  opacity: 0.7;
 }
 
 .foot {
@@ -65,7 +104,11 @@
 }
 
 @media (max-width: 900px) {
-  .gallery {
+  .gallery,
+  .gallery[data-count="1"],
+  .gallery[data-count="2"],
+  .gallery[data-count="3"] {
     grid-template-columns: 1fr;
+    max-width: none;
   }
 }

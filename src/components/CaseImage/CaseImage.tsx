@@ -66,11 +66,7 @@ export function CaseImage({
   if (videoSrc) {
     return (
       <div className={cn(styles.frame, aspectClass, className)}>
-        <FrameVideo
-          src={videoSrc}
-          poster={videoPoster ?? ""}
-          className={styles.img}
-        />
+        <FrameVideo src={videoSrc} poster={videoPoster} className={styles.img} />
       </div>
     );
   }

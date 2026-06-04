@@ -6,7 +6,11 @@ import { prefersReducedMotion } from "@/lib/motion";
 
 export interface FrameVideoProps {
   src: string;
-  poster: string;
+  /** Optional poster frame. When absent, the paused (reduced-motion) state
+   *  rests on the video's first frame. */
+  poster?: string;
+  /** Source MIME type. Defaults to video/mp4. */
+  type?: string;
   /** Class applied to the <video> (object-fit cover fill of the frame). */
   className?: string;
 }
@@ -18,7 +22,7 @@ export interface FrameVideoProps {
  * its poster frame. Decorative cover, so aria-hidden and no controls; the
  * band's client name + link carry the accessible label.
  */
-export function FrameVideo({ src, poster, className }: FrameVideoProps) {
+export function FrameVideo({ src, poster, type, className }: FrameVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -42,7 +46,7 @@ export function FrameVideo({ src, poster, className }: FrameVideoProps) {
       preload="metadata"
       aria-hidden="true"
     >
-      <source src={src} type="video/mp4" />
+      <source src={src} type={type ?? "video/mp4"} />
     </video>
   );
 }
