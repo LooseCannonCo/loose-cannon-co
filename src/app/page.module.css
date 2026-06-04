@@ -1,38 +1,49 @@
-/* HERO */
+/* HERO — static launch layout. Asymmetric two-column grid: text left
+   (smaller), image right (larger, bleeds past the page padding so the work
+   PNG reads big and unframed on the pink canvas). Bottom padding stays 0
+   so the chapter break to the work section comes only from .firstSection
+   below (per the "chapters never bottom-pad themselves" rule). */
 .hero {
   position: relative;
-  padding: 48px 0 var(--lc-section-pad-y);
+  padding: 48px 0 0;
 }
 
-.heroContent {
-  position: relative;
-  z-index: 1;
-}
-
-/* Stacked headline lines; the sticker shares the last line's row so it anchors
-   to the end of the last line regardless of line widths. */
-.heroHeadlineWrap {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.heroLastLine {
-  display: inline-flex;
+/* 5fr / 7fr split puts the image visually larger than the text block while
+   keeping the headline + support + CTA stack readable on the left. Centered
+   vertically so the text block sits in the middle of the image height. */
+.heroGrid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 48px;
   align-items: center;
 }
 
-/* Page-level hero headline sits in the STATEMENT tier (marquee feel). */
-.heroHeadline {
-  font-size: var(--lc-size-statement);
-  line-height: 1;
-}
-
-.subhead {
+.heroLeft {
   position: relative;
   z-index: 1;
-  margin: var(--lc-rhythm-mid) 0 0;
-  max-width: 540px;
+}
+
+/* Headline: page-headline tier, single weight (700 via --lc-weight-display,
+   never 800), sentence case, no boxes, no outline, no bleed. balance is the
+   wrap backstop for short copy like "Social that doesn't suck." (4 words). */
+.heroHeadline {
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: var(--lc-size-page-headline);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--lc-plum);
+  text-wrap: balance;
+}
+
+/* Support line: DM Sans 400 body tier. max-width caps the measure so it
+   stays a 2-3 line block under the headline, doesn't run to column edge. */
+.heroSupport {
+  margin: var(--lc-space-intra) 0 0;
+  max-width: 460px;
+  font-family: var(--lc-body);
   font-size: var(--lc-size-body);
   font-weight: var(--lc-weight-body);
   line-height: 1.5;
@@ -40,22 +51,41 @@
   text-wrap: pretty;
 }
 
-.ctaRow {
-  position: relative;
-  z-index: 1;
-  margin-top: var(--lc-rhythm-mid);
+/* Body-to-CTA gap: canonical sub-section tier, matching every other
+   body-above-CTA pattern on the site. Button itself uses DM Sans 600 via
+   Button.module.css. */
+.heroCta {
+  margin-top: var(--lc-space-sub);
 }
 
-/* Positive intra-tight margin so the sticker never overlaps the headline's
-   trailing punctuation. */
-.heroSticker {
-  margin-left: var(--lc-space-intra-tight);
-  z-index: 5;
+/* Hero image bleeds past the page's right padding so the transparent work
+   PNG reads big and unframed. The clamp gives a moderate bleed on small
+   desktops (-32px, matches one page padding) and scales up to a meatier
+   bleed on wider viewports (-100px floor). Mobile resets to 0 in the
+   media query below so the image stays inside the column when stacked. */
+.heroImageWrap {
+  position: relative;
+  margin-right: clamp(-100px, -5vw, -32px);
+}
+
+.heroImage {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* Generic section */
 .section {
   padding: var(--lc-section-pad-y) 0 0;
+}
+
+/* Home-only: the first section after the hero ("The work.") closes up to a
+   sub-section gap instead of a full chapter break, so the visitor sees the
+   hero and the start of the work in the first screen without scrolling past
+   empty pink. Other sections on home (services, ClosingCTA) keep the full
+   chapter rhythm. */
+.firstSection {
+  padding-top: var(--lc-space-sub);
 }
 
 .sectionTitle {
@@ -138,12 +168,23 @@
 }
 
 @media (max-width: 900px) {
+  /* Hero stacks: headline + support + CTA on top, image full-width below.
+     Image bleed is removed so the PNG sits inside the page padding (no
+     horizontal scrollbar at ~390px). */
+  .hero {
+    padding: 32px 0 0;
+  }
+  .heroGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  .heroImageWrap {
+    margin-right: 0;
+  }
   .servicesGrid {
     grid-template-columns: 1fr;
     gap: 32px;
-  }
-  .heroSticker {
-    margin-left: var(--lc-space-intra-tight);
   }
   .serviceDesc {
     max-width: none;

@@ -1,7 +1,14 @@
 export interface SlotRollTarget {
   el: HTMLElement;
-  /** Final character this digit settles on. */
+  /** Final character this slot settles on. */
   value: string;
+  /**
+   * Glyphs to flip through while rolling. Defaults to the digits 0-9 so
+   * existing numeric callers behave exactly as before. Letter slots pass a
+   * case-matched alphabet, so letters roll through letters and digits through
+   * digits.
+   */
+  rollChars?: string;
 }
 
 export interface SlotRollOptions {
@@ -17,10 +24,40 @@ export interface SlotRollOptions {
   popMs?: number;
 }
 
+const DIGITS = "0123456789";
+const LOWER = "abcdefghijklmnopqrstuvwxyz";
+const UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+export type StatCharKind = "digit" | "letter" | "space" | "other";
+
+export interface StatChar {
+  ch: string;
+  kind: StatCharKind;
+  /** Pool to roll through; present for digit + letter only. */
+  rollChars?: string;
+}
+
 /**
- * Slot-roll a set of digit elements: each flips through random 0-9 at `interval`
- * ms, then settles to its final value (sequentially, staggered by perDigitDelay)
- * with a scale-pop. Shared by HeroNumber and the stats-trio numbers.
+ * Classify a stat value into per-character descriptors for the slot-roll.
+ * Digits and ASCII letters roll (letters case-matched); spaces are gaps that
+ * never roll; everything else (commas, dots, punctuation) is static. Shared by
+ * HeroNumber and the stats-trio number so both treat words identically.
+ */
+export function splitStatChars(value: string): StatChar[] {
+  return value.split("").map((ch) => {
+    if (DIGITS.includes(ch)) return { ch, kind: "digit", rollChars: DIGITS };
+    if (LOWER.includes(ch)) return { ch, kind: "letter", rollChars: LOWER };
+    if (UPPER.includes(ch)) return { ch, kind: "letter", rollChars: UPPER };
+    if (ch === " ") return { ch, kind: "space" };
+    return { ch, kind: "other" };
+  });
+}
+
+/**
+ * Slot-roll a set of slot elements: each flips through random glyphs from its
+ * pool (digits by default) at `interval` ms, then settles to its final value
+ * (sequentially, staggered by perDigitDelay) with a scale-pop. Shared by
+ * HeroNumber and the stats-trio numbers.
  *
  * Caller is responsible for reduced-motion (set finals directly instead of
  * calling this) and for clearing the returned timer ids on cleanup.
@@ -40,9 +77,10 @@ export function slotRoll(
   const timers: number[] = [];
 
   targets.forEach((t, i) => {
+    const pool = t.rollChars && t.rollChars.length > 0 ? t.rollChars : DIGITS;
     const stopAt = startTime + i * perDigitDelay;
     const iv = window.setInterval(() => {
-      t.el.textContent = String(Math.floor(Math.random() * 10));
+      t.el.textContent = pool[Math.floor(Math.random() * pool.length)];
     }, interval);
     timers.push(iv);
 

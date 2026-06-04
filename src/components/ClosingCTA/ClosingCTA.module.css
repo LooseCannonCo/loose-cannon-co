@@ -1,7 +1,23 @@
+/* Full-bleed dark inversion beat, same pattern as the QuoteBlock. Section
+   escapes .page's 1320px max-width via 100vw breakout, then .inner rebuilds
+   the centered max-width column so the headline + FinePrintStat align with
+   every other section's content boundary. Chapter-scale padding top AND
+   bottom (vs. the prior top-only) so the dark band has equal breathing
+   inside before the footer below. */
 .closing {
   position: relative;
-  /* Chapter top only. The footer mark below provides its own chapter top. */
-  padding: var(--lc-space-chapter) 0 0;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  background: var(--lc-plum);
+  color: var(--lc-pink-0);
+  padding: var(--lc-space-chapter) 0;
+}
+
+.inner {
+  max-width: var(--lc-page-max-width);
+  margin: 0 auto;
+  padding: 0 var(--lc-page-pad);
 }
 
 /* Mirrors the host page's 3-col grid so the Fine Print block lines up with the
@@ -44,20 +60,17 @@
   align-items: center;
 }
 
-.closingSticker {
-  margin-left: 6px;
-  z-index: 5;
-}
-
 @media (max-width: 900px) {
+  /* Mobile: inner padding drops to the page's mobile horizontal padding
+     so the dark band's content edge aligns with every other section. */
+  .inner {
+    padding: 0 var(--lc-page-pad-mobile);
+  }
   .closingContent {
     grid-template-columns: 1fr;
     gap: 32px;
   }
   .closingLeft {
     grid-column: auto;
-  }
-  .closingSticker {
-    margin-left: 2px;
   }
 }

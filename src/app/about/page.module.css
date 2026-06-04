@@ -1,184 +1,677 @@
-/* HERO */
-.hero {
-  position: relative;
-  padding: 48px 0 var(--lc-section-pad-y);
-}
+/* /about — zine spread.
+ *
+ * Ported from the locked reference (loose-cannon-about-zine-v7.html) but
+ * native to this codebase: every color is a locked --lc-* token, every family
+ * is --lc-display / --lc-body, and the dark beats break out of the Page
+ * column with the same 100vw pattern QuoteBlock / ClosingCTA use. The bespoke
+ * zine type sizes and tilt angles are kept as literal values because they ARE
+ * the design (the case-study type ramp is intentionally not applied here).
+ *
+ * The .par parallax, hero-bleed settle, and per-section reveal staggers
+ * remain step 2; the continuous marquee scroll and the B&W→color headshot
+ * hover are wired here. */
 
-.heroContent {
-  position: relative;
-  z-index: 1;
-}
-
-.heroHeadlineWrap {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.heroLastLine {
-  display: inline-flex;
-  align-items: center;
-}
-
-.heroHeadline {
-  font-size: var(--lc-size-statement);
-  line-height: 1;
-  text-wrap: balance;
-}
-
-.subhead {
-  position: relative;
-  z-index: 1;
-  margin: var(--lc-rhythm-mid) 0 0;
-  max-width: 620px;
-  font-size: var(--lc-size-body);
-  font-weight: var(--lc-weight-body);
-  line-height: 1.5;
-  color: var(--lc-plum);
-  text-wrap: pretty;
-}
-
-.ctaRow {
-  position: relative;
-  z-index: 1;
-  margin-top: var(--lc-rhythm-mid);
-}
-
-.heroSticker {
-  margin-left: var(--lc-space-intra-tight);
-  z-index: 5;
-}
-
-/* Generic section */
-.section {
-  padding: var(--lc-section-pad-y) 0 0;
-}
-
-.sectionTitle {
-  margin: 0 0 40px;
-  font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
-  font-weight: var(--lc-weight-display);
-  font-size: var(--lc-size-section-title);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  color: var(--lc-plum);
-  text-wrap: balance;
-}
-
-/* FOUNDERS */
-.foundersGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 80px;
-  align-items: start;
-}
-
-.founderCol {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
-}
-
-.founderNum {
-  font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
-  font-weight: var(--lc-weight-display);
-  font-size: 72px;
-  line-height: 1;
-  color: var(--lc-plum);
-}
-
-/* Founder headshot: 4:5 portrait frame above the numeral. Plum 1.5px border
-   + offset plum drop-shadow matches the case study image treatment. Sits at
-   320px max width on desktop, scales fluidly on mobile. next/image fills
-   the frame with object-fit: cover so portrait crop is preserved. */
-.founderHeadshot {
-  position: relative;
-  width: 100%;
-  max-width: 320px;
-  aspect-ratio: 4 / 5;
-  border: 1.5px solid var(--lc-plum);
-  background: var(--lc-pink-0);
-  box-shadow: 8px 8px 0 var(--lc-plum);
-  overflow: hidden;
-  margin-bottom: var(--lc-space-intra);
-}
-
-.founderHeadshotImg {
-  object-fit: cover;
-}
-
-.founderName {
-  margin: 0;
-  font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-sub), "wght" var(--lc-weight-display);
-  font-weight: var(--lc-weight-display);
-  font-size: var(--lc-size-sub);
-  letter-spacing: -0.015em;
-  line-height: 1.05;
-  color: var(--lc-plum);
-  text-wrap: balance;
-}
-
-.founderRole {
+/* Shared small caps line (hero topfur, doc label). */
+.fur {
   font-family: var(--lc-body);
-  font-size: var(--lc-size-caption);
-  font-weight: var(--lc-weight-caption);
-  letter-spacing: 0.16em;
+  font-weight: var(--lc-weight-eyebrow);
+  font-size: var(--lc-size-eyebrow);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--lc-plum);
 }
 
-.founderBio {
-  margin: 0;
-  max-width: 480px;
-  font-family: var(--lc-body);
-  font-size: var(--lc-size-body);
-  font-weight: var(--lc-weight-body);
-  line-height: 1.55;
-  color: var(--lc-plum);
-  text-wrap: pretty;
+/* The reversed letter in the hero headline. */
+.flip {
+  display: inline-block;
+  transform: scaleX(-1);
 }
 
-/* PROOF: featured work list, same as home */
-.workList {
+/* ── HERO ────────────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  padding: 34px 0 92px;
+}
+
+.topfur {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.heroStage {
+  position: relative;
+  margin-top: 26px;
+}
+
+/* Stacks the two headline lines and pins each line's RIGHT edge to the column
+   edge; a line wider than the column overflows off the LEFT (the page clips
+   horizontal overflow). flex-column guarantees the two lines never sit on the
+   same row. */
+.heroHeadlineWrap {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
 }
 
-.linkRow {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 28px;
+/* Faint oversized ampersand sitting in the negative space behind the
+   headline. Reads as a registration ghost, not a third ink. */
+.bigAmp {
+  position: absolute;
+  left: -2%;
+  bottom: -6%;
+  z-index: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(120px, 22vw, 340px);
+  line-height: 0.7;
+  color: var(--lc-violet);
+  mix-blend-mode: multiply;
+  opacity: 0.08;
+  pointer-events: none;
 }
 
-.inlineLink {
+/* Right-anchored, one weight, sentence case, rotated a hair, allowed to bleed
+   off the left edge. PrintHeadline supplies the flat-plum ink + the canonical
+   violet misregistration via `bleed`. */
+/* One per line. As a flex item of .heroHeadlineWrap each headline is sized to
+   its content, so PrintHeadline's absolutely-positioned violet bleed copy
+   (which shrink-wraps to the same text) stays locked directly behind the ink
+   at the canonical 2px offset. nowrap here is a belt; the authoritative nowrap
+   is on .heroLineText below. */
+.heroHeadline {
+  white-space: nowrap;
+  font-size: clamp(46px, 9vw, 128px);
+  transform: rotate(-1deg);
+  transform-origin: right;
+}
+
+/* The element that TRULY holds each line of text. nowrap set directly here
+   wins the cascade regardless of anything PrintHeadline's module does to the
+   wrapping ink/headline, so the line never wraps. */
+.heroLineText {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Keeps "agency" (and its reversed g) unbreakable even when the line is
+   allowed to wrap, e.g. on mobile. */
+.heroWord {
+  white-space: nowrap;
+}
+
+.byline {
+  position: relative;
+  z-index: 2;
+  margin-top: 40px;
+  max-width: 42ch;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-sub), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(18px, 2.1vw, 24px);
+  line-height: 1.12;
+  color: var(--lc-plum);
+}
+
+/* ── MARQUEE RIBBON ─────────────────────────────────────────────────────────
+   Continuous left scroll. The track holds TWO copies of the phrase set, so
+   translateX(-50%) shifts exactly one copy and the loop is seamless. The
+   @keyframes MUST live in this same module as the rule that references it:
+   CSS Modules scope animation names, and a split would silently break it. */
+.ribbonWrap {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+}
+
+.ribbon {
+  background: var(--lc-plum);
+  padding: 22px 0;
+  transform: rotate(-1.4deg) scale(1.05);
+}
+
+.ribbonTrack {
   display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 26s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ribbonTrack {
+    animation: none;
+  }
+}
+
+.ribbonItem {
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-sub), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(18px, 2.2vw, 26px);
+  color: var(--lc-pink-0);
+  padding: 0 26px;
+}
+
+.ribbonItem::after {
+  content: "//";
+  color: var(--lc-violet);
+  margin-left: 26px;
+}
+
+/* ── SECTIONS (light) ──────────────────────────────────────────────────────── */
+.section {
+  position: relative;
+  padding: 76px 0;
+}
+
+.secline {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+}
+
+.secnum {
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1;
+  color: var(--lc-pink-3);
+}
+
+/* Neutralize SectionEyebrow's own bottom margin inside the baseline secline. */
+.secEyebrow {
+  margin-bottom: 0;
+}
+
+/* ── 01: HOW WE MET ─────────────────────────────────────────────────────────── */
+.origin {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 56px;
+  align-items: start;
+  margin-top: 18px;
+}
+
+.originHead {
+  margin: 8px 0 22px;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(34px, 4.6vw, 58px);
+  line-height: 0.9;
+  letter-spacing: -0.015em;
+  color: var(--lc-plum);
+  transform: rotate(-0.7deg);
+  transform-origin: left;
+}
+
+.zinecols {
+  column-count: 2;
+  column-gap: 24px;
+  font-family: var(--lc-body);
+  font-size: var(--lc-size-caption);
+  line-height: 1.45;
+  text-align: justify;
+  hyphens: auto;
+  color: var(--lc-plum);
+}
+
+.zinecols p {
+  margin-bottom: 11px;
+  break-inside: avoid;
+}
+
+.zinecols p:first-child::first-letter {
+  font-family: var(--lc-display);
+  font-weight: var(--lc-weight-display);
+  font-size: 3.1em;
+  line-height: 0.8;
+  float: left;
+  padding: 4px 8px 0 0;
+  color: var(--lc-violet);
+}
+
+.docLabel {
+  composes: fur;
+  display: block;
+  margin-top: 18px;
+  opacity: 0.5;
+}
+
+.artifact {
+  position: relative;
+}
+
+/* The Cage drawing: shown FULL and uncropped at its natural aspect ratio, in
+   full color (no halftone screen). The slight tilt is kept for the zine feel. */
+.artifactFigure {
+  transform: rotate(-1.4deg);
+}
+
+.artifactImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pull {
+  margin-top: 30px;
+}
+
+.pullQuote {
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(26px, 3.4vw, 46px);
+  line-height: 0.96;
+  letter-spacing: -0.015em;
+  max-width: 14ch;
+  color: var(--lc-plum);
+  transform: rotate(0.6deg);
+  transform-origin: left;
+}
+
+.pullAttr {
+  margin-top: 16px;
   font-family: var(--lc-body);
   font-weight: var(--lc-weight-caption);
-  font-size: var(--lc-size-caption);
+  font-size: 12px;
+  letter-spacing: 0.04em;
   color: var(--lc-plum);
-  text-decoration: none;
-  transition: opacity 160ms ease;
+  opacity: 0.7;
 }
 
-.inlineLink:hover {
+/* ── 02: OUR QUALIFICATIONS ──────────────────────────────────────────────────── */
+.headrow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.qualsHead {
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(34px, 4.6vw, 58px);
+  line-height: 0.9;
+  letter-spacing: -0.015em;
+  color: var(--lc-plum);
+  transform: rotate(0.7deg);
+  transform-origin: left;
+}
+
+.founders {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 42px;
+  margin-top: 46px;
+}
+
+.founder:nth-child(2) {
+  transform: translateY(56px);
+}
+
+.frame {
+  position: relative;
+}
+
+/* Headshot frame: no halftone screen. Grayscale by default, eases to full
+   color on hover of the founder card. */
+.headshot {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--lc-pink-1);
+}
+
+.headshotImg {
+  object-fit: cover;
+  /* Faces sit centered. Both source photos are square (800x800 / 400x400) and
+     the frame is 1:1, so cover shows the full photo with no crop. */
+  object-position: center;
+  filter: grayscale(1);
+  transition: filter 350ms ease;
+}
+
+.founder:hover .headshotImg {
+  filter: grayscale(0);
+}
+
+/* Both cards share a square frame (matches the square source images) so the
+   full face + shoulders read with nothing cut off, and the two cards stay the
+   same shape. */
+.founder .headshot {
+  aspect-ratio: 1 / 1;
+  transform: rotate(-1deg);
+}
+
+.founder:nth-child(2) .headshot {
+  transform: rotate(1.2deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .headshotImg {
+    transition: none;
+  }
+}
+
+.film {
+  position: relative;
+  z-index: 3;
+  margin-top: -38px;
+  margin-left: -8px;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(38px, 5.6vw, 72px);
+  line-height: 0.84;
+  letter-spacing: -0.02em;
+  color: var(--lc-plum);
+  transform: rotate(-1.6deg);
+}
+
+.founder:nth-child(2) .film {
+  margin-left: 0;
+  margin-right: -8px;
+  text-align: right;
+  transform: rotate(1.6deg);
+}
+
+.founderMeta {
+  margin-top: 22px;
+}
+
+.founder:nth-child(2) .founderMeta {
+  text-align: right;
+}
+
+.role {
+  font-family: var(--lc-body);
+  font-weight: var(--lc-weight-caption);
+  font-size: var(--lc-size-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lc-plum);
   opacity: 0.65;
 }
 
+.name {
+  margin-top: 2px;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-sub), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: 24px;
+  letter-spacing: -0.015em;
+  color: var(--lc-plum);
+}
+
+.why {
+  margin-top: 10px;
+  max-width: 34ch;
+  font-family: var(--lc-body);
+  font-size: var(--lc-size-caption);
+  line-height: 1.5;
+  color: var(--lc-plum);
+}
+
+.founder:nth-child(2) .why {
+  margin-left: auto;
+}
+
+/* ── Shared closing rail (sideways label + content) ──────────────────────────── */
+.closingRow {
+  display: flex;
+  gap: 26px;
+  align-items: flex-start;
+}
+
+.side {
+  flex: none;
+  margin-top: 4px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  font-family: var(--lc-body);
+  font-weight: var(--lc-weight-eyebrow);
+  font-size: var(--lc-size-eyebrow);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.closingContent {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── MANIFESTO (dark) ────────────────────────────────────────────────────────── */
+.manifesto {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+  background: var(--lc-plum);
+  color: var(--lc-pink-0);
+  padding: 76px 0;
+}
+
+/* Recentered column inside the full-bleed dark band, matching the page gutter. */
+.manInner {
+  max-width: var(--lc-page-max-width);
+  margin: 0 auto;
+  padding: 0 var(--lc-page-pad);
+}
+
+.manGlyph {
+  position: absolute;
+  right: -1%;
+  top: -16%;
+  z-index: 0;
+  font-family: var(--lc-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(260px, 44vw, 580px);
+  line-height: 0.7;
+  color: var(--lc-violet);
+  opacity: 0.09;
+  pointer-events: none;
+}
+
+.manHead {
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(38px, 6vw, 80px);
+  line-height: 0.9;
+  letter-spacing: -0.015em;
+  max-width: 18ch;
+  color: inherit;
+  transform: rotate(-0.8deg);
+  transform-origin: left;
+}
+
+.manLower {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 44px;
+  align-items: start;
+  margin-top: 36px;
+}
+
+.manDecided {
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(24px, 3.2vw, 42px);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  max-width: 18ch;
+  color: inherit;
+}
+
+.manAside {
+  padding-top: 8px;
+}
+
+.manKicker {
+  display: inline-block;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-sub), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(19px, 2.2vw, 28px);
+  letter-spacing: -0.01em;
+  opacity: 0.85;
+  transform: rotate(-3deg);
+}
+
+.manBody {
+  margin-top: 24px;
+  max-width: 36ch;
+  font-family: var(--lc-body);
+  font-size: var(--lc-size-caption);
+  line-height: 1.5;
+  opacity: 0.72;
+}
+
+/* ── BRIDGE (light, right-set pivot) ─────────────────────────────────────────── */
+.bridge {
+  padding: 76px 0;
+}
+
+.bridgeContent {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+  min-width: 0;
+}
+
+.bridgeLine {
+  max-width: 24ch;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(23px, 3vw, 40px);
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+  color: var(--lc-plum);
+  text-align: right;
+  transform: rotate(-0.5deg);
+  transform-origin: right;
+}
+
+/* ── CTA (dark) ──────────────────────────────────────────────────────────────── */
+.cta {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+  background: var(--lc-plum);
+  color: var(--lc-pink-0);
+  padding: 76px 0;
+}
+
+.ctaHead {
+  display: block;
+  font-size: clamp(42px, 7vw, 96px);
+  line-height: 0.9;
+  max-width: 13ch;
+}
+
+.ctaCluster {
+  margin-top: 32px;
+}
+
+.ctaEmail {
+  margin-top: 22px;
+  font-family: var(--lc-body);
+  font-weight: var(--lc-weight-caption);
+  font-size: var(--lc-size-caption);
+  letter-spacing: 0.02em;
+  opacity: 0.85;
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .foundersGrid {
+  .bigAmp,
+  .manGlyph {
+    display: none;
+  }
+
+  .hero {
+    padding: 28px 0 64px;
+  }
+
+  .heroHeadlineWrap {
+    align-items: flex-start;
+  }
+
+  .heroHeadline {
+    white-space: normal;
+    font-size: clamp(40px, 12vw, 74px);
+    transform-origin: left;
+  }
+
+  .heroLineText {
+    white-space: normal;
+  }
+
+  .origin,
+  .founders,
+  .manLower {
     grid-template-columns: 1fr;
-    gap: 56px;
   }
-  .founderBio {
-    max-width: none;
+
+  .zinecols {
+    column-count: 1;
   }
-  .heroSticker {
-    margin-left: var(--lc-space-intra-tight);
+
+  .founder:nth-child(2) {
+    transform: none;
+  }
+
+  .founder:nth-child(2) .film,
+  .founder:nth-child(2) .founderMeta,
+  .founder:nth-child(2) .why {
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .bridgeContent {
+    justify-content: flex-start;
+  }
+
+  .bridgeLine {
+    text-align: left;
+    transform-origin: left;
+  }
+
+  .section,
+  .manifesto,
+  .bridge,
+  .cta {
+    padding: 54px 0;
+  }
+
+  .manInner {
+    padding: 0 var(--lc-page-pad-mobile);
   }
 }

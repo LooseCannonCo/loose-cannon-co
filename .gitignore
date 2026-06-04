@@ -35,3 +35,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local working artifacts (reference mockup + asset bundle, not site code)
+/loose-cannon-ayye-case-v15.html
+/02_OUTPUT_AYYE.zip

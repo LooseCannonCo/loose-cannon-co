@@ -3,13 +3,17 @@
 import { useEffect, useMemo, useRef } from "react";
 
 import { prefersReducedMotion } from "@/lib/motion";
-import { slotRoll } from "@/lib/slotRoll";
+import { slotRoll, splitStatChars } from "@/lib/slotRoll";
 
 import styles from "./StatsTrio.module.css";
 
 export interface TrioNumberProps {
   prefix?: string;
-  /** e.g. "218" or "3.4". Commas/dots stay static; digits roll. */
+  /**
+   * The value. Any string of letters, digits, spaces, and punctuation:
+   * "218", "3.4", or a phrase. Digits and letters roll; commas/dots/punctuation
+   * stay static; spaces are preserved gaps.
+   */
   digits: string;
   /** Superscript unit, e.g. "%" or "×". */
   unit?: string;
@@ -17,10 +21,7 @@ export interface TrioNumberProps {
 
 /** The big number in a stats-trio cell. Slot-rolls on entering the viewport. */
 export function TrioNumber({ prefix, digits, unit }: TrioNumberProps) {
-  const chars = useMemo(
-    () => digits.split("").map((ch) => ({ ch, isDigit: /[0-9]/.test(ch) })),
-    [digits],
-  );
+  const chars = useMemo(() => splitStatChars(digits), [digits]);
 
   const wrapRef = useRef<HTMLSpanElement>(null);
   const digitRefs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -29,10 +30,12 @@ export function TrioNumber({ prefix, digits, unit }: TrioNumberProps) {
     const wrap = wrapRef.current;
     if (!wrap) return;
 
-    const targets: { el: HTMLElement; value: string }[] = [];
+    const targets: { el: HTMLElement; value: string; rollChars: string }[] = [];
     chars.forEach((c, i) => {
       const el = digitRefs.current[i];
-      if (c.isDigit && el) targets.push({ el, value: c.ch });
+      if ((c.kind === "digit" || c.kind === "letter") && el && c.rollChars) {
+        targets.push({ el, value: c.ch, rollChars: c.rollChars });
+      }
     });
 
     if (prefersReducedMotion()) {
@@ -45,7 +48,7 @@ export function TrioNumber({ prefix, digits, unit }: TrioNumberProps) {
     const timers: number[] = [];
     const run = () => {
       targets.forEach((t) => {
-        t.el.textContent = "0";
+        t.el.textContent = t.rollChars[0];
       });
       slotRoll(targets, { startTime: 400, perDigitDelay: 150 }).forEach((id) =>
         timers.push(id),
@@ -85,16 +88,45 @@ export function TrioNumber({ prefix, digits, unit }: TrioNumberProps) {
     <div className={styles.num}>
       <span ref={wrapRef} className={styles.numInner}>
         {prefix ? <span>{prefix}</span> : null}
-        {chars.map((c, i) => (
-          <span
-            key={i}
-            ref={(el) => {
-              digitRefs.current[i] = el;
-            }}
-          >
-            {c.isDigit ? "0" : c.ch}
-          </span>
-        ))}
+        {chars.map((c, i) => {
+          if (c.kind === "letter") {
+            return (
+              <span key={i} className={styles.slot}>
+                <span className={styles.ghost} aria-hidden="true">
+                  {c.ch}
+                </span>
+                <span
+                  className={styles.roller}
+                  ref={(el) => {
+                    digitRefs.current[i] = el;
+                  }}
+                >
+                  {c.ch}
+                </span>
+              </span>
+            );
+          }
+          if (c.kind === "space") {
+            return (
+              <span key={i} className={styles.space}>
+                {" "}
+              </span>
+            );
+          }
+          if (c.kind === "digit") {
+            return (
+              <span
+                key={i}
+                ref={(el) => {
+                  digitRefs.current[i] = el;
+                }}
+              >
+                0
+              </span>
+            );
+          }
+          return <span key={i}>{c.ch}</span>;
+        })}
       </span>
       {unit ? <sup>{unit}</sup> : null}
     </div>

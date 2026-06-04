@@ -60,6 +60,8 @@ export default async function WorkIndex() {
             year={c.year}
             headline={c.headline}
             coverImage={c.coverImage ?? c.posterImage}
+            coverRatio={c.coverRatio}
+            coverHotspot={c.coverHotspot}
             // Ayye card only: the Creators UGC spot as the cover, instead of
             // the wordmark-on-pink still. Other cards keep their image cover.
             coverVideo={

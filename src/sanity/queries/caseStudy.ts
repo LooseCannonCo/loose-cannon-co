@@ -13,6 +13,8 @@ export const getAllCaseStudies = groq`*[_type == "caseStudy"]{
   featured,
   coverImage,
   "posterImage": heroVideo.posterImage,
+  "coverRatio": coalesce(coverImage.asset->metadata.dimensions.aspectRatio, heroVideo.posterImage.asset->metadata.dimensions.aspectRatio),
+  "coverHotspot": coalesce(coverImage.hotspot, heroVideo.posterImage.hotspot),
   "prefix": hero.prefix,
   "digits": hero.digits,
   "suffix": hero.suffix,
@@ -244,6 +246,11 @@ export interface CaseStudyListItem {
   /** Projected from heroVideo.posterImage; used as the card fallback when
    *  coverImage is empty. */
   posterImage?: SanityImageSource;
+  /** Native aspect ratio (w/h) of the chosen cover, for native-aspect cards. */
+  coverRatio?: number;
+  /** Hotspot of the chosen cover; drives object-position when the cover is
+   *  capped by max-height. */
+  coverHotspot?: { x: number; y: number };
   prefix?: string;
   digits?: string;
   suffix?: string;

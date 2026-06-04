@@ -8,7 +8,10 @@ export interface ButtonProps {
   /** When set (and no `href`), renders a <button> with this type. */
   type?: "submit" | "button" | "reset";
   children: React.ReactNode;
-  variant?: "primary";
+  /** "primary" (default): plum fill, cream text. Used on light surfaces.
+   *  "onDark": cream fill, plum text. Used inside the inverted Quote and
+   *  ClosingCTA beats where the surface is plum. */
+  variant?: "primary" | "onDark";
   className?: string;
 }
 

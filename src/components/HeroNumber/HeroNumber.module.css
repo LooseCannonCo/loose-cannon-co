@@ -43,6 +43,33 @@
   transition: transform 0.18s cubic-bezier(0.2, 1.5, 0.3, 1);
 }
 
+/* Preserved space between words (e.g. "a shit ton"). white-space: pre keeps
+   the single space from collapsing inside the inline-flex row. */
+.space {
+  white-space: pre;
+}
+
+/* Letter slot: the ghost is the final glyph and reserves the slot's exact
+   width (invisible); the roller flips through letters on top of it, absolutely
+   positioned so rolling glyphs never shift their neighbors and the slot lands
+   precisely on the final letter. */
+.slot {
+  position: relative;
+}
+
+.ghost {
+  visibility: hidden;
+}
+
+.roller {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: pre;
+  transform-origin: center;
+  transition: transform 0.18s cubic-bezier(0.2, 1.5, 0.3, 1);
+}
+
 /* Tucked into the bottom-right negative space of the number block. Anchored
    to the RIGHT edge of the number (right: 0) and hanging BELOW the bottom
    (bottom: -50px), so the sticker lives entirely in the negative space
@@ -74,7 +101,8 @@
     opacity: 1;
     transform: none;
   }
-  .digits > span {
+  .digits > span,
+  .roller {
     transition: none;
   }
 }

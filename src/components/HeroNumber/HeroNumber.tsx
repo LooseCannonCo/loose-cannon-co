@@ -4,26 +4,27 @@ import { useEffect, useMemo, useRef } from "react";
 
 import { Sticker, type StickerHandle } from "@/components/Sticker/Sticker";
 import { prefersReducedMotion } from "@/lib/motion";
-import { slotRoll } from "@/lib/slotRoll";
+import { slotRoll, splitStatChars } from "@/lib/slotRoll";
 
 import styles from "./HeroNumber.module.css";
 
 export interface HeroNumberProps {
-  /** Rendered small (60px) before the digits, e.g. "+" or "$". */
+  /** Rendered small (60px) before the value, e.g. "+" or "$". */
   prefix?: string;
-  /** The number, e.g. "2,400" or "100,000". Commas stay static; digits roll. */
+  /**
+   * The value. Any string of letters, digits, spaces, and punctuation:
+   * "2,400", "100,000", or a phrase like "a shit ton". Digits and letters
+   * roll; commas/dots/punctuation stay static; spaces are preserved gaps.
+   */
   digits: string;
-  /** Rendered small (60px) after the digits, e.g. "%" or "K". */
+  /** Rendered small (60px) after the value, e.g. "%" or "K". */
   suffix?: string;
-  /** Sticker tucked into the bottom-right of the last digit; slams in last. */
+  /** Sticker tucked into the bottom-right of the last slot; slams in last. */
   sticker?: { text: string; angle: number };
 }
 
 export function HeroNumber({ prefix, digits, suffix, sticker }: HeroNumberProps) {
-  const chars = useMemo(
-    () => digits.split("").map((ch) => ({ ch, isDigit: /[0-9]/.test(ch) })),
-    [digits],
-  );
+  const chars = useMemo(() => splitStatChars(digits), [digits]);
 
   const wrapRef = useRef<HTMLSpanElement>(null);
   const digitRefs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -36,10 +37,15 @@ export function HeroNumber({ prefix, digits, suffix, sticker }: HeroNumberProps)
     const wrap = wrapRef.current;
     if (!wrap) return;
 
-    const targets: { el: HTMLSpanElement; value: string }[] = [];
+    // Digits AND letters roll, in source order, so the stagger sweeps the whole
+    // value left to right. Spaces and punctuation are not targets.
+    const targets: { el: HTMLSpanElement; value: string; rollChars: string }[] =
+      [];
     chars.forEach((c, i) => {
       const el = digitRefs.current[i];
-      if (c.isDigit && el) targets.push({ el, value: c.ch });
+      if ((c.kind === "digit" || c.kind === "letter") && el && c.rollChars) {
+        targets.push({ el, value: c.ch, rollChars: c.rollChars });
+      }
     });
 
     // Reduced motion: show the final number immediately, no roll, no pops.
@@ -86,7 +92,7 @@ export function HeroNumber({ prefix, digits, suffix, sticker }: HeroNumberProps)
 
     const runIntro = () => {
       targets.forEach((t) => {
-        t.el.textContent = "0";
+        t.el.textContent = t.rollChars[0];
       });
       if (prefixRef.current) after(prefixAt, () => popIn(prefixRef.current!));
       roll(startTime, perDigitDelay);
@@ -145,16 +151,51 @@ export function HeroNumber({ prefix, digits, suffix, sticker }: HeroNumberProps)
         </span>
       ) : null}
       <span className={styles.digits}>
-        {chars.map((c, i) => (
-          <span
-            key={i}
-            ref={(el) => {
-              digitRefs.current[i] = el;
-            }}
-          >
-            {c.isDigit ? "0" : c.ch}
-          </span>
-        ))}
+        {chars.map((c, i) => {
+          // Letter: a width-reserving ghost (the final glyph) with an absolutely
+          // positioned roller on top, so the rolling glyphs never shift their
+          // neighbors and the slot lands exactly on the final letter.
+          if (c.kind === "letter") {
+            return (
+              <span key={i} className={styles.slot}>
+                <span className={styles.ghost} aria-hidden="true">
+                  {c.ch}
+                </span>
+                <span
+                  className={styles.roller}
+                  ref={(el) => {
+                    digitRefs.current[i] = el;
+                  }}
+                >
+                  {c.ch}
+                </span>
+              </span>
+            );
+          }
+          // Space: a preserved gap (white-space: pre), never rolls.
+          if (c.kind === "space") {
+            return (
+              <span key={i} className={styles.space}>
+                {" "}
+              </span>
+            );
+          }
+          // Digit: unchanged — placeholder "0" that rolls through 0-9.
+          if (c.kind === "digit") {
+            return (
+              <span
+                key={i}
+                ref={(el) => {
+                  digitRefs.current[i] = el;
+                }}
+              >
+                0
+              </span>
+            );
+          }
+          // Punctuation (commas, dots, etc.): static.
+          return <span key={i}>{c.ch}</span>;
+        })}
       </span>
       {suffix ? (
         <span ref={suffixRef} className={styles.affix}>

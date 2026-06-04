@@ -13,6 +13,11 @@ export interface CaseBandProps {
   headline?: string;
   /** Sanity cover image. Falls back to the on-brand halftone swatch. */
   coverImage?: SanityImageSource;
+  /** Native aspect ratio (w/h) of the cover image, so the card uses the
+   *  cover's own shape instead of a fixed crop. */
+  coverRatio?: number;
+  /** Cover hotspot; keeps the focal area in frame if a tall cover is capped. */
+  coverHotspot?: { x: number; y: number };
   /** Optional cover video (autoplay/muted/loop/playsinline). Overrides the
    *  cover image for this band. Used only by the Ayye card. */
   coverVideo?: { src: string; poster: string };
@@ -34,6 +39,8 @@ export function CaseBand({
   year,
   headline,
   coverImage,
+  coverRatio,
+  coverHotspot,
   coverVideo,
 }: CaseBandProps) {
   // Squash any \n breaks in the hero headline into a single line for the
@@ -41,6 +48,12 @@ export function CaseBand({
   const hook = (headline ?? "").replace(/\s*\n\s*/g, " ").trim();
   // Strip any month prefix from a freeform year so the eyebrow stays tight.
   const displayYear = (year ?? "").match(/\d{4}/)?.[0] ?? year;
+  // Video covers (Ayye) are 16:9; image covers use their native ratio.
+  const ratio = coverVideo ? 16 / 9 : coverRatio;
+  // Hotspot to object-position, used only if the cover gets capped.
+  const objectPosition = coverHotspot
+    ? `${coverHotspot.x * 100}% ${coverHotspot.y * 100}%`
+    : undefined;
 
   return (
     <a
@@ -53,8 +66,9 @@ export function CaseBand({
           image={coverImage}
           videoSrc={coverVideo?.src}
           videoPoster={coverVideo?.poster}
+          ratio={ratio}
+          objectPosition={objectPosition}
           alt={`${client} cover`}
-          aspect="4-3"
           width={1100}
           className={styles.image}
         />

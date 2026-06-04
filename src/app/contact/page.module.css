@@ -15,13 +15,8 @@
   align-items: flex-start;
 }
 
-.heroLastLine {
-  display: inline-flex;
-  align-items: center;
-}
-
 .heroHeadline {
-  font-size: var(--lc-size-statement);
+  font-size: var(--lc-size-page-headline);
   line-height: 1;
   text-wrap: balance;
 }
@@ -36,13 +31,6 @@
   line-height: 1.5;
   color: var(--lc-plum);
   text-wrap: pretty;
-}
-
-/* Positive intra-tight margin so the sticker never overlaps the headline's
-   trailing punctuation. */
-.heroSticker {
-  margin-left: var(--lc-space-intra-tight);
-  z-index: 5;
 }
 
 /* Generic section */
@@ -282,8 +270,5 @@ select.input {
   }
   .stripDesc {
     max-width: none;
-  }
-  .heroSticker {
-    margin-left: var(--lc-space-intra-tight);
   }
 }

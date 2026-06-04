@@ -91,6 +91,29 @@ export const caseStudy = defineType({
       ],
     }),
 
+    // ── Gallery title block (optional, sits above the gallery grid) ──────
+    // Renders only when `galleryTitle` is set. Same eyebrow + section-title +
+    // intro lockup as the StatsTrio title block, so cases that need to frame
+    // their gallery as a chapter (Ayye "What we built.") get a proper title;
+    // image-only galleries (FITAID) leave these blank and the section renders
+    // just the eyebrow + grid as before.
+    defineField({
+      name: "galleryEyebrow",
+      title: "Gallery eyebrow (optional)",
+      type: "string",
+    }),
+    defineField({
+      name: "galleryTitle",
+      title: "Gallery title (optional, enables the title block)",
+      type: "string",
+    }),
+    defineField({
+      name: "galleryIntro",
+      title: "Gallery intro (optional, short paragraph)",
+      type: "text",
+      rows: 2,
+    }),
+
     // ── Gallery ───────────────────────────────────────────────────────────
     // Arbitrary set of post/asset images. FITAID uses this for the social
     // post grid. Each entry is an image with optional alt + caption.
@@ -122,6 +145,30 @@ export const caseStudy = defineType({
       ],
     }),
 
+    // ── Feature image (optional, full-bleed cinematic beat) ──────────────
+    // Renders edge-to-edge between the Brief and the content gallery. Hotspot
+    // + crop are enabled so the editor controls the focal point when a tall
+    // source gets cropped to a wide cinematic band. Caption is optional and
+    // renders eyebrow-style bottom-left. No image = the whole section skips.
+    defineField({
+      name: "featureImage",
+      title: "Feature image (full-bleed, optional)",
+      type: "object",
+      fields: [
+        defineField({
+          name: "image",
+          type: "image",
+          options: { hotspot: true },
+        }),
+        defineField({ name: "alt", title: "Alt text", type: "string" }),
+        defineField({
+          name: "caption",
+          title: "Caption (short, optional, bottom-left)",
+          type: "string",
+        }),
+      ],
+    }),
+
     // ── Hero ──────────────────────────────────────────────────────────────
     defineField({
       name: "hero",
@@ -129,10 +176,12 @@ export const caseStudy = defineType({
       fields: [
         defineField({ name: "eyebrow", type: "string" }),
         defineField({ name: "prefix", title: "Prefix (e.g. + or $)", type: "string" }),
+        // Optional: leave blank to render a stat-less hero (eyebrow + headline +
+        // subhead + meta + artifact, no big number block).
         defineField({
           name: "digits",
+          title: "Digits (leave blank for a no-number hero)",
           type: "string",
-          validation: (r) => r.required(),
         }),
         defineField({ name: "suffix", title: "Suffix (e.g. % or K)", type: "string" }),
         defineField({

@@ -1,8 +1,25 @@
+/* Full-bleed dark inversion beat. Section escapes .page's 1320px max-width
+   via the 100vw breakout pattern so the dark band spans the full viewport
+   width. Internal `.inner` wrapper re-establishes the page's max-width +
+   horizontal padding so the quote text aligns with every other section's
+   content boundary. Sub-section padding (72px desktop / 40px mobile) top
+   and bottom inside the dark surface; the matching pink-side breathing
+   comes from StatsTrio's own padding-bottom so both sides of the color
+   boundary clear with obvious symmetric space. */
 .quoteBlock {
   position: relative;
-  /* Chapters provide only TOP padding. The next chapter (credits) provides
-     its own top, so no bottom padding here. */
-  padding: var(--lc-space-chapter) 0 0;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  background: var(--lc-plum);
+  color: var(--lc-pink-0);
+  padding: var(--lc-space-sub) 0;
+}
+
+.inner {
+  max-width: var(--lc-page-max-width);
+  margin: 0 auto;
+  padding: 0 var(--lc-page-pad);
 }
 
 .row {
@@ -13,6 +30,9 @@
   max-width: 1000px;
 }
 
+/* Mark + text + attribution all consume `color: inherit` so the inversion
+   propagates from the .quoteBlock parent without explicit pink-0 anywhere
+   below. */
 .markBig {
   display: inline-block;
   font-family: var(--lc-display);
@@ -21,7 +41,7 @@
   font-size: 64px;
   line-height: 1;
   letter-spacing: -0.04em;
-  color: var(--lc-plum);
+  color: inherit;
   transform: translateY(0.42em);
 }
 
@@ -34,6 +54,7 @@
   font-size: var(--lc-size-statement);
   letter-spacing: -0.025em;
   line-height: 1.04;
+  color: inherit;
   text-wrap: balance;
 }
 
@@ -43,27 +64,41 @@
   letter-spacing: var(--lc-tracking-source);
   text-transform: uppercase;
   font-weight: var(--lc-weight-source);
-  opacity: var(--lc-opacity-source);
+  color: inherit;
+  /* Slight de-emphasis (0.8 vs body's full strength). On dark, pink at 0.8
+     opacity still reads clearly without dominating the quote text above. */
+  opacity: 0.8;
 }
 
 .role {
   font-weight: var(--lc-weight-body);
-  opacity: 0.65;
   text-transform: none;
   letter-spacing: 0.02em;
   font-size: var(--lc-size-eyebrow);
+  color: inherit;
+  opacity: 0.75;
 }
 
-.micDrop {
-  position: absolute;
-  top: 56px;
-  right: 80px;
-  z-index: 5;
-}
-
+/* Mobile: drop the pull quote out of the statement tier (60px floor) so the
+   FITAID-length quote (13 words) wraps to fuller lines and no single word
+   lands alone on the last line. At 60px in a ~288px quote column the
+   browser was forced to 5+ lines of 1-2 words each and the trailing
+   "right." was widowing. 30px in the same column gives ~17-18 chars per
+   line, ~3-4 words per line, ~4 lines for a 13-word quote; balance keeps
+   the last line at 3-4 words, no widow. Mark scales down proportionally
+   so it still baseline-aligns with the smaller text via the existing
+   transform: translateY(0.42em). Inner padding also drops to the page's
+   mobile horizontal padding so content aligns with every other section. */
 @media (max-width: 900px) {
-  .micDrop {
-    top: 16px;
-    right: 16px;
+  .inner {
+    padding: 0 var(--lc-page-pad-mobile);
+  }
+  .text {
+    font-size: 30px;
+    line-height: 1.15;
+  }
+  .markBig {
+    font-size: 40px;
   }
 }
+

@@ -11,6 +11,8 @@ export interface FrameVideoProps {
   poster?: string;
   /** Source MIME type. Defaults to video/mp4. */
   type?: string;
+  /** object-position for the video, used when a tall frame caps the cover. */
+  objectPosition?: string;
   /** Class applied to the <video> (object-fit cover fill of the frame). */
   className?: string;
 }
@@ -22,7 +24,13 @@ export interface FrameVideoProps {
  * its poster frame. Decorative cover, so aria-hidden and no controls; the
  * band's client name + link carry the accessible label.
  */
-export function FrameVideo({ src, poster, type, className }: FrameVideoProps) {
+export function FrameVideo({
+  src,
+  poster,
+  type,
+  objectPosition,
+  className,
+}: FrameVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -39,6 +47,7 @@ export function FrameVideo({ src, poster, type, className }: FrameVideoProps) {
     <video
       ref={ref}
       className={className}
+      style={objectPosition ? { objectPosition } : undefined}
       poster={poster}
       muted
       loop

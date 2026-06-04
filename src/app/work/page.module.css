@@ -5,10 +5,9 @@
   padding: 48px 0 var(--lc-space-chapter);
 }
 
-/* "Work." with the print-registration treatment: a violet copy offset behind
-   the solid plum word (registration bleed), not an outline or stroke. The
-   word is large but caps at the statement tier so the case rows below it
-   still own the visual hierarchy. */
+/* "Work." renders flat plum, no print-registration offset. At statement
+   tier the duplicate offset reads as a drop-shadow regardless of color,
+   so every large display headline across the site stays flat. */
 .headline {
   position: relative;
   z-index: 1;
@@ -20,22 +19,7 @@
   font-size: var(--lc-size-statement);
   line-height: 0.9;
   letter-spacing: -0.04em;
-}
-
-.ink {
-  position: relative;
-  z-index: 1;
   color: var(--lc-plum);
-}
-
-.bleed {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 0;
-  color: var(--lc-violet);
-  opacity: 0.62;
-  transform: translate(1.5px, 1px);
 }
 
 .subhead {
@@ -50,8 +34,15 @@
   text-wrap: pretty;
 }
 
-.list {
+/* Big bands list: chapter-break vertical rhythm between each band so the
+   page reads as an index of three deliberate beats. Top padding is the
+   sub-section gap from the page header above; everything else is owned by
+   the band gap. */
+.bands {
   display: flex;
   flex-direction: column;
-  padding-top: 8px;
+  gap: var(--lc-space-chapter);
+  padding-top: var(--lc-space-sub);
+  /* Reserve bottom space before the footer so the last band breathes. */
+  padding-bottom: var(--lc-space-chapter);
 }

@@ -2,6 +2,38 @@
   padding: var(--lc-space-chapter) 0 0;
 }
 
+/* Title block above the grid. Mirrors StatsTrio's title-block lockup: section
+   title on the left, intro on the right, sub-section gap below. Only renders
+   when a `title` is supplied; galleries without a title keep the original
+   eyebrow-above-grid chrome. */
+.titleBlock {
+  display: grid;
+  grid-template-columns: var(--lc-section-title-grid);
+  gap: var(--lc-section-gap);
+  align-items: start;
+  margin-bottom: var(--lc-space-sub);
+}
+
+.ttl {
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: var(--lc-size-section-title);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.body {
+  margin: 0;
+  padding-top: 12px;
+  font-size: var(--lc-size-body);
+  line-height: 1.55;
+  max-width: 540px;
+  text-wrap: pretty;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -57,7 +89,36 @@
   text-wrap: pretty;
 }
 
+/* Image-less placeholder: cream-fill tile with the caption shown inside.
+   Sits inside the same plum-bordered frame so the registration bleed and
+   tile geometry stay identical to image tiles. Used by deliverables-style
+   galleries (Ayye) that publish copy before assets land. */
+.placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--lc-cream);
+  padding: 20px;
+}
+
+.placeholderText {
+  font-family: var(--lc-body);
+  font-size: var(--lc-size-caption);
+  font-weight: var(--lc-weight-caption);
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  color: var(--lc-plum);
+  text-align: center;
+  text-wrap: pretty;
+}
+
 @media (max-width: 900px) {
+  .titleBlock {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
   .grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;

@@ -51,6 +51,14 @@
   opacity: 0.55;
 }
 
+/* 16:9 poster teaser sits a sub-section break below the meta row so the page
+   ends on an image rather than a bare link. Frame treatment comes from
+   CaseImage (plum border + offset violet bleed), consistent with the rest of
+   the case study image language. */
+.teaser {
+  margin-top: var(--lc-space-sub);
+}
+
 .ps {
   position: absolute;
   top: 60px;

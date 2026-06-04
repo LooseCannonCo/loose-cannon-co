@@ -4,21 +4,15 @@ export interface MetaStripProps {
   client: string;
   discipline: string;
   year: string;
-  /** e.g. "Case 001". */
-  caseLabel: string;
-  /** e.g. "Featured". */
+  /** Optional right-side tag, e.g. "Featured". Only renders the right column
+   *  when present. The case-number label was removed; caseNumber stays in
+   *  the schema for sort order but no longer surfaces in the UI. */
   tag?: string;
 }
 
-/** Section 2: the client / discipline / year strip, with the case number and
- *  an optional tag on the right. */
-export function MetaStrip({
-  client,
-  discipline,
-  year,
-  caseLabel,
-  tag,
-}: MetaStripProps) {
+/** Section 2: the client / discipline / year strip, with an optional tag
+ *  on the right. */
+export function MetaStrip({ client, discipline, year, tag }: MetaStripProps) {
   return (
     <div className={styles.metaStrip}>
       <div className={styles.grp}>
@@ -26,10 +20,11 @@ export function MetaStrip({
         <Col label="Discipline" value={discipline} />
         <Col label="Year" value={year} />
       </div>
-      <div className={`${styles.col} ${styles.right}`}>
-        <span className={styles.lbl}>{caseLabel}</span>
-        {tag ? <span className={styles.val}>{tag}</span> : null}
-      </div>
+      {tag ? (
+        <div className={`${styles.col} ${styles.right}`}>
+          <span className={styles.val}>{tag}</span>
+        </div>
+      ) : null}
     </div>
   );
 }

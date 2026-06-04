@@ -15,10 +15,14 @@
   margin: 0 0 var(--lc-space-intra-tight);
 }
 
+/* dot + text both consume currentColor so the eyebrow flips with its parent
+   on dark surfaces (the inverted Quote and ClosingCTA beats) without
+   needing a separate variant. Light contexts inherit plum from the body
+   default; dark contexts set color: var(--lc-pink-0) on the wrapper. */
 .dot {
   width: 7px;
   height: 7px;
-  background: var(--lc-plum);
+  background: currentColor;
   flex: none;
 }
 
@@ -28,5 +32,5 @@
   font-weight: var(--lc-weight-eyebrow);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--lc-plum);
+  color: inherit;
 }

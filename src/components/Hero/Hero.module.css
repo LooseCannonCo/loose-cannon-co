@@ -4,13 +4,16 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
-  align-items: center;
+  /* Top-aligned: artifact's top sits with the eyebrow row in the left column.
+     With a 4:5 portrait artifact the right column is now nearly the same
+     vertical height as eyebrow + number + headline + subhead + meta, so the
+     two columns balance without a vertical-center pivot. */
+  align-items: start;
 }
 
-/* Content sits above the splatter layer (z-index 0). The .left column gets a
-   higher z-index than .right so the Banger sticker that overflows the
-   bottom-right of the number into the column gap isn't painted over by the
-   hero image. */
+/* .left gets a higher z-index than .right so the Banger sticker that
+   overflows the bottom-right of the number into the column gap isn't
+   painted over by the hero image. */
 .left {
   position: relative;
   z-index: 2;
@@ -70,27 +73,6 @@
 
 .artifactWrap {
   position: relative;
-}
-
-.artifactSticker {
-  position: absolute;
-  z-index: 6;
-}
-.top-right {
-  top: -16px;
-  right: -16px;
-}
-.top-left {
-  top: -16px;
-  left: -16px;
-}
-.bottom-right {
-  bottom: -16px;
-  right: -16px;
-}
-.bottom-left {
-  bottom: -16px;
-  left: -16px;
 }
 
 @media (max-width: 900px) {

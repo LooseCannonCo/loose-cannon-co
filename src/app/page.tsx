@@ -3,10 +3,7 @@ import { ClosingCTA } from "@/components/ClosingCTA/ClosingCTA";
 import { Footer } from "@/components/Footer/Footer";
 import { Nav } from "@/components/Nav/Nav";
 import { Page } from "@/components/Page/Page";
-import { PrintHeadline } from "@/components/PrintHeadline/PrintHeadline";
 import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
-import { Splatter } from "@/components/Splatter/Splatter";
-import { Sticker } from "@/components/Sticker/Sticker";
 import { WorkRow } from "@/components/WorkRow/WorkRow";
 import { client } from "@/sanity/client";
 import {
@@ -42,55 +39,55 @@ export default async function Home() {
     <Page>
       <Nav />
 
-      {/* HERO */}
+      {/* HERO — static launch layout. Asymmetric grid: headline + support +
+          CTA on the left, transparent PNG of work on the right, sized larger
+          than the text block and bled past the page padding so it reads
+          unframed on the pink canvas. No reel, no video, no autoplay. */}
       <section className={styles.hero}>
-        <Splatter count={4} excludeCenter />
-        <div className={styles.heroContent}>
-          <SectionEyebrow>Studio</SectionEyebrow>
-          <div className={styles.heroHeadlineWrap}>
-            <PrintHeadline as="h1" className={styles.heroHeadline}>
-              Social-first creative.
-            </PrintHeadline>
-            <span className={styles.heroLastLine}>
-              <PrintHeadline as="span" className={styles.heroHeadline}>
-                Built to actually perform.
-              </PrintHeadline>
-              <Sticker
-                text="Banger!"
-                angle={6}
-                variant="hero"
-                className={styles.heroSticker}
-              />
-            </span>
+        <div className={styles.heroGrid}>
+          <div className={styles.heroLeft}>
+            <h1 className={`${styles.heroHeadline} flippy-hide-behind`}>
+              Social that doesn&apos;t&nbsp;suck.
+            </h1>
+            <p className={styles.heroSupport}>
+              Social-first creative for brands tired of looking like
+              everyone&nbsp;else.
+            </p>
+            <div className={styles.heroCta}>
+              <Button href="/work">See the work</Button>
+            </div>
           </div>
-          <p className={styles.subhead}>
-            We make social campaigns and brand systems for companies that want
-            their content to do something.
-          </p>
-          <div className={styles.ctaRow}>
-            <Button href="/contact">Start a project</Button>
+          <div className={styles.heroImageWrap}>
+            {/* Transparent PNG, composites onto the pink canvas with no frame
+                or card behind it. eager + high fetch priority because this is
+                the above-the-fold LCP candidate. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/lc-home-hero-work.png"
+              alt=""
+              className={styles.heroImage}
+              loading="eager"
+              fetchPriority="high"
+            />
           </div>
         </div>
       </section>
 
-      {/* FEATURED WORK */}
-      <section className={styles.section}>
+      {/* FEATURED WORK — uses .firstSection on top of .section so the gap
+          from the hero is a sub-section break (72/40px), not a full chapter
+          break (200/88px). Lets the visitor see hero + start of work on
+          the first screen. */}
+      <section className={`${styles.section} ${styles.firstSection}`}>
         <SectionEyebrow>Recent receipts</SectionEyebrow>
         <h2 className={styles.sectionTitle}>The work.</h2>
         <div className={styles.workList}>
-          {featured.map((c, i) => (
+          {featured.map((c) => (
             <WorkRow
               key={c.slug}
-              index={i}
-              showSticker={false}
               slug={c.slug}
               client={c.client}
               discipline={c.discipline}
               year={c.year}
-              caseNumber={c.caseNumber}
-              prefix={c.prefix}
-              digits={c.digits}
-              suffix={c.suffix}
               headline={c.headline}
               coverImage={c.coverImage ?? c.posterImage}
             />
@@ -134,7 +131,6 @@ export default async function Home() {
           </>
         }
         headlineLast="Let's go."
-        sticker={{ text: "Off the charts!", angle: -8 }}
       />
 
       <Footer />

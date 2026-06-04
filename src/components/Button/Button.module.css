@@ -9,7 +9,9 @@
   letter-spacing: 0.01em;
   text-decoration: none;
   border: 0;
-  border-radius: 3px;
+  /* 2px corner radius matches the Contact form inputs so every interactive
+     surface across the site reads as the same micro-rounded shape. */
+  border-radius: 2px;
   cursor: pointer;
   transition: transform 160ms cubic-bezier(0.3, 1.4, 0.4, 1);
 }
@@ -17,6 +19,14 @@
 .primary {
   background: var(--lc-plum);
   color: var(--lc-cream);
+}
+
+/* On dark inversion beats (Quote, ClosingCTA): cream fill on plum text so
+   the button stays high-contrast against the near-black background and
+   still reads as the primary action. */
+.onDark {
+  background: var(--lc-cream);
+  color: var(--lc-plum);
 }
 
 .button:hover {

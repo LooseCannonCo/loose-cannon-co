@@ -1,0 +1,61 @@
+/* Full-bleed feature beat. Breaks out of the 1320px Page container by spanning
+   the full viewport width via the standard left:50%/-50vw breakout, then sits
+   in the chapter rhythm with top padding so it lands a chapter break below
+   the Brief above. */
+.section {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding-top: var(--lc-space-chapter);
+}
+
+/* Cinematic band: ~70vh, clamped so it stays usable on short and tall
+   viewports. background reads as pink-1 while the image decodes so the
+   reveal doesn't flash white. */
+.frame {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  height: 70vh;
+  min-height: 420px;
+  max-height: 760px;
+  overflow: hidden;
+  background: var(--lc-pink-1);
+}
+
+/* object-fit cover + object-position from the Sanity hotspot keeps the
+   subject in frame when the source crops to the wide band. Flat: no border,
+   no offset bleed, no shadow. */
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Eyebrow-style caption, bottom-left, inset to the standard page padding so
+   it aligns with the rest of the page content above and below. Cream on the
+   image (locked 2-color palette: no shadow ornament added). */
+.caption {
+  position: absolute;
+  left: var(--lc-page-pad);
+  bottom: 20px;
+  margin: 0;
+  font-family: var(--lc-body);
+  font-size: var(--lc-size-eyebrow);
+  font-weight: var(--lc-weight-eyebrow);
+  letter-spacing: var(--lc-tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--lc-cream);
+}
+
+@media (max-width: 900px) {
+  .frame {
+    height: 60vh;
+    min-height: 320px;
+  }
+  .caption {
+    left: var(--lc-page-pad-mobile);
+  }
+}

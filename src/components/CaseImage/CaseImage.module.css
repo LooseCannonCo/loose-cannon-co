@@ -41,6 +41,15 @@
   aspect-ratio: 3 / 4;
 }
 
+/* Native-aspect cover: the frame's aspect-ratio is set inline to the cover's
+   own ratio, so the image is never cropped to a fixed shape. The max-height
+   caps only a very tall cover so it cannot dominate the page; at that point the
+   media's object-fit cover + object-position (hotspot) keep the focal area in
+   frame. A 4:5 cover at the ~596px column (~745px tall) stays under the cap. */
+.coverNative {
+  max-height: 800px;
+}
+
 .img {
   display: block;
   width: 100%;

@@ -10,20 +10,28 @@
   text-wrap: pretty;
 }
 
+/* color: inherit so the headline flips with its surrounding context. Light
+   sections (page heroes) inherit plum from the body default; the inverted
+   ClosingCTA inherits pink-0 from the .closing wrapper. Same pattern as
+   SectionEyebrow and FinePrintStat so every text element across inverted
+   surfaces reads as pink without per-context overrides. */
 .ink {
   position: relative;
   z-index: 1;
   display: block;
-  color: var(--lc-plum);
+  color: inherit;
 }
 
+/* Canonical print-registration bleed. Values come from the --lc-bleed-*
+   tokens so every headline (this component AND the /work page header)
+   renders the same misregistration, with no per-page drift. */
 .bleed {
   position: absolute;
   left: 0;
   top: 0;
   z-index: 0;
   display: block;
-  color: var(--lc-violet);
-  opacity: 0.62;
-  transform: translate(1.5px, 1px);
+  color: var(--lc-bleed-color);
+  opacity: var(--lc-bleed-opacity);
+  transform: translate(var(--lc-bleed-offset-x), var(--lc-bleed-offset-y));
 }

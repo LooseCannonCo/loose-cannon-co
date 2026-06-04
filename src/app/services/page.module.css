@@ -15,13 +15,8 @@
   align-items: flex-start;
 }
 
-.heroLastLine {
-  display: inline-flex;
-  align-items: center;
-}
-
 .heroHeadline {
-  font-size: var(--lc-size-statement);
+  font-size: var(--lc-size-page-headline);
   line-height: 1;
   text-wrap: balance;
 }
@@ -38,17 +33,9 @@
   text-wrap: pretty;
 }
 
-/* Hero sticker hangs to the right of the second headline line. Positive
-   margin (intra-tight) gives clear space so the sticker never overlaps the
-   trailing punctuation of the headline. */
-.heroSticker {
-  margin-left: var(--lc-space-intra-tight);
-  z-index: 5;
-}
-
-/* Deliberate gap between the hero body copy and the CTA: sub-section tier
-   so the button reads as intentionally placed below the paragraph, not
-   cramped against it or floating off. */
+/* Canonical body-to-CTA gap (sub-section tier). Same value used on every
+   page with a body-above-CTA pattern so the button sits the same distance
+   below the paragraph everywhere. */
 .ctaRow {
   position: relative;
   z-index: 1;
@@ -225,9 +212,6 @@
   .howGrid {
     grid-template-columns: 1fr;
     gap: 32px;
-  }
-  .heroSticker {
-    margin-left: var(--lc-space-intra-tight);
   }
   .leadDesc,
   .expDesc,

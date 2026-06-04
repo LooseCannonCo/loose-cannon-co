@@ -1,5 +1,10 @@
+/* Top is the canonical chapter break; bottom is sub-section so the source
+   labels (INSTAGRAM 1ST-PARTY, NET NEW FOLLOWS, SHOPIFY META ATTRIBUTION)
+   clear the pink-to-dark color edge below this section with obvious space.
+   Pairs with QuoteBlock's matching sub-tier top padding inside the dark
+   band so the boundary breathes symmetrically. */
 .section {
-  padding: var(--lc-space-chapter) 0 0;
+  padding: var(--lc-space-chapter) 0 var(--lc-space-sub);
 }
 
 /* The title block introduces the trio inside the stats chapter, so the gap
@@ -79,6 +84,38 @@
   display: inline-block;
   transform-origin: center;
   transition: transform 0.18s cubic-bezier(0.2, 1.5, 0.3, 1);
+}
+
+/* Preserved space between words; keeps the gap from collapsing in the row. */
+.space {
+  white-space: pre;
+}
+
+/* Letter slot: invisible ghost reserves the final glyph's width; the roller
+   flips through letters on top, so neighbors never shift and the slot lands on
+   the final letter. (Same treatment as HeroNumber.) */
+.slot {
+  position: relative;
+}
+
+.ghost {
+  visibility: hidden;
+}
+
+.roller {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: pre;
+  transform-origin: center;
+  transition: transform 0.18s cubic-bezier(0.2, 1.5, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .numInner > span,
+  .roller {
+    transition: none;
+  }
 }
 
 .num sup {

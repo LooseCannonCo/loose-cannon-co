@@ -1,30 +1,19 @@
 import { HeroNumber, type HeroNumberProps } from "@/components/HeroNumber/HeroNumber";
 import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
-import { Splatter } from "@/components/Splatter/Splatter";
-import { Sticker } from "@/components/Sticker/Sticker";
-import { cn } from "@/lib/utils";
 
 import styles from "./Hero.module.css";
 
-type ArtifactStickerPosition =
-  | "top-right"
-  | "top-left"
-  | "bottom-right"
-  | "bottom-left";
-
 export interface HeroProps {
   eyebrow: string;
-  number: HeroNumberProps;
+  /** Optional. Omit on stat-less heroes: the entire number block is skipped
+   *  and the eyebrow / headline / subhead / meta close up at the existing
+   *  intra-loose rhythm with no leftover gap. */
+  number?: HeroNumberProps;
   /** Supports "\n" for forced line breaks. */
   headline: string;
   subhead: string;
   meta: string | string[];
   artifact: React.ReactNode;
-  artifactSticker?: {
-    text: string;
-    angle: number;
-    position: ArtifactStickerPosition;
-  };
 }
 
 /** Render text with "\n" turned into <br> line breaks. */
@@ -45,18 +34,15 @@ export function Hero({
   subhead,
   meta,
   artifact,
-  artifactSticker,
 }: HeroProps) {
   const metaText = Array.isArray(meta) ? meta.join("\n") : meta;
 
   return (
     <section data-reveal-section className={styles.hero}>
-      <Splatter count={4} excludeCenter />
-
       <div className={styles.left}>
         <SectionEyebrow className={styles.eyebrowRow}>{eyebrow}</SectionEyebrow>
 
-        <HeroNumber {...number} />
+        {number?.digits ? <HeroNumber {...number} /> : null}
 
         <h1 className={styles.headline} data-reveal>
           {withBreaks(headline)}
@@ -70,20 +56,7 @@ export function Hero({
       </div>
 
       <div className={styles.right} data-reveal>
-        <div className={styles.artifactWrap}>
-          {artifact}
-          {artifactSticker ? (
-            <Sticker
-              text={artifactSticker.text}
-              angle={artifactSticker.angle}
-              variant="corner"
-              className={cn(
-                styles.artifactSticker,
-                styles[artifactSticker.position],
-              )}
-            />
-          ) : null}
-        </div>
+        <div className={styles.artifactWrap}>{artifact}</div>
       </div>
     </section>
   );

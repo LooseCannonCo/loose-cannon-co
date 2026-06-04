@@ -1,9 +1,10 @@
+/* Two-column compact teaser row: cover panel + text column. The previous
+   third column (the big slot-roll stat) was removed because the naked
+   number has no context outside the case study detail page. Cover keeps
+   its proportional width; text absorbs the rest. */
 .row {
   display: grid;
-  /* cover (1.1) | text (1.7) | number (2.4). Stat column stays the widest so
-     the big digits remain the visual punch; cover is a real visual panel
-     without crowding the stat. */
-  grid-template-columns: 1.1fr 1.7fr 2.4fr;
+  grid-template-columns: 1.1fr 4.1fr;
   gap: 40px;
   align-items: center;
   padding: 56px 32px;
@@ -31,23 +32,8 @@
   position: relative;
 }
 
-.eyebrow {
-  margin-bottom: 14px;
-  font-size: var(--lc-size-eyebrow);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-weight: var(--lc-weight-eyebrow);
-  color: var(--lc-plum);
-}
-
-.clientWrap {
-  position: relative;
-  display: inline-block;
-}
-
 /* Client name on a row reads at statement scale: marquee feel, the case
-   name as the punch line of the row. Never larger than the row's hero
-   number. */
+   name as the punch line of the row. */
 .client {
   margin: 0;
   font-family: var(--lc-display);
@@ -58,13 +44,6 @@
   letter-spacing: -0.03em;
   color: var(--lc-plum);
   text-wrap: balance;
-}
-
-.sticker {
-  position: absolute;
-  top: -8px;
-  right: -18px;
-  z-index: 5;
 }
 
 .meta {
@@ -88,45 +67,6 @@
   overflow: hidden;
 }
 
-.right {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-/* The row's hero stat. Always the largest element in the row. .number sets
-   font-size to the hero-number token so .affix can size in em relative to
-   the digits (was sizing in em relative to inherited body, far too small). */
-.number {
-  display: inline-flex;
-  align-items: flex-start;
-  font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-hero-number), "wght" var(--lc-weight-display);
-  font-weight: var(--lc-weight-display);
-  font-size: var(--lc-size-hero-number);
-  letter-spacing: -0.045em;
-  line-height: 0.82;
-  font-variant-numeric: tabular-nums;
-  color: var(--lc-plum);
-}
-
-.affix {
-  font-size: 0.4em;
-  padding-top: 0.12em;
-  display: inline-block;
-}
-
-.digits {
-  font-size: 1em;
-  display: inline-flex;
-}
-
-.digits > span {
-  display: inline-block;
-  transform-origin: center;
-  transition: transform 0.18s cubic-bezier(0.2, 1.5, 0.3, 1);
-}
-
 @media (max-width: 900px) {
   .row {
     grid-template-columns: 1fr;
@@ -136,14 +76,5 @@
   }
   .cover {
     max-width: 320px;
-  }
-  .right {
-    justify-content: flex-start;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .digits > span {
-    transition: none;
   }
 }

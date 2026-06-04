@@ -11,10 +11,14 @@
   gap: 9px;
 }
 
+/* dot, eyebrow text, and number all use currentColor so this block flips
+   with its parent on the dark ClosingCTA beat without per-context variants.
+   Light contexts: plum (inherited from body). Dark contexts: pink-0 (set
+   on the .closing wrapper). */
 .dot {
   width: 7px;
   height: 7px;
-  background: var(--lc-plum);
+  background: currentColor;
   flex: none;
 }
 
@@ -23,7 +27,7 @@
   letter-spacing: var(--lc-tracking-eyebrow);
   text-transform: uppercase;
   font-weight: var(--lc-weight-eyebrow);
-  color: var(--lc-plum);
+  color: inherit;
 }
 
 /* Number container is the mega tier "0" digit (footer-mark scale by intent). */
@@ -34,7 +38,7 @@
   font-size: var(--lc-size-mega);
   line-height: 0.9;
   letter-spacing: -0.04em;
-  color: var(--lc-plum);
+  color: inherit;
   font-variant-numeric: tabular-nums;
 }
 
@@ -64,7 +68,7 @@
   font-size: var(--lc-size-body);
   font-weight: var(--lc-weight-body);
   line-height: 1.4;
-  color: var(--lc-plum);
+  color: inherit;
   text-wrap: pretty;
 }
 

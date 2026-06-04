@@ -27,7 +27,6 @@ The visual and interaction language for any LC.co web page. Extends the LC brand
 | Halftone dot patterns | Torn paper edges |
 | Print misregistration (violet bleed) | Safety pins |
 | Screened densities (Pink 1, 2, 3) | Caution tape |
-| Ink splatter / escaped dots | Sharpie scribbles |
 | Slot-roll digits | Spray paint |
 | Halftone shrapnel | "Distressed" textures |
 | Tabular-nums baseline shift | Grunge filters |
@@ -53,7 +52,7 @@ Violet is NEVER used as a standalone fill color for text, numbers, borders, or U
 
 1. Offset registration bleed: violet sits behind plum halftone elements with translate(1.5px, 1px) and 60-65% opacity, part of the print-registration animation system.
 
-2. Escaped-ink residue: violet appears as standalone dots in the permanent halftone splatter and slam shrapnel particles, mixed roughly 50/50 with plum, at low opacity (0.42-0.62 for splatter).
+2. Escaped-ink residue: violet appears as standalone dots in the slam shrapnel particles emitted by sticker slams, mixed roughly 50/50 with plum, at low opacity.
 
 If violet appears anywhere outside these two printing-artifact treatments, it's wrong. Change it to plum.
 
@@ -226,12 +225,6 @@ Rules:
 - **Rotation between -14° and +10°.** Hero sticker tucked into the right of the hero number rotates +6°. Mic drop! in quote rotates +8°. Vary the angle per sticker.
 - **Halftone bleed** via `::before` pseudo-element: `transform: translate(2px, 1.5px)` with a violet dot pattern background.
 
-## Permanent halftone splatter (escaped ink)
-
-Every hero gets 3-4 small SVG dots scattered around the area, with deliberately "wrong" placement. top edge, middle nowhere-in-particular, off-edge-left. Mix of plum and violet, varied sizes (6-18px), low opacity (0.42-0.62). These persist forever (not just during the slam animation) and read as permanent visual residue. The page looks like something happened here.
-
-**Do not place splatter under the hero number**. at certain viewport widths it creates a "smudge" that looks like a UI bug. Edges and corners only.
-
 ## Case study page skeleton (locked)
 
 Every LC case study page assembles from this skeleton, in this order. Each section can scale up or down based on content, but the order and section types are fixed.
@@ -257,14 +250,29 @@ Every LC case study page assembles from this skeleton, in this order. Each secti
           + Meta line (eyebrow tier, uppercase tracked)
    Block-to-block gap inside .left uses intra (24px): eyebrow to number wider via the Hero-specific eyebrowRow override, number to headline 80px (sticker hang + intra), headline to subhead 24px, subhead to meta 24px.
    Right: Hero artifact (poster / video / image) with offset plum drop-shadow + corner sticker.
-   Grid:  1fr 1fr, gap 60px, align-items: center, 3-4 splatter SVGs scattered.
+   Grid:  1fr 1fr, gap 60px, align-items: center.
 
 4. BRIEF DECODED
    Left:  eyebrow + 3-line headline ("Stop selling X. / Start being Y.")
    Right: 2-3 paragraph body
    Below: 3-col breakdown OR 3-step numbered breakdown
 
-5. CONTENT SECTION (case-specific)
+5. FEATURE IMAGE (optional, full-bleed)
+   Component: FeatureImage. Cinematic beat between the Brief and the content
+   gallery. Skips entirely when no `featureImage.image` is set on the case.
+   Breaks out of the 1320px Page container to span the full viewport via
+   `width: 100vw; margin-left: calc(50% - 50vw)`. Height ~70vh (clamped
+   420-760px desktop, 60vh with 320px floor on mobile). Image renders with
+   `object-fit: cover` and `object-position` driven from the Sanity hotspot
+   (`hotspot.x/y → percent`) so a portrait source crops to a wide band
+   without losing the subject. Flat treatment to match the case study
+   chapter headline language: no plum border, no offset violet bleed, no
+   drop-shadow. Optional caption sits bottom-left, eyebrow-style cream over
+   the image, inset to `--lc-page-pad` so it aligns with the rest of the
+   page. NO sticker on this section (the page is already at its two-sticker
+   max). Reveals on scroll like the other chapters via `data-reveal`.
+
+6. CONTENT SECTION (case-specific)
    Three primitives, picked by content density. Selection rule lives in the
    case study page render: count gallery items, dispatch to drag or static.
    Six is the threshold for "scroll through them" density.
@@ -298,36 +306,44 @@ Every LC case study page assembles from this skeleton, in this order. Each secti
      Component: ThreeUpVideo. Vertical / square / vertical Meta ads in a
      3-col grid. Never converts to drag.
 
-6. OPTIONAL HERO CHART
+7. OPTIONAL HERO CHART
    Full-bleed centerpiece chart (Smolotov has Shopify hockey stick; FITAID skips this)
    Left: label + big title + sub + delta rows
    Right: animated SVG bar chart with value labels drop-in over each bar
 
-7. STATS TRIO
+8. STATS TRIO
    3 data-honest chart cells, centered, equal-width grid
    Title block above: eyebrow + "The receipts." + brief explanation
 
-8. QUOTE
+9. QUOTE
    Big quote mark + 44px Bricolage quote text
    Attribution: name + role
    Mic drop! sticker top-right rotated +8°
 
-9. CREDITS
-   4-col grid: 4 disciplines with name underneath each
-   Use case-specific labels (FITAID = "Strategy + Concept / Creative Direction + Design / AI Image Generation / Client Team"; Smolotov = "Paid Media + Strategy / Account + Funnel / Creative / Engagement")
+10. CREDITS
+    4-col grid: 4 disciplines with name underneath each
+    Use case-specific labels (FITAID = "Strategy + Concept / Creative Direction + Design / AI Image Generation / Client Team"; Smolotov = "Paid Media + Strategy / Account + Funnel / Creative / Engagement")
 
-10. UP NEXT
+11. UP NEXT
     Eyebrow "Up next" + Big case name + arrow → with hover slide animation
     Meta row: "Case 00X · Discipline" | descriptor
+    Teaser frame below the meta row: the next case's coverImage (with
+    posterImage as fallback) rendered via CaseImage at 16:9 aspect, so the
+    page ends on a visual rather than a bare link. Frame carries the locked
+    plum border + offset violet registration bleed like every other case
+    study image. The teaser is part of the same UpNext `<a>`, so the image
+    is clickable along with the title and arrow. When the next case has no
+    image set at all, CaseImage falls back to the on-brand halftone swatch
+    with a registration crosshair so the teaser still reads as intentional.
     P.S. line top-right: "P.S. want this for your brand? Start a project →" (Bricolage 14px 400, 75% opacity)
 
-11. BIG FOOTER MARK
+12. BIG FOOTER MARK
     "Loose Cannon Co." at clamp(36px, 9vw, 180px), Bricolage opsz 96 weight 700, upright (never italic), centered. white-space: nowrap. The clamp is a footer-mark-specific override of the mega ramp (which still tops out at 200 for FinePrintStat's single "0" digit) because the longer string would overflow on wide desktop at 200px. "Co." must never orphan onto its own line at any viewport width.
 
-12. FOOTER COLS
+13. FOOTER COLS
     Studio tagline + Studio links + Shop links + Contact links
 
-13. FOOT META
+14. FOOT META
     © Loose Cannon Co. | San Diego // Working everywhere
 ```
 
@@ -343,7 +359,7 @@ All three tiers are FIXED pixel values with a single mobile step at the 900px br
 
 | Tier | Token | Desktop | Mobile (<=900px) | Use |
 |---|---|---|---|---|
-| Chapter break | `--lc-space-chapter` | 200px | 88px | Top padding of every major case-study chapter: hero, brief decoded, content section (drag gallery / 3-up video / static gallery), optional hero chart, stats trio, quote, credits, up next, big footer mark. Apply once per chapter as top padding only. Chapters never bottom-pad themselves; the next chapter's top padding does the separation work. |
+| Chapter break | `--lc-space-chapter` | 200px | 88px | Top padding of every major case-study chapter: hero, brief decoded, optional feature image (full-bleed), content section (drag gallery / 3-up video / static gallery), optional hero chart, stats trio, quote, credits, up next, big footer mark. Apply once per chapter as top padding only. Chapters never bottom-pad themselves; the next chapter's top padding does the separation work. |
 | Sub-section gap | `--lc-space-sub` | 72px | 40px | Between parts that belong to the SAME chapter. Examples: the brief body and its 3-column breakdown are one chapter so the gap between them is sub-section. A stats title block sits sub-section close to its trio. |
 | Intra-element | `--lc-space-intra-tight: 16px`, `--lc-space-intra: 24px` | 16 / 24 | 16 / 24 (no step) | Inside a single block: eyebrow to title uses tight (16), title to body uses loose (24). Never viewport-driven. Stay tight. |
 
@@ -399,7 +415,6 @@ For consistency across pages and ease of porting to React components, use these 
 | `.hero`, `.hero-left`, `.hero-right` | Hero section + columns |
 | `.hero__number`, `.hero__plus`, `.hero__digits`, `.hero__suffix`, `.hero__sticker` | Hero stat parts |
 | `.hero__headline`, `.hero__sub`, `.hero__meta` | Hero text block |
-| `.hero-splatter` | Permanent splatter SVG |
 | `.section`, `.section__title-block` | Standard section + title block |
 | `.brief`, `.three-col`, `.three-step` | Brief decoded layouts |
 | `.nine`, `.tile` | 9-grid editorial gallery |
@@ -441,5 +456,5 @@ Both files contain the complete system applied. Use them as the canonical refere
 - **Is this sticker over-used?** Max 2 per page.
 - **Is the hero number doing the work?** It should be the largest visual element on the page.
 - **Are reveals scroll-triggered?** Every section should fire via IntersectionObserver, not on initial load.
-- **Does the page feel alive when you stop scrolling?** Periodic re-roll on hero, violet breath on stats trio, idle splatter persist.
+- **Does the page feel alive when you stop scrolling?** Periodic re-roll on hero, violet breath on stats trio, idle micro-motions on charts.
 - **Is the system enforcing itself or are you making one-off decisions?** If one-off, stop and reconsider whether to extend the system or push back to brief.

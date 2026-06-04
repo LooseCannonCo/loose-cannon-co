@@ -8,8 +8,6 @@ import { Nav } from "@/components/Nav/Nav";
 import { Page } from "@/components/Page/Page";
 import { PrintHeadline } from "@/components/PrintHeadline/PrintHeadline";
 import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
-import { Splatter } from "@/components/Splatter/Splatter";
-import { Sticker } from "@/components/Sticker/Sticker";
 
 import styles from "./page.module.css";
 
@@ -115,24 +113,15 @@ export default function ContactPage() {
 
       {/* HERO */}
       <section className={styles.hero}>
-        <Splatter count={4} excludeCenter />
         <div className={styles.heroContent}>
           <SectionEyebrow>Contact</SectionEyebrow>
           <div className={styles.heroHeadlineWrap}>
             <PrintHeadline as="h1" className={styles.heroHeadline}>
               Tell us what you&apos;re working&nbsp;on.
             </PrintHeadline>
-            <span className={styles.heroLastLine}>
-              <PrintHeadline as="span" className={styles.heroHeadline}>
-                We&apos;ll write back&nbsp;fast.
-              </PrintHeadline>
-              <Sticker
-                text="Banger!"
-                angle={6}
-                variant="hero"
-                className={styles.heroSticker}
-              />
-            </span>
+            <PrintHeadline as="span" className={styles.heroHeadline}>
+              We&apos;ll write back&nbsp;fast.
+            </PrintHeadline>
           </div>
           <p className={styles.subhead}>
             We read every one. The good ones get a reply within a day. The bad

@@ -5,8 +5,6 @@ import { Nav } from "@/components/Nav/Nav";
 import { Page } from "@/components/Page/Page";
 import { PrintHeadline } from "@/components/PrintHeadline/PrintHeadline";
 import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
-import { Splatter } from "@/components/Splatter/Splatter";
-import { Sticker } from "@/components/Sticker/Sticker";
 import { WorkRow } from "@/components/WorkRow/WorkRow";
 import { client } from "@/sanity/client";
 import {
@@ -63,24 +61,15 @@ export default async function ServicesPage() {
 
       {/* HERO */}
       <section className={styles.hero}>
-        <Splatter count={4} excludeCenter />
         <div className={styles.heroContent}>
           <SectionEyebrow>Services</SectionEyebrow>
           <div className={styles.heroHeadlineWrap}>
             <PrintHeadline as="h1" className={styles.heroHeadline}>
               Ads that don&apos;t look like&nbsp;ads.
             </PrintHeadline>
-            <span className={styles.heroLastLine}>
-              <PrintHeadline as="span" className={styles.heroHeadline}>
-                And convert&nbsp;anyway.
-              </PrintHeadline>
-              <Sticker
-                text="Next level!"
-                angle={6}
-                variant="hero"
-                className={styles.heroSticker}
-              />
-            </span>
+            <PrintHeadline as="span" className={styles.heroHeadline}>
+              And convert&nbsp;anyway.
+            </PrintHeadline>
           </div>
           <p className={styles.subhead}>
             We&apos;re a creative agency that runs paid social. The ads are
@@ -113,16 +102,10 @@ export default async function ServicesPage() {
         <SectionEyebrow>The receipt</SectionEyebrow>
         {smolotov ? (
           <WorkRow
-            index={0}
-            showSticker={false}
             slug={smolotov.slug}
             client={smolotov.client}
             discipline={smolotov.discipline}
             year={smolotov.year}
-            caseNumber={smolotov.caseNumber}
-            prefix={smolotov.prefix}
-            digits={smolotov.digits}
-            suffix={smolotov.suffix}
             headline={smolotov.headline}
             coverImage={smolotov.coverImage ?? smolotov.posterImage}
           />
@@ -163,8 +146,6 @@ export default async function ServicesPage() {
       <ClosingCTA
         headlineTop="Got something to sell?"
         headlineLast="Let's go."
-        sticker={{ text: "Mic drop!", angle: -8 }}
-        splatterSeed={5}
       />
 
       <Footer />
