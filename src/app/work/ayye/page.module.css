@@ -1,0 +1,674 @@
+/* Ayye case study (Case 003): the case study becomes the brand guide it
+ * describes. A stack of per-section cards on the LC pink canvas. The LC intro
+ * and close are LC voice (Bricolage + DM Sans); the bespoke section cards are
+ * Ayye voice (General Sans + the --ayye-* palette).
+ *
+ * --ayye-* tokens are scoped to this page wrapper so they never leak into the
+ * global LC system. Violet is shared with the LC system (same #B14AFF). The
+ * offset block reuses the canonical --lc-offset-block token (no hardcoded px).
+ */
+.ayye {
+  --ayye-cream: #fff8e4;
+  --ayye-black: #141414;
+  --ayye-amber: #ffbf00;
+  --ayye-violet: var(--lc-violet); /* #B14AFF, already in the LC system */
+  --ayye-hair: rgba(20, 20, 20, 0.16);
+  --ayye-hair-on-dark: rgba(255, 248, 228, 0.16);
+  --ayye-muted-on-dark: rgba(255, 248, 228, 0.62);
+  --ayye-muted-on-cream: rgba(20, 20, 20, 0.62);
+  --font-ayye: var(--font-general), "General Sans", system-ui, sans-serif;
+}
+
+/* ── Section 1: LC case intro (pink, LC voice) ─────────────────────────────── */
+.intro {
+  padding: 8px 0 var(--lc-space-sub);
+}
+
+.introHeadline {
+  margin: var(--lc-space-intra) 0 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: var(--lc-size-page-headline);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--lc-plum);
+  text-wrap: balance;
+  max-width: 18ch;
+}
+
+.introLede {
+  margin: var(--lc-space-intra) 0 0;
+  max-width: 60ch;
+  font-family: var(--lc-body);
+  font-size: var(--lc-size-body);
+  font-weight: var(--lc-weight-body);
+  line-height: 1.55;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+/* Violet system-stat line. Ayye voice (General Sans), violet, tracked, so it
+   reads as a spec line under the lede. */
+.sysStat {
+  margin: var(--lc-space-sub) 0 0;
+  font-family: var(--font-ayye);
+  font-weight: 600;
+  font-size: clamp(20px, 2.4vw, 30px);
+  letter-spacing: -0.01em;
+  color: var(--ayye-violet);
+}
+
+/* ── Section cards ─────────────────────────────────────────────────────────── */
+/* Each bespoke section is a card on the pink canvas, carrying the canonical
+   offset block. Cards stack with a sub-section gap between them. */
+.card {
+  position: relative;
+  /* isolate: each card is its own stacking context, so reveal transforms and
+     section content can never paint over an adjacent section. overflow:hidden
+     (matching v15 .abox) clips any child to the card. Together with the opaque
+     cardBlack/cardCream backgrounds, nothing bleeds between sections. The
+     offset-block box-shadow is the element's own shadow, so overflow:hidden
+     does not clip it. */
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: var(--lc-space-sub);
+  padding: clamp(28px, 4vw, 56px);
+  border: 1.5px solid var(--lc-plum);
+  box-shadow: var(--lc-offset-block);
+  font-family: var(--font-ayye);
+}
+
+.cardBlack {
+  background: var(--ayye-black);
+  color: var(--ayye-cream);
+}
+
+.cardCream {
+  background: var(--ayye-cream);
+  color: var(--ayye-black);
+}
+
+/* Card header: number + label row, then the section title. */
+.cardHead {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.cardNum {
+  font-family: var(--font-ayye);
+  font-weight: 700;
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ayye-amber);
+}
+
+.cardLabel {
+  font-family: var(--font-ayye);
+  font-weight: 600;
+  font-size: var(--lc-size-eyebrow);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.cardTitle {
+  margin: var(--lc-space-intra) 0 0;
+  font-family: var(--font-ayye);
+  font-weight: 600;
+  font-size: clamp(28px, 3.6vw, 48px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
+}
+
+.cardNote {
+  margin: var(--lc-space-intra) 0 0;
+  max-width: 56ch;
+  font-family: var(--font-ayye);
+  font-weight: 400;
+  font-size: var(--lc-size-body);
+  line-height: 1.5;
+  /* Avoid a last-line widow (e.g. "pricing." alone). */
+  text-wrap: pretty;
+}
+
+/* Caption shown under a section's media block. */
+.cardCaption {
+  margin: 24px 0 0;
+  font-family: var(--font-ayye);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+}
+
+.cardCream .cardCaption {
+  color: var(--ayye-muted-on-cream);
+}
+
+.cardBlack .cardCaption {
+  color: var(--ayye-muted-on-dark);
+}
+
+/* Temporary placeholder body for sections not yet built. No rule under the
+   title (v15 titles sit directly above their content); just muted text. */
+.placeholderBody {
+  margin-top: var(--lc-space-intra);
+  opacity: 0.45;
+  font-family: var(--font-ayye);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ── 02 The type: weight ladder (v15 .ladder/.lrow/.lw/.ls) ─────────────────
+   On the black card. A top hairline plus a solid full-width hairline under
+   each row are the ONLY rules in the section. No fill or boxed background. */
+.ladder {
+  margin-top: 46px;
+  border-top: 1px solid var(--ayye-hair-on-dark);
+}
+
+.lrow {
+  display: flex;
+  align-items: baseline;
+  gap: 28px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--ayye-hair-on-dark);
+}
+
+.lw {
+  flex: none;
+  width: 130px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 248, 228, 0.5);
+}
+
+.ls {
+  font-size: clamp(20px, 3vw, 34px);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+/* Big specimen + supporting copy below the ladder. */
+.specimen {
+  margin-top: 64px;
+  font-weight: 500;
+  font-size: clamp(48px, 11vw, 150px);
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+  color: var(--ayye-cream);
+}
+
+.typeCopy {
+  margin-top: 32px;
+  max-width: 56ch;
+  font-size: var(--lc-size-body);
+  line-height: 1.5;
+  color: var(--ayye-muted-on-dark);
+}
+
+/* ── 05 The landing pages: browser chrome (v15 .browser/.bbar/.dot/.url) ────
+   Opaque white panel with its own stacking context (z-index:0 + overflow
+   hidden) and an opaque cream iframe background, so nothing from the page
+   behind it can bleed through. */
+.browser {
+  position: relative;
+  z-index: 0;
+  margin-top: 50px;
+  border: 1px solid var(--ayye-hair);
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -30px rgba(20, 20, 20, 0.3);
+}
+
+.bbar {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: #ece6d6;
+  border-bottom: 1px solid var(--ayye-hair);
+}
+
+.dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #cfc7b3;
+  margin-right: 8px;
+}
+
+.url {
+  margin-left: 10px;
+  font-size: 12px;
+  color: var(--ayye-muted-on-cream);
+  background: #fff;
+  border: 1px solid var(--ayye-hair);
+  border-radius: 20px;
+  padding: 5px 16px;
+}
+
+.browserFrame {
+  display: block;
+  width: 100%;
+  /* Taller than v15's 560px so the whole first section of the creators page
+     is visible without cropping, including the full signup form (First name,
+     @ handle, Email, Sign up button), the founding-pricing line, and the
+     phone image. */
+  height: 1040px;
+  border: 0;
+  background: var(--ayye-cream);
+}
+
+@media (max-width: 900px) {
+  .lw {
+    width: 84px;
+  }
+  .browserFrame {
+    height: 780px;
+  }
+}
+
+/* ── Close CTA: underlined text link with arrow (v15 .guidelink) ───────────── */
+.guideLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-ayye);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--lc-pink-0);
+  text-decoration: none;
+  border-bottom: 2px solid var(--ayye-violet);
+  padding-bottom: 4px;
+}
+
+/* ── 02 The mark: animated wordmark (ported from v15 #markbox) ─────────────── */
+.markStage {
+  position: relative;
+  margin-top: var(--lc-space-sub);
+  /* Generous vertical room (v15's markstage was 150/160px) so the radial wash
+     reaches full transparency before the stage clips. With this padding the
+     glow's colored core stays well inside, so there is no hard horizontal
+     edge where it meets the card. */
+  padding: clamp(72px, 10vw, 140px) 0;
+  text-align: center;
+  overflow: hidden;
+}
+
+.markbox {
+  position: relative;
+  display: inline-block;
+  width: min(720px, 76vw);
+}
+
+/* Golden glow behind the mark. Settles (opacity + scale) when .burst is on. */
+.markwash {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 82%;
+  height: 165%;
+  transform: translate(-50%, -50%) scale(0.5);
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 191, 0, 0.5),
+    rgba(255, 191, 0, 0.13) 42%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.7s ease, transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+  filter: blur(12px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wm {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.wmFill {
+  fill: var(--ayye-cream);
+  fill-opacity: 0;
+  transition: fill-opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wmStroke {
+  fill: none;
+  stroke: var(--ayye-cream);
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: round;
+  stroke-opacity: 0;
+  transition:
+    stroke-dashoffset 1.5s cubic-bezier(0.45, 0.05, 0.2, 1),
+    stroke-opacity 0.45s ease;
+}
+
+.cgrid {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.cgrid line {
+  stroke: var(--ayye-amber);
+  stroke-width: 2;
+  stroke-dasharray: 12 12;
+  vector-effect: non-scaling-stroke;
+  transform-box: fill-box;
+}
+
+.cgrid circle {
+  fill: none;
+  stroke: var(--ayye-amber);
+  stroke-width: 2;
+  stroke-dasharray: 9 9;
+  vector-effect: non-scaling-stroke;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* State classes toggled by AyyeMark.tsx (module-scoped equivalents of v15's
+   .markbox.show-grid / .fill / .burst / .fade). */
+.showGrid .cgrid {
+  opacity: 0.42;
+}
+
+.fill .wmFill {
+  fill-opacity: 1;
+}
+
+.fill .wmStroke {
+  stroke-opacity: 0;
+}
+
+.fade .wmFill {
+  fill-opacity: 0;
+}
+
+.burst .markwash {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.markCaption {
+  margin: 40px auto 0;
+  max-width: 40ch;
+  font-family: var(--font-ayye);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  color: var(--ayye-muted-on-dark);
+}
+
+/* Reduced motion: finished state only (filled cream wordmark + glow), no
+   guides, no draw, no burst, no loop. Matches v15's reduced-motion block. */
+@media (prefers-reduced-motion: reduce) {
+  .markwash {
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+  }
+  .wmFill {
+    fill-opacity: 1 !important;
+  }
+  .wmStroke {
+    stroke-opacity: 0 !important;
+  }
+  .cgrid {
+    opacity: 0 !important;
+  }
+}
+
+/* ── 01 The palette: chips + dominance pie + Receipt gradient (v15) ────────── */
+.chips {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+  margin-top: 48px;
+}
+
+.chip {
+  border: 1px solid var(--ayye-hair);
+  outline-offset: -1px;
+}
+
+.chipSw {
+  height: 118px;
+}
+
+.info {
+  padding: 14px 14px 16px;
+}
+
+.role {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ayye-muted-on-cream);
+}
+
+.name {
+  font-weight: 600;
+  font-size: 16px;
+  margin: 3px 0 8px;
+}
+
+.hex {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--ayye-muted-on-cream);
+}
+
+.dom {
+  margin-top: 64px;
+}
+
+.domhead {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 24px;
+}
+
+.domwrap {
+  display: flex;
+  align-items: center;
+  gap: 52px;
+  flex-wrap: wrap;
+}
+
+/* Solid dominance pie (v15 .pie): conic 64/32/4. Reveals with a scale + rotate
+   settle, overriding the generic translateY reveal for this element only. */
+.pie {
+  width: 220px;
+  height: 220px;
+  flex: none;
+  border-radius: 50%;
+  /* Deviation from v15: cream slice is true Receipt Cream (#FFF8E4), not the
+     greyish #E8E2CF. A 1px perimeter hairline + thin dark dividers at the
+     slice boundaries (cream/black at 230.4deg, black/amber at 345.6deg,
+     amber/cream at 360deg) keep the cream wedge legible against the cream
+     card. The divider layer sits above the slice layer. */
+  background:
+    conic-gradient(
+      from 0deg,
+      rgba(20, 20, 20, 0.35) 0 0.7deg,
+      transparent 0.7deg 229.7deg,
+      rgba(20, 20, 20, 0.35) 229.7deg 231.1deg,
+      transparent 231.1deg 344.9deg,
+      rgba(20, 20, 20, 0.35) 344.9deg 346.3deg,
+      transparent 346.3deg 359.3deg,
+      rgba(20, 20, 20, 0.35) 359.3deg 360deg
+    ),
+    conic-gradient(#fff8e4 0 64%, #141414 64% 96%, #ffbf00 96% 100%);
+  border: 1px solid rgba(20, 20, 20, 0.2);
+}
+
+.pie[data-reveal] {
+  transform: scale(0.9) rotate(-10deg);
+}
+
+.pie[data-reveal][data-revealed="true"] {
+  transform: none;
+}
+
+.leg {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.legItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+}
+
+.legSw {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  border: 1px solid var(--ayye-hair);
+}
+
+.domline {
+  margin-top: 24px;
+  max-width: 48ch;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ayye-muted-on-cream);
+}
+
+.gradbar {
+  height: 64px;
+  margin-top: 48px;
+  border: 1px solid var(--ayye-hair);
+}
+
+.gradLabel {
+  margin-top: 14px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ayye-muted-on-cream);
+}
+
+/* ── 03 The social system: compare block (v15 .compare/.cmp) ───────────────── */
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 62px;
+  max-width: 760px;
+}
+
+.cmp {
+  margin: 0;
+  overflow: hidden;
+  background: var(--ayye-cream);
+  border: 1px solid var(--ayye-hair);
+  box-shadow: var(--lc-offset-block);
+}
+
+/* Amber accent bar, same device as the carousel slide bar. */
+.cmpBar {
+  height: 8px;
+  background: var(--ayye-amber);
+}
+
+.cmpImg {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.cmpCap {
+  padding: 12px 14px 14px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ayye-muted-on-cream);
+}
+
+/* ── 04 UGC: two 16:9 spots (v15 .vids/.vid) ───────────────────────────────── */
+.vids {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 50px;
+}
+
+.vid {
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 1px solid var(--ayye-hair);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.vidEl {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 700px) {
+  .chips {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .vids,
+  .compare {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Section 8: LC close (plum, full-bleed, LC voice) ──────────────────────── */
+.close {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-top: var(--lc-space-chapter);
+  background: var(--lc-plum);
+  color: var(--lc-pink-0);
+  padding: var(--lc-space-chapter) 0;
+}
+
+.closeInner {
+  max-width: var(--lc-page-max-width);
+  margin: 0 auto;
+  padding: 0 var(--lc-page-pad);
+}
+
+.closeHeadline {
+  margin: var(--lc-space-intra) 0 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: var(--lc-size-section-title);
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  text-wrap: balance;
+  max-width: 22ch;
+}
+
+.closeCta {
+  margin-top: 42px;
+}
+
+@media (max-width: 900px) {
+  .closeInner {
+    padding: 0 var(--lc-page-pad-mobile);
+  }
+}

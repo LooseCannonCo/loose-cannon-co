@@ -1,9 +1,8 @@
+import { CaseBand } from "@/components/CaseBand/CaseBand";
 import { Footer } from "@/components/Footer/Footer";
 import { Nav } from "@/components/Nav/Nav";
 import { Page } from "@/components/Page/Page";
 import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
-import { Splatter } from "@/components/Splatter/Splatter";
-import { WorkRow } from "@/components/WorkRow/WorkRow";
 import { client } from "@/sanity/client";
 import {
   getAllCaseStudies,
@@ -40,34 +39,37 @@ export default async function WorkIndex() {
       <Nav />
 
       <header className={styles.header}>
-        <Splatter count={4} excludeCenter />
         <SectionEyebrow>Receipts</SectionEyebrow>
-        <h1 className={styles.headline}>
-          <span className={styles.bleed} aria-hidden="true">
-            Work.
-          </span>
-          <span className={styles.ink}>Work.</span>
-        </h1>
+        <h1 className={styles.headline}>Work.</h1>
         <p className={styles.subhead}>
           Receipts from social-first work that paid the bills.
         </p>
       </header>
 
-      <div className={styles.list}>
-        {sorted.map((c, i) => (
-          <WorkRow
+      {/* Big alternating bands, one per case, with chapter-break spacing
+          between. This is the page's immersion treatment vs the compact
+          WorkRow teaser the home uses. No stat number here; the big
+          hero number lives on the individual case study detail pages. */}
+      <div className={styles.bands}>
+        {sorted.map((c) => (
+          <CaseBand
             key={c.slug}
-            index={i}
             slug={c.slug}
             client={c.client}
             discipline={c.discipline}
             year={c.year}
-            caseNumber={c.caseNumber}
-            prefix={c.prefix}
-            digits={c.digits}
-            suffix={c.suffix}
             headline={c.headline}
             coverImage={c.coverImage ?? c.posterImage}
+            // Ayye card only: the Creators UGC spot as the cover, instead of
+            // the wordmark-on-pink still. Other cards keep their image cover.
+            coverVideo={
+              c.slug === "ayye"
+                ? {
+                    src: "/ayye/ayye-creator.mp4",
+                    poster: "/ayye/ayye-creator-poster.jpg",
+                  }
+                : undefined
+            }
           />
         ))}
       </div>

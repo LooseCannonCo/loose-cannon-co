@@ -1,0 +1,135 @@
+/* /work band: half-image, half-text, alternating sides per band so the page
+   gets a rhythm the home's compact teasers don't have. The whole band is a
+   single anchor link to the case study. Stays on pink, no inversion. */
+.band {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Default order (odd-positioned bands): image left, text right. */
+.bandImage {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.bandText {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/* Even-positioned bands flip: image right, text left. The alternation is
+   the page's rhythm. */
+.band:nth-child(even) .bandImage {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.band:nth-child(even) .bandText {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* Subtle hover: image scale and the arrow on the case name nudges right.
+   Both keep the band's bounding box stable (transform-only, no layout
+   shift). */
+.image {
+  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform-origin: center;
+}
+
+.band:hover .image,
+.band:focus-visible .image {
+  transform: scale(1.02);
+}
+
+.arrow {
+  display: inline-block;
+  font-size: 0.7em;
+  line-height: 1;
+  transition: transform 240ms cubic-bezier(0.3, 1.4, 0.4, 1);
+}
+
+.band:hover .arrow,
+.band:focus-visible .arrow {
+  transform: translateX(8px);
+}
+
+/* Eyebrow above the name: discipline + year, small uppercase. */
+.eyebrow {
+  font-family: var(--lc-body);
+  font-size: var(--lc-size-eyebrow);
+  font-weight: var(--lc-weight-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  margin-bottom: var(--lc-space-intra);
+}
+
+/* Client name at statement scale: marquee feel on the page index without
+   competing with the case detail hero number. One weight (700 via
+   --lc-weight-display), sentence case from the source data. */
+.name {
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-statement), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: var(--lc-size-statement);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--lc-plum);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 20px;
+  text-wrap: balance;
+}
+
+/* One-line hook from hero.headline: body tier, capped measure so it stays
+   a deliberate support line and doesn't run wide. */
+.hook {
+  margin: var(--lc-space-intra) 0 0;
+  max-width: 460px;
+  font-size: var(--lc-size-body);
+  font-weight: var(--lc-weight-body);
+  line-height: 1.5;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+@media (max-width: 900px) {
+  /* Mobile: stack to single column, image always on top, text below.
+     Alternation is cancelled here because the alternation only reads as
+     rhythm in a two-column layout; in a stacked layout it'd just be
+     inconsistent positioning. */
+  .band {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .bandImage,
+  .band:nth-child(even) .bandImage {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .bandText,
+  .band:nth-child(even) .bandText {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image,
+  .arrow {
+    transition: none;
+  }
+  .band:hover .image,
+  .band:focus-visible .image,
+  .band:hover .arrow,
+  .band:focus-visible .arrow {
+    transform: none;
+  }
+}

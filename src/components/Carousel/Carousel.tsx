@@ -3,38 +3,63 @@
 import { useEffect, useRef, useState } from "react";
 
 import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
-import { urlFor } from "@/sanity/image";
-import type { GalleryItemData } from "@/sanity/queries/caseStudy";
+import { cn } from "@/lib/utils";
 
-import styles from "./CaseGalleryDrag.module.css";
+import styles from "./Carousel.module.css";
 
-export interface CaseGalleryDragProps {
-  items: GalleryItemData[];
-  /** Section eyebrow text. Defaults to "The work" for case study content. */
+export interface CarouselSlide {
+  /** Resolved image URL. Empty renders the cream placeholder with `caption`. */
+  src: string;
+  alt?: string;
+  /** Placeholder text shown when `src` is empty. */
+  caption?: string;
+}
+
+export interface CarouselProps {
+  /** Slides in order. Callers resolve their own URLs (Sanity urlFor, /public,
+   *  etc.) so this component is presentation-only and shared across cases. */
+  slides: CarouselSlide[];
+  /** Per-slide accent top bar color (e.g. Ayye amber). Omit for no bar, which
+   *  keeps the FITAID carousel exactly as it was. */
+  accent?: string;
+  /** Drag-cue eyebrow. Defaults to "The work" for case study content. */
   eyebrow?: string;
+  /** Optional title block above the scroller. Renders only when `title` is
+   *  set; image-only galleries keep the eyebrow-above-scroller chrome. */
+  title?: string;
+  /** Optional intro paragraph in the title block's right column. */
+  intro?: string;
+  /** Embedded mode: drop the standalone eyebrow and the chapter top padding,
+   *  for when a host section (Ayye social card) already supplies the header.
+   *  Default false, so standalone callers (FITAID) are unchanged. */
+  bare?: boolean;
 }
 
 const pad2 = (n: number) => n.toString().padStart(2, "0");
 
 /**
- * Horizontal drag gallery for large image collections (FITAID pattern, 6+
- * items). 4:5 portrait tiles in a scroll-snap row, sized so roughly 2.5 are
- * visible across the 1320px container with a peek at the right edge as the
- * drag affordance. Live "NN / NN" counter updates as the active tile changes.
+ * Horizontal drag carousel shared by every case study (FITAID social grid,
+ * Ayye Creators set, etc). 4:5 tiles in a scroll-snap row, ~2.5 visible across
+ * the 1320px container with a peek at the right edge as the drag affordance.
+ * Live "NN / NN" counter updates as the active tile changes.
  *
  * Interaction: native horizontal scroll handles trackpad + touch swipe + most
- * mouse wheels. Pointer events on top of that handle mouse drag explicitly so
- * users on a non-touch / non-trackpad pointer still get the drag affordance.
+ * mouse wheels. Pointer events on top handle mouse drag explicitly so users on
+ * a non-touch / non-trackpad pointer still get the drag affordance.
  *
  * Accessibility: scroller is a focusable region with an aria-label, each tile
  * is tabbable with an aria-label, arrow keys jump to the next/previous tile,
  * focus ring uses pink-3. prefers-reduced-motion drops smooth scroll behavior
  * and the scroll-into-view animation.
  */
-export function CaseGalleryDrag({
-  items,
+export function Carousel({
+  slides,
+  accent,
   eyebrow = "The work",
-}: CaseGalleryDragProps) {
+  title,
+  intro,
+  bare = false,
+}: CarouselProps) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const tileRefs = useRef<(HTMLDivElement | null)[]>([]);
   const dragRef = useRef<{
@@ -89,7 +114,7 @@ export function CaseGalleryDrag({
       scroller.removeEventListener("scroll", onScroll);
       if (raf) window.cancelAnimationFrame(raf);
     };
-  }, [items.length]);
+  }, [slides.length]);
 
   // Mouse drag via pointer events. Touch falls through to native momentum
   // scroll because that feels better than synthesized pointer drag on touch.
@@ -126,7 +151,7 @@ export function CaseGalleryDrag({
   // Keyboard navigation. Arrow keys jump the focused tile to the next or
   // previous one. Home and End jump to the first / last.
   const scrollToTile = (i: number) => {
-    const idx = Math.max(0, Math.min(items.length - 1, i));
+    const idx = Math.max(0, Math.min(slides.length - 1, i));
     const tile = tileRefs.current[idx];
     if (!tile) return;
     tile.scrollIntoView({
@@ -153,24 +178,41 @@ export function CaseGalleryDrag({
         break;
       case "End":
         e.preventDefault();
-        scrollToTile(items.length - 1);
+        scrollToTile(slides.length - 1);
         break;
     }
   };
 
+  const hasTitleBlock = Boolean(title);
   return (
-    <section data-reveal-section className={styles.section}>
-      <SectionEyebrow>{eyebrow}</SectionEyebrow>
+    <section
+      data-reveal-section
+      className={cn(styles.section, bare && styles.bare)}
+    >
+      {hasTitleBlock ? (
+        <div className={styles.titleBlock}>
+          <div>
+            <SectionEyebrow>{eyebrow}</SectionEyebrow>
+            <h3 className={styles.ttl} data-reveal>
+              {title}
+            </h3>
+          </div>
+          {intro ? (
+            <p className={styles.intro} data-reveal>
+              {intro}
+            </p>
+          ) : null}
+        </div>
+      ) : bare ? null : (
+        <SectionEyebrow>{eyebrow}</SectionEyebrow>
+      )}
       <div className={styles.head}>
         <span className={styles.cue}>
           <span aria-hidden="true">{"←→"}</span> Drag
         </span>
-        <span
-          className={styles.counter}
-          aria-live="polite"
-          aria-atomic="true"
-        >
-          {pad2(active + 1)} <span aria-hidden="true">/</span> {pad2(items.length)}
+        <span className={styles.counter} aria-live="polite" aria-atomic="true">
+          {pad2(active + 1)} <span aria-hidden="true">/</span>{" "}
+          {pad2(slides.length)}
         </span>
       </div>
       <div
@@ -183,35 +225,49 @@ export function CaseGalleryDrag({
         onKeyDown={onKeyDown}
         tabIndex={0}
         role="region"
-        aria-label={`Image gallery, ${items.length} items`}
+        aria-label={`Image gallery, ${slides.length} items`}
       >
-        {items.map((item, i) => {
-          const src = urlFor(item.image).width(960).quality(70).auto("format").url();
-          return (
-            <div
-              key={i}
-              ref={(el) => {
-                tileRefs.current[i] = el;
-              }}
-              className={styles.tile}
-              tabIndex={0}
-              role="group"
-              aria-roledescription="slide"
-              aria-label={item.alt ?? `Image ${i + 1} of ${items.length}`}
-            >
-              <div className={styles.frame}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
+        {slides.map((slide, i) => (
+          <div
+            key={i}
+            ref={(el) => {
+              tileRefs.current[i] = el;
+            }}
+            className={styles.tile}
+            tabIndex={0}
+            role="group"
+            aria-roledescription="slide"
+            aria-label={
+              slide.alt ?? slide.caption ?? `Tile ${i + 1} of ${slides.length}`
+            }
+          >
+            <div className={styles.frame}>
+              {accent ? (
+                <span
+                  className={styles.bar}
+                  style={{ background: accent }}
+                  aria-hidden="true"
+                />
+              ) : null}
+              {slide.src ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
                 <img
-                  src={src}
-                  alt={item.alt ?? ""}
+                  src={slide.src}
+                  alt={slide.alt ?? ""}
                   className={styles.img}
                   loading="lazy"
                   draggable={false}
                 />
-              </div>
+              ) : (
+                <div className={styles.placeholder}>
+                  <span className={styles.placeholderText}>
+                    {slide.caption ?? slide.alt ?? ""}
+                  </span>
+                </div>
+              )}
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </section>
   );

@@ -21,6 +21,32 @@
   --lc-cream:  #fdf3e7;
   --lc-red:    #d9342c;
 
+  /* ── Print-registration bleed (canonical, headline-side) ─────────────────
+   * The single source of truth for the violet misregistration offset that
+   * sits behind plum display headlines. Consumed by PrintHeadline and the
+   * /work page header so the treatment stays identical across every page.
+   * Tuned to read as a printing artifact (a plate misaligned by a hair),
+   * NOT as a drop shadow:
+   *   color   : violet (#b14aff) so the offset reads as a second ink, not
+   *             a darker copy of the same ink (a darker copy always reads
+   *             as depth/shadow regardless of opacity)
+   *   opacity : 0.6, the low end of the 60-65% spec band, so the bleed
+   *             sits behind the type instead of competing with it
+   *   offset  : ~2px, asymmetric x/y so the artifact reads as accidental
+   *             plate alignment, not a deliberate diagonal shadow */
+  --lc-bleed-color: var(--lc-violet);
+  --lc-bleed-opacity: 0.6;
+  --lc-bleed-offset-x: 2px;
+  --lc-bleed-offset-y: 1.5px;
+
+  /* ── Offset block (canonical) ────────────────────────────────────────────
+   * The hard plum drop-shadow (no blur) behind framed artifacts and cards:
+   * the case study hero artifact, carousel slides, and the Ayye section /
+   * compare cards. Single source of truth so every framed block reuses the
+   * same offset rather than hardcoding a px value per consumer. Same hard,
+   * blurless print-card treatment as the registration bleed above. */
+  --lc-offset-block: 8px 8px 0 var(--lc-plum);
+
   /* ── Typography families (locked) ─────────────────────────────────────────
    * Families are loaded via next/font/google, exposed through the
    * --font-display / --font-body variables (set on <body> in layout.tsx).
@@ -81,6 +107,11 @@
   /* Statement tier: marquee section headlines and the pull quote. Fills the
    * gap between section titles and the hero number. */
   --lc-size-statement: clamp(60px, 8vw, 104px);
+  /* Page headline tier: main-page hero headlines (home, Services, About,
+   * Contact). Caps below statement so multi-sentence headlines like
+   * "Tell us what you're working on." fit one sentence per line at the
+   * 1256px content width without orphaning or wrapping awkwardly. */
+  --lc-size-page-headline: clamp(44px, 6vw, 80px);
   /* Section title: replaces both old display-lg (54-58) and display-md
    * (42-48) tiers, collapsed to a single section-title scale. */
   --lc-size-section-title: clamp(38px, 5vw, 56px);
