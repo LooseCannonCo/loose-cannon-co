@@ -577,7 +577,9 @@
   transform-origin: right;
 }
 
-/* ── CTA (dark) ──────────────────────────────────────────────────────────────── */
+/* ── CTA (dark, torn band) ───────────────────────────────────────────────────
+   Same dark treatment as the other closing CTAs, with its own torn silhouette
+   (every dark banner on the site shares the treatment, unique tear). */
 .cta {
   position: relative;
   width: 100vw;
@@ -586,6 +588,16 @@
   background: var(--lc-plum);
   color: var(--lc-pink-0);
   padding: 76px 0;
+  clip-path: polygon(
+    0 6.5%,
+    35% 2%,
+    68% 7%,
+    100% 3%,
+    100% 96.5%,
+    64% 92.5%,
+    30% 99%,
+    0 94%
+  );
 }
 
 .ctaHead {
@@ -669,6 +681,18 @@
   .bridge,
   .cta {
     padding: 54px 0;
+  }
+
+  /* Softened tear on small screens, same family as the Services mobile tear. */
+  .cta {
+    clip-path: polygon(
+      0 2.5%,
+      42% 0.5%,
+      100% 3%,
+      100% 97.5%,
+      52% 99.5%,
+      0 96.5%
+    );
   }
 
   .manInner {

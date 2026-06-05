@@ -643,6 +643,17 @@
   background: var(--lc-plum);
   color: var(--lc-pink-0);
   padding: var(--lc-space-chapter) 0;
+  /* Torn band, same treatment as the other closing CTAs, own silhouette. */
+  clip-path: polygon(
+    0 6.5%,
+    35% 2%,
+    68% 7%,
+    100% 3%,
+    100% 96.5%,
+    64% 92.5%,
+    30% 99%,
+    0 94%
+  );
 }
 
 .closeInner {
@@ -670,5 +681,17 @@
 @media (max-width: 900px) {
   .closeInner {
     padding: 0 var(--lc-page-pad-mobile);
+  }
+
+  /* Softened tear on small screens, same family as the Services mobile tear. */
+  .close {
+    clip-path: polygon(
+      0 2.5%,
+      42% 0.5%,
+      100% 3%,
+      100% 97.5%,
+      52% 99.5%,
+      0 96.5%
+    );
   }
 }
