@@ -3,12 +3,16 @@ import localFont from "next/font/local";
 
 import { BackLink } from "@/components/BackLink/BackLink";
 import { Carousel } from "@/components/Carousel/Carousel";
+import { Credits } from "@/components/Credits/Credits";
 import { Footer } from "@/components/Footer/Footer";
 import { MetaStrip } from "@/components/MetaStrip/MetaStrip";
 import { Nav } from "@/components/Nav/Nav";
 import { Page } from "@/components/Page/Page";
 import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
+import { UpNext } from "@/components/UpNext/UpNext";
 import { cn } from "@/lib/utils";
+import { client } from "@/sanity/client";
+import { getCaseStudyBySlug, type CaseStudy } from "@/sanity/queries/caseStudy";
 
 import { AyyeMark } from "./AyyeMark";
 import { AyyeVideo } from "./AyyeVideo";
@@ -44,7 +48,16 @@ export const metadata: Metadata = {
  * bespoke section cards render their headers with placeholder bodies, filled
  * in section by section in the following steps.
  */
-export default function AyyeCasePage() {
+export default async function AyyeCasePage() {
+  // Up Next is the one Sanity-driven block on this otherwise static bespoke
+  // page: fetch the Ayye case doc's upNext (next case = FITAID) via the same
+  // query the [slug] template uses, so the pointer renders identically.
+  const doc = await client.fetch<CaseStudy | null>(getCaseStudyBySlug, {
+    slug: "ayye",
+  });
+  const upNext = doc?.upNext;
+  const credits = doc?.credits;
+
   return (
     <Page className={cn(generalSans.variable, styles.ayye)}>
       <Nav />
@@ -301,6 +314,31 @@ export default function AyyeCasePage() {
           </div>
         </div>
       </section>
+
+      {/* Credits: Sanity-driven, same component + placement as the [slug]
+          template (before Up Next). `cr` avoids shadowing the `c` content
+          binding used throughout this page. */}
+      {credits && credits.length > 0 ? (
+        <Credits
+          credits={credits.map((cr) => ({
+            label: cr.label ?? "",
+            name: cr.name ?? "",
+          }))}
+        />
+      ) : null}
+
+      {/* Up Next: FITAID. Sanity-driven, same component + placement as the
+          [slug] template (last block before the footer). */}
+      {upNext?.next?.slug ? (
+        <UpNext
+          title={`${upNext.next.client ?? ""}.`}
+          href={`/work/${upNext.next.slug}`}
+          caseLabel={upNext.next.discipline ?? ""}
+          descriptor={upNext.descriptor ?? ""}
+          posterImage={upNext.next.coverImage ?? upNext.next.posterImage}
+          psText={upNext.psLine}
+        />
+      ) : null}
 
       <Footer />
     </Page>
