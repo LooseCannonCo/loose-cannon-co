@@ -24,7 +24,7 @@
 .line,
 .big,
 .ctaH2 {
-  text-shadow: 0.03em 0.042em 0 var(--lc-violet);
+  text-shadow: 0.016em 0.022em 0 var(--lc-violet);
 }
 
 /* ── MASTHEAD (under the global nav) ───────────────────────────────────────── */
@@ -99,7 +99,7 @@
   }
   100% {
     opacity: 1;
-    text-shadow: 0.03em 0.042em 0 var(--lc-violet);
+    text-shadow: 0.016em 0.022em 0 var(--lc-violet);
   }
 }
 
@@ -407,7 +407,7 @@
   100% {
     opacity: 1;
     transform: rotate(var(--rot)) scale(1);
-    text-shadow: 0.03em 0.042em 0 var(--lc-violet);
+    text-shadow: 0.016em 0.022em 0 var(--lc-violet);
   }
 }
 
@@ -565,7 +565,7 @@
     opacity: 1;
     animation: none;
     transform: rotate(-1deg);
-    text-shadow: 0.03em 0.042em 0 var(--lc-violet);
+    text-shadow: 0.016em 0.022em 0 var(--lc-violet);
   }
 
   .line {
