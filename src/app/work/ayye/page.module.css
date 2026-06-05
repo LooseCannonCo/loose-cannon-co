@@ -643,15 +643,16 @@
   background: var(--lc-plum);
   color: var(--lc-pink-0);
   padding: var(--lc-space-chapter) 0;
-  /* Torn band, same treatment as the other closing CTAs, own silhouette. */
+  /* Torn band, same treatment as the other closing CTAs. Shape-D: unique
+     silhouette so no two dark banners share a tear. */
   clip-path: polygon(
-    0 6.5%,
-    35% 2%,
-    68% 7%,
-    100% 3%,
-    100% 96.5%,
-    64% 92.5%,
-    30% 99%,
+    0 3%,
+    33% 6.5%,
+    66% 2.5%,
+    100% 5.5%,
+    100% 95.5%,
+    67% 93.5%,
+    33% 96.5%,
     0 94%
   );
 }
@@ -683,15 +684,15 @@
     padding: 0 var(--lc-page-pad-mobile);
   }
 
-  /* Softened tear on small screens, same family as the Services mobile tear. */
+  /* Softened shape-D tear on small screens; shallow, no spike. */
   .close {
     clip-path: polygon(
-      0 2.5%,
-      42% 0.5%,
-      100% 3%,
-      100% 97.5%,
-      52% 99.5%,
-      0 96.5%
+      0 4%,
+      38% 6%,
+      100% 3.5%,
+      100% 96%,
+      60% 96.5%,
+      0 94.5%
     );
   }
 }

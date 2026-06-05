@@ -589,13 +589,13 @@
   color: var(--lc-pink-0);
   padding: 76px 0;
   clip-path: polygon(
-    0 6.5%,
-    35% 2%,
-    68% 7%,
+    0 6%,
+    35% 2.5%,
+    68% 6.5%,
     100% 3%,
-    100% 96.5%,
-    64% 92.5%,
-    30% 99%,
+    100% 96%,
+    64% 93%,
+    30% 96.5%,
     0 94%
   );
 }
@@ -683,15 +683,15 @@
     padding: 54px 0;
   }
 
-  /* Softened tear on small screens, same family as the Services mobile tear. */
+  /* Softened shape-C tear on small screens; shallow, no spike. */
   .cta {
     clip-path: polygon(
-      0 2.5%,
-      42% 0.5%,
+      0 3%,
+      42% 5.5%,
       100% 3%,
-      100% 97.5%,
-      52% 99.5%,
-      0 96.5%
+      100% 96%,
+      52% 96.5%,
+      0 94.5%
     );
   }
 
