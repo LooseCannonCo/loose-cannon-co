@@ -1,14 +1,17 @@
+import { Button } from "@/components/Button/Button";
 import { CaseBand } from "@/components/CaseBand/CaseBand";
 import { Footer } from "@/components/Footer/Footer";
 import { Nav } from "@/components/Nav/Nav";
 import { Page } from "@/components/Page/Page";
 import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
+import { cn } from "@/lib/utils";
 import { client } from "@/sanity/client";
 import {
   getAllCaseStudies,
   type CaseStudyListItem,
 } from "@/sanity/queries/caseStudy";
 
+import { WorkMotion } from "./WorkMotion";
 import styles from "./page.module.css";
 
 /** Extract a comparable 4-digit year from a freeform year string. */
@@ -37,11 +40,23 @@ export default async function WorkIndex() {
   return (
     <Page>
       <Nav />
+      <WorkMotion />
+
+      {/* MASTHEAD — same pattern as About / Services / Contact. */}
+      <div className={styles.masthead}>
+        <span className={styles.fur}>Work // No. 004</span>
+        <span className={cn(styles.fur, styles.furR)}>
+          Loose Cannon Co. // The receipts
+        </span>
+      </div>
 
       <header className={styles.header}>
         <SectionEyebrow>Receipts</SectionEyebrow>
-        <h1 className={styles.headline}>Work.</h1>
-        <p className={styles.subhead}>
+        <h1 className={styles.headline}>
+          <span className={styles.hl1}>Our work.</span>
+          <span className={styles.hl2}>Or whatever.</span>
+        </h1>
+        <p className={cn(styles.subhead, styles.rv)}>
           Receipts from social-first work that paid the bills.
         </p>
       </header>
@@ -51,9 +66,13 @@ export default async function WorkIndex() {
           WorkRow teaser the home uses. No stat number here; the big
           hero number lives on the individual case study detail pages. */}
       <div className={styles.bands}>
-        {sorted.map((c) => (
+        {sorted.map((c, i) => (
           <CaseBand
             key={c.slug}
+            // Presentation-only additions: scroll-reveal class + a vertical
+            // sidelabel numbered by the row's order in the list (from index).
+            className={styles.rv}
+            receiptLabel={`Receipt ${String(i + 1).padStart(2, "0")}`}
             slug={c.slug}
             client={c.client}
             discipline={c.discipline}
@@ -75,6 +94,26 @@ export default async function WorkIndex() {
           />
         ))}
       </div>
+
+      {/* CLOSING CTA — dark torn band, tilted content. Same treatment as the
+          Services closing CTA; button links to /contact to match it. No Flippy
+          here (he already lives at the top of the page). */}
+      <section className={styles.cta}>
+        <div className={styles.ctaInner}>
+          <h2 className={styles.ctaH2}>Want to be a receipt?</h2>
+          <div className={styles.ctaBtn}>
+            <Button href="/contact" variant="onDark">
+              Start a project
+            </Button>
+          </div>
+          <p className={styles.yell}>
+            Or just yell at us.{" "}
+            <a href="mailto:seymourbuttz@loosecannon.co">
+              seymourbuttz@loosecannon.co
+            </a>
+          </p>
+        </div>
+      </section>
 
       <Footer />
     </Page>

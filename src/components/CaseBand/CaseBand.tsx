@@ -1,6 +1,7 @@
 import type { SanityImageSource } from "@sanity/image-url";
 
 import { CaseImage } from "@/components/CaseImage/CaseImage";
+import { cn } from "@/lib/utils";
 
 import styles from "./CaseBand.module.css";
 
@@ -21,6 +22,12 @@ export interface CaseBandProps {
   /** Optional cover video (autoplay/muted/loop/playsinline). Overrides the
    *  cover image for this band. Used only by the Ayye card. */
   coverVideo?: { src: string; poster: string };
+  /** Presentation-only: extra class on the band root (e.g. the scroll-reveal
+   *  class from /work). Does not affect the Sanity-driven content. */
+  className?: string;
+  /** Presentation-only: vertical sidelabel text for this row (e.g.
+   *  "Receipt 01"), numbered by the row's order on /work. Hidden under 900px. */
+  receiptLabel?: string;
 }
 
 /**
@@ -42,6 +49,8 @@ export function CaseBand({
   coverRatio,
   coverHotspot,
   coverVideo,
+  className,
+  receiptLabel,
 }: CaseBandProps) {
   // Squash any \n breaks in the hero headline into a single line for the
   // band's hook paragraph.
@@ -58,9 +67,14 @@ export function CaseBand({
   return (
     <a
       href={`/work/${slug}`}
-      className={styles.band}
+      className={cn(styles.band, className)}
       data-flippy-react="work"
     >
+      {receiptLabel ? (
+        <span className={styles.sidelabel} aria-hidden="true">
+          {receiptLabel}
+        </span>
+      ) : null}
       <div className={styles.bandImage}>
         <CaseImage
           image={coverImage}

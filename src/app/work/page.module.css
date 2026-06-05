@@ -1,31 +1,86 @@
-/* Page header padding consumes canonical tokens. Top is intra-loose-ish
-   distance from the nav; bottom is the chapter break before the work rows. */
-.header {
-  position: relative;
-  padding: 48px 0 var(--lc-space-chapter);
+/* /work — zine index.
+ *
+ * Restyled into the same zine system as /services, /about, /contact: masthead
+ * line, eyebrow + square bullet (via SectionEyebrow), the violet
+ * print-misregistration offset on display type (text-shadow), crooked
+ * rotations, vertical sidelabels (per row, in CaseBand), and the generic
+ * .rv / .rvf scroll reveals toggled to [data-in] by WorkMotion. The project
+ * rows themselves stay 100% Sanity-driven; this is presentation only.
+ *
+ * The .rv / .rvf keyframe-free reveal rules live in THIS module next to the
+ * selectors WorkMotion queries by hashed name, so the markup and the observer
+ * agree without a brittle string contract. */
+
+/* ── MASTHEAD (under the global nav) ───────────────────────────────────────── */
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 4px;
+  padding-bottom: 10px;
 }
 
-/* "Work." renders flat plum, no print-registration offset. At statement
-   tier the duplicate offset reads as a drop-shadow regardless of color,
-   so every large display headline across the site stays flat. */
+.fur {
+  font-family: var(--lc-body);
+  font-weight: var(--lc-weight-eyebrow);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  opacity: 0.7;
+}
+
+.furR {
+  opacity: 0.55;
+}
+
+/* ── HERO ──────────────────────────────────────────────────────────────────── */
+/* Top is intra-loose-ish distance from the masthead; bottom is the chapter
+   break before the work rows. */
+.header {
+  position: relative;
+  padding: 40px 0 var(--lc-space-chapter);
+}
+
+/* "Work." gets the hero display treatment shared by the other pages: one
+   weight, crooked, with the canonical violet misregistration offset. One short
+   word, so no wrap or clip risk; left origin keeps the tilt from drifting. */
 .headline {
   position: relative;
   z-index: 1;
   display: inline-block;
   margin: 0;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-statement), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: var(--lc-size-statement);
+  font-size: clamp(52px, 10.5vw, 128px);
   line-height: 0.9;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
   color: var(--lc-plum);
+  transform: rotate(-2deg);
+  transform-origin: left;
+  text-shadow: 0.016em 0.022em 0 var(--lc-violet);
+}
+
+/* Two stacked lines: line 1 sets up bleeding a hair left, line 2 lands kicking
+   a hair right. Same two-line hero move as Services / Contact. */
+.hl1 {
+  display: block;
+  margin-left: -1.2vw;
+  white-space: nowrap;
+}
+
+.hl2 {
+  display: block;
+  margin-left: 6%;
+  white-space: nowrap;
 }
 
 .subhead {
   position: relative;
   z-index: 1;
-  margin: 20px 0 0;
+  margin: 22px 0 0;
   max-width: 540px;
   font-size: var(--lc-size-body);
   font-weight: var(--lc-weight-eyebrow);
@@ -34,10 +89,8 @@
   text-wrap: pretty;
 }
 
-/* Big bands list: chapter-break vertical rhythm between each band so the
-   page reads as an index of three deliberate beats. Top padding is the
-   sub-section gap from the page header above; everything else is owned by
-   the band gap. */
+/* Big bands list: chapter-break vertical rhythm between each band so the page
+   reads as an index of deliberate beats. */
 .bands {
   display: flex;
   flex-direction: column;
@@ -45,4 +98,131 @@
   padding-top: var(--lc-space-sub);
   /* Reserve bottom space before the footer so the last band breathes. */
   padding-bottom: var(--lc-space-chapter);
+}
+
+/* ── CLOSING CTA (dark, torn band) ─────────────────────────────────────────────
+   Same treatment as the Services closing CTA (dark plum, cream ink, light
+   cream button, content tilted, pulled-back violet offset on the headline), but
+   with THIS page's own torn silhouette: every dark banner on the site shares
+   the treatment and gets a unique tear. No Flippy here (he already lives at the
+   top of the page). */
+.cta {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  background: var(--lc-plum);
+  color: var(--lc-cream);
+  padding: 140px 0 128px;
+  clip-path: polygon(
+    0 5%,
+    28% 1%,
+    55% 6.5%,
+    100% 2.5%,
+    100% 95%,
+    70% 99.5%,
+    38% 93.5%,
+    0 98%
+  );
+}
+
+/* Recentered, padded column inside the bleed, tilted off-axis. */
+.ctaInner {
+  max-width: var(--lc-page-max-width);
+  margin: 0 auto;
+  padding: 0 var(--lc-page-pad);
+  transform: rotate(-1.8deg);
+}
+
+.ctaH2 {
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(40px, 6.2vw, 90px);
+  line-height: 0.9;
+  letter-spacing: -0.012em;
+  color: var(--lc-cream);
+  text-shadow: 0.016em 0.022em 0 var(--lc-violet);
+}
+
+.ctaBtn {
+  margin-top: 32px;
+}
+
+.yell {
+  margin-top: 22px;
+  font-family: var(--lc-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--lc-cream);
+  opacity: 0.75;
+}
+
+.yell a {
+  border-bottom: 1px solid var(--lc-cream);
+}
+
+/* ── REVEALS ────────────────────────────────────────────────────────────────
+   .rv rises + fades; .rvf fades only (keeps any static rotation). WorkMotion
+   toggles [data-in] when each element enters the viewport. */
+.rv {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.rv[data-in] {
+  opacity: 1;
+  transform: none;
+}
+
+.rvf {
+  opacity: 0;
+  transition: opacity 0.65s ease;
+}
+
+.rvf[data-in] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv,
+  .rvf {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .furR {
+    display: none;
+  }
+
+  .hl1,
+  .hl2 {
+    margin-left: 0;
+    /* Short copy stays on one line here too, but if a very narrow viewport
+       would clip, let it wrap rather than overflow. */
+    white-space: normal;
+  }
+
+  /* Softened tear + straighten the tilt on small screens. */
+  .cta {
+    padding: 96px 0 88px;
+    clip-path: polygon(
+      0 2%,
+      40% 0.5%,
+      100% 2.5%,
+      100% 98.5%,
+      55% 99.5%,
+      0 97%
+    );
+  }
+
+  .ctaInner {
+    transform: none;
+  }
 }

@@ -70,9 +70,11 @@
   margin-bottom: var(--lc-space-intra);
 }
 
-/* Client name at statement scale: marquee feel on the page index without
-   competing with the case detail hero number. One weight (700 via
-   --lc-weight-display), sentence case from the source data. */
+/* Client name at statement scale, now with the zine hero display treatment:
+   crooked (gentle, alternating row to row via :nth-child below) and carrying
+   the violet print-misregistration offset. At rest the offset sits a hair out
+   of register; on hover the name straightens and the offset clicks into the
+   canonical register, the same motion language as the page headlines. */
 .name {
   margin: 0;
   font-family: var(--lc-display);
@@ -86,6 +88,48 @@
   align-items: baseline;
   gap: 20px;
   text-wrap: balance;
+  text-shadow: 0.022em 0.028em 0 var(--lc-violet);
+  transform-origin: left center;
+  transition:
+    transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    text-shadow 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Gentle alternating tilt, computed from the row's position in the list. */
+.band:nth-child(odd) .name {
+  transform: rotate(-1.8deg);
+}
+
+.band:nth-child(even) .name {
+  transform: rotate(1.8deg);
+}
+
+/* Hover/focus: straighten + click the offset into register. Placed after the
+   tilt rules so it wins at equal specificity. */
+.band:hover .name,
+.band:focus-visible .name {
+  transform: rotate(0deg);
+  text-shadow: 0.016em 0.022em 0 var(--lc-violet);
+}
+
+/* Vertical rotated sidelabel per row ("Receipt 0X"), dropped into the left
+   gutter (negative left of the page pad lands it ~6px from the viewport edge),
+   matching the About / Services / Contact sidelabels. Hidden under 900px. */
+.sidelabel {
+  position: absolute;
+  left: calc(6px - var(--lc-page-pad));
+  top: 0;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  font-family: var(--lc-body);
+  font-weight: var(--lc-weight-eyebrow);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* One-line hook from hero.headline: body tier, capped measure so it stays
@@ -119,11 +163,17 @@
     grid-column: 1;
     grid-row: 2;
   }
+  /* Sidelabels read as gutter marks; in the stacked layout there's no gutter,
+     so hide them like every other page does. */
+  .sidelabel {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .image,
-  .arrow {
+  .arrow,
+  .name {
     transition: none;
   }
   .band:hover .image,
@@ -131,5 +181,15 @@
   .band:hover .arrow,
   .band:focus-visible .arrow {
     transform: none;
+  }
+  /* Name shown straight, offset at canonical register, no hover motion. Listed
+     at the tilt rules' specificity (and later in source) so they're overridden. */
+  .name,
+  .band:nth-child(odd) .name,
+  .band:nth-child(even) .name,
+  .band:hover .name,
+  .band:focus-visible .name {
+    transform: none;
+    text-shadow: 0.016em 0.022em 0 var(--lc-violet);
   }
 }
