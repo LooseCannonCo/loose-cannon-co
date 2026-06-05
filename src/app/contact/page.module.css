@@ -1,56 +1,132 @@
-/* HERO */
+/* /contact — zine spread.
+ *
+ * Built native to this codebase from the same patterns as /services and
+ * /about: every color is a locked --lc-* token, every family is --lc-display /
+ * --lc-body. The bespoke zine type sizes, tilt angles, and the violet
+ * print-misregistration offset are kept as literal values because they ARE the
+ * design (the case-study type ramp is intentionally not applied here).
+ *
+ * Interactions (all reduced-motion gated):
+ *   1. Crook-on-focus — each field sits at a tiny distinct rotation and snaps
+ *      straight on :focus (pure CSS). The Send button tilts and straightens on
+ *      hover/focus.
+ *   2. Validation-with-attitude styling — red border + red copy on bad fields.
+ *   3. Send button states — handled in the page (text swap).
+ *   4. Success swap — the form + "Five questions." heading are replaced by a
+ *      crooked headline (violet offset, CSS stamp-in) plus a local Flippy.
+ * The generic .rv / .rvf scroll reveals are toggled to [data-in] by the page's
+ * own IntersectionObserver (the page is already a client component). All
+ * keyframes live in THIS module next to the rules that reference them: CSS
+ * Modules scope animation names, so a split would silently break them. */
+
+/* The violet print-misregistration offset behind the display ink. A text-shadow
+   (not PrintHeadline's duplicate-span bleed) so the success stamp keyframe can
+   animate the offset itself. */
+.heroH1,
+.formHeading,
+.pointTitle,
+.successHead {
+  text-shadow: 0.016em 0.022em 0 var(--lc-violet);
+}
+
+/* ── MASTHEAD (under the global nav) ───────────────────────────────────────── */
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 4px;
+  padding-bottom: 10px;
+}
+
+.fur {
+  font-family: var(--lc-body);
+  font-weight: var(--lc-weight-eyebrow);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  opacity: 0.7;
+}
+
+.furR {
+  opacity: 0.55;
+}
+
+/* ── HERO ──────────────────────────────────────────────────────────────────── */
 .hero {
   position: relative;
-  padding: 48px 0 var(--lc-section-pad-y);
+  padding: 40px 0 44px;
 }
 
-.heroContent {
-  position: relative;
-  z-index: 1;
+.heroEyebrow {
+  margin-bottom: 20px;
+  transform: rotate(-1.5deg);
+  transform-origin: left;
 }
 
-.heroHeadlineWrap {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.heroHeadline {
-  font-size: var(--lc-size-page-headline);
-  line-height: 1;
+/* Two lines, gentle tilt + offset. NO white-space:nowrap — this copy is longer
+   than the Services hero, so it must be allowed to wrap. The clamp is sized so
+   nothing clips on either edge at 900px and up; line 1 bleeds a hair left, line
+   2 kicks a hair right. */
+.heroH1 {
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(52px, 10.5vw, 128px);
+  line-height: 0.96;
+  letter-spacing: -0.015em;
+  color: var(--lc-plum);
   text-wrap: balance;
+  transform: rotate(-1deg);
 }
 
-.subhead {
-  position: relative;
-  z-index: 1;
-  margin: var(--lc-rhythm-mid) 0 0;
-  max-width: 620px;
-  font-size: var(--lc-size-body);
-  font-weight: var(--lc-weight-body);
+.hl1 {
+  display: block;
+  margin-left: -1.2vw;
+}
+
+.hl2 {
+  display: block;
+  margin-left: 12%;
+}
+
+.sub {
+  max-width: 46ch;
+  margin-top: 28px;
+  font-family: var(--lc-body);
+  font-size: clamp(15px, 1.3vw, 18px);
   line-height: 1.5;
   color: var(--lc-plum);
   text-wrap: pretty;
 }
 
-/* Generic section */
+/* ── SECTIONS ──────────────────────────────────────────────────────────────── */
 .section {
-  padding: var(--lc-section-pad-y) 0 0;
+  position: relative;
+  padding: 72px 0 0;
 }
 
-.sectionTitle {
-  margin: 0 0 40px;
+.formEyebrow {
+  margin-bottom: 0;
+}
+
+/* "Five questions." — crooked + violet offset, the Services h2 treatment. */
+.formHeading {
+  margin: 10px 0 36px;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: var(--lc-size-section-title);
-  letter-spacing: -0.03em;
-  line-height: 1;
+  font-size: clamp(30px, 4.2vw, 56px);
+  line-height: 0.95;
+  letter-spacing: -0.018em;
   color: var(--lc-plum);
-  text-wrap: balance;
+  transform: rotate(-1.4deg);
+  transform-origin: left;
 }
 
-/* FORM */
+/* ── FORM ──────────────────────────────────────────────────────────────────── */
 .form {
   display: flex;
   flex-direction: column;
@@ -58,6 +134,7 @@
   max-width: 880px;
 }
 
+/* Honeypot. Hidden from humans, filled by bots, dropped by Netlify. */
 .honey {
   position: absolute;
   left: -9999px;
@@ -114,8 +191,12 @@
   line-height: 1.4;
   color: var(--lc-plum);
   outline: none;
-  transition: border-color 140ms ease, border-width 140ms ease;
   appearance: none;
+  /* border-color is the only border transition (no width change, so no reflow);
+     transform carries the crook-on-focus straighten. */
+  transition:
+    border-color 140ms ease,
+    transform 0.25s ease;
 }
 
 .input::placeholder {
@@ -123,12 +204,19 @@
   opacity: 0.4;
 }
 
-.input:focus,
-.input:focus-visible {
-  border: 2px solid var(--lc-pink-3);
+/* Bad field: red border. Placed BEFORE :focus so a focused-but-invalid field
+   still shows the pink focus border. */
+.input[aria-invalid="true"] {
+  border-color: var(--lc-red);
 }
 
-/* Select chevron: small plum caret, no native arrow. */
+.input:focus {
+  border-color: var(--lc-pink-3);
+  /* Snap straight on focus — overrides the per-field tilt by specificity. */
+  transform: none;
+}
+
+/* Select chevron: small plum caret drawn with gradients, no native arrow. */
 select.input {
   background-image:
     linear-gradient(45deg, transparent 50%, var(--lc-plum) 50%),
@@ -151,11 +239,65 @@ select.input {
   line-height: 1.5;
 }
 
+/* Crook-on-focus: each field rests at a tiny distinct rotation (all different,
+   all within -1deg..+1deg) and straightens via .input:focus above. */
+.tiltA {
+  transform: rotate(-0.8deg);
+}
+.tiltB {
+  transform: rotate(0.6deg);
+}
+.tiltC {
+  transform: rotate(-0.5deg);
+}
+.tiltD {
+  transform: rotate(0.9deg);
+}
+.tiltE {
+  transform: rotate(-0.4deg);
+}
+
+/* Per-field error copy. Deadpan, red. */
+.error {
+  min-height: 0;
+  font-family: var(--lc-body);
+  font-size: var(--lc-size-caption);
+  font-weight: var(--lc-weight-caption);
+  line-height: 1.3;
+  color: var(--lc-red);
+}
+
+.error:empty {
+  display: none;
+}
+
 .submitRow {
   display: flex;
   align-items: center;
   gap: 20px;
   flex-wrap: wrap;
+}
+
+/* The Send button tilts a hair and straightens on hover/focus. Rotation lives
+   on this wrapper; the Button's own hover lift composes on the inner element. */
+.sendTilt {
+  display: inline-block;
+  transform: rotate(-1.2deg);
+  transition: transform 0.25s ease;
+}
+
+.sendTilt:hover,
+.sendTilt:focus-within {
+  transform: none;
+}
+
+/* The "you sent us nothing" summary + network error sit in a live region. */
+.formError {
+  font-family: var(--lc-body);
+  font-size: var(--lc-size-caption);
+  font-weight: var(--lc-weight-eyebrow);
+  letter-spacing: 0.02em;
+  color: var(--lc-red);
 }
 
 .errMsg {
@@ -165,110 +307,284 @@ select.input {
   color: var(--lc-red);
 }
 
-/* CONFIRMATION */
-.confirm {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
-  max-width: 720px;
-}
-
-/* "Got it." confirmation sits in the statement tier. Payoff after submit. */
-.confirmHeadline {
-  font-size: var(--lc-size-statement);
-  line-height: 1;
-  letter-spacing: -0.03em;
-  text-wrap: balance;
-}
-
-.confirmBody {
-  margin: 0;
+/* ── SIDELABEL HECKLERS (beside the form) ──────────────────────────────────────
+   Same vertical treatment as the About / Services sidelabels, dropped into the
+   left gutter (negative left of the page pad lands them ~6px from the viewport
+   edge). Tops are tuned to sit roughly beside Name, Budget, and the textarea.
+   Hidden under 900px like every other sidelabel. */
+.heckler {
+  position: absolute;
+  left: calc(6px - var(--lc-page-pad));
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
   font-family: var(--lc-body);
-  font-size: var(--lc-size-body);
-  font-weight: var(--lc-weight-body);
-  line-height: 1.5;
-  color: var(--lc-plum);
-  text-wrap: pretty;
-}
-
-.confirmLink {
-  margin-top: 8px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  font-family: var(--lc-body);
-  font-size: var(--lc-size-caption);
-  font-weight: var(--lc-weight-caption);
-  color: var(--lc-plum);
-  cursor: pointer;
-  transition: opacity 160ms ease;
-}
-
-.confirmLink:hover {
-  opacity: 0.65;
-}
-
-/* REASSURANCE STRIP */
-.strip {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  align-items: start;
-}
-
-.stripCell {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.stripNum {
-  font-family: var(--lc-body);
-  font-size: var(--lc-size-eyebrow);
   font-weight: var(--lc-weight-eyebrow);
-  letter-spacing: 0.16em;
+  font-size: 10px;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--lc-plum);
+  opacity: 0.5;
+  pointer-events: none;
 }
 
-.stripTitle {
+.heckler1 {
+  top: 150px;
+}
+
+.heckler2 {
+  top: 286px;
+}
+
+.heckler3 {
+  top: 430px;
+}
+
+/* ── SUCCESS STATE (replaces the form + "Five questions.") ──────────────────── */
+.success {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  min-height: 220px;
+}
+
+.successHead {
   margin: 0;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-sub), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: var(--lc-size-sub);
-  letter-spacing: -0.01em;
-  line-height: 1.05;
+  font-size: clamp(44px, 7vw, 104px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
   color: var(--lc-plum);
-  text-wrap: balance;
+  transform: rotate(-1.4deg);
+  transform-origin: left;
+  /* Stamp-in: the violet plate clicks into register on mount. */
+  opacity: 0;
+  animation: ctStamp 0.6s cubic-bezier(0.16, 0.9, 0.3, 1) 0.05s both;
 }
 
-.stripDesc {
-  margin: 0;
-  max-width: 320px;
+.scl1 {
+  display: block;
+}
+
+.scl2 {
+  display: block;
+  margin-left: 9%;
+}
+
+@keyframes ctStamp {
+  0% {
+    opacity: 0;
+    text-shadow: 0.2em 0.24em 0 var(--lc-violet);
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    text-shadow: 0.016em 0.022em 0 var(--lc-violet);
+  }
+}
+
+.successSub {
+  margin: 6px 0 0;
+  max-width: 40ch;
   font-family: var(--lc-body);
-  font-size: var(--lc-size-body);
-  font-weight: var(--lc-weight-body);
+  font-size: clamp(15px, 1.3vw, 18px);
   line-height: 1.5;
   color: var(--lc-plum);
   text-wrap: pretty;
 }
 
+/* Local Flippy artwork (public/flippy.svg, already pink-on-near-black) with a
+   small cream bubble. Same pattern as the Services dark CTA. The global cursor
+   Flippy is untouched. */
+.flippyWrap {
+  position: relative;
+  margin-top: 18px;
+  width: clamp(96px, 12vw, 140px);
+  align-self: flex-start;
+}
+
+.flippyImg {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: rotate(6deg);
+}
+
+.flippyBubble {
+  position: absolute;
+  top: -10px;
+  right: -34px;
+  background: var(--lc-plum);
+  color: var(--lc-cream);
+  font-family: var(--lc-body);
+  font-weight: var(--lc-weight-eyebrow);
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  padding: 7px 13px;
+  border-radius: 14px;
+  transform: rotate(5deg);
+  white-space: nowrap;
+}
+
+.flippyBubble::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  bottom: -7px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 8px solid var(--lc-plum);
+}
+
+/* ── THE THREE POINTS (zine blocks, big numbers, crooked) ───────────────────── */
+.points {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  align-items: start;
+  margin-top: 8px;
+}
+
+.pointNum {
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(46px, 6vw, 72px);
+  line-height: 1;
+  color: var(--lc-plum);
+}
+
+.pointEyebrow {
+  margin: 12px 0 0;
+}
+
+.pointTitle {
+  margin: 4px 0 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(26px, 3.1vw, 42px);
+  line-height: 0.96;
+  letter-spacing: -0.015em;
+  color: var(--lc-plum);
+  transform-origin: left;
+}
+
+.pointDesc {
+  margin: 14px 0 0;
+  max-width: 34ch;
+  font-family: var(--lc-body);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+/* Tail padding under the last section before the footer. */
+.tail {
+  padding-bottom: 96px;
+}
+
+/* ── REVEALS ────────────────────────────────────────────────────────────────
+   .rv rises + fades; .rvf fades only (keeps the element's static rotation).
+   The page's IntersectionObserver toggles [data-in] when each enters view. */
+.rv {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.rv[data-in] {
+  opacity: 1;
+  transform: none;
+}
+
+.rvf {
+  opacity: 0;
+  transition: opacity 0.65s ease;
+}
+
+.rvf[data-in] {
+  opacity: 1;
+}
+
+/* ── REDUCED MOTION ─────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .rv,
+  .rvf {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  /* Fields + send button: no tilt, no transition. */
+  .input,
+  .tiltA,
+  .tiltB,
+  .tiltC,
+  .tiltD,
+  .tiltE,
+  .sendTilt {
+    transform: none;
+    transition: none;
+  }
+
+  .successHead {
+    opacity: 1;
+    animation: none;
+    text-shadow: 0.016em 0.022em 0 var(--lc-violet);
+  }
+}
+
+/* ── MOBILE ─────────────────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
+  .furR {
+    display: none;
+  }
+
+  .heckler {
+    display: none;
+  }
+
+  .heroH1 {
+    font-size: clamp(36px, 11vw, 64px);
+    transform: rotate(-1deg);
+  }
+
+  .hl1,
+  .hl2 {
+    margin-left: 0;
+  }
+
   .fieldGrid {
     grid-template-columns: 1fr;
     gap: 22px;
   }
-  .strip {
+
+  .points {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 36px;
   }
-  .stripDesc {
+
+  .pointDesc {
     max-width: none;
+  }
+
+  .successHead {
+    font-size: clamp(40px, 13vw, 72px);
+  }
+
+  .scl2 {
+    margin-left: 0;
   }
 }
