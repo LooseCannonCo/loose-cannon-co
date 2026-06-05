@@ -1,222 +1,648 @@
-/* HERO */
+/* /services — zine spread.
+ *
+ * Ported faithfully from the locked reference
+ * (loose-cannon-services-zine-v14.html), rebuilt native to this codebase:
+ * every color is a locked --lc-* token, every family is --lc-display /
+ * --lc-body, the full-bleed dark beat uses the same 100vw breakout the rest
+ * of the site uses. The bespoke zine type sizes, tilt angles, and clip-path
+ * are kept as literal values because they ARE the design (the same call About
+ * made: the case-study type ramp is intentionally not applied here).
+ *
+ * The three load/scroll interactions (hero register, proof count-up, step
+ * stamp-in) plus the generic .rv / .rvf reveals are driven by ServicesMotion
+ * (the page's `use client` IntersectionObserver mount). All keyframes live in
+ * THIS module next to the rules that reference them: CSS Modules scope
+ * animation names, so a split would silently break them. */
+
+/* The violet print-misregistration offset behind the display ink. This is a
+   text-shadow (not PrintHeadline's duplicate-span bleed) because the register
+   and stamp keyframes animate the offset itself. Footer mark gets NONE. */
+.heroH1,
+.secH2,
+.procH2,
+.svcH3,
+.line,
+.big,
+.ctaH2 {
+  text-shadow: 0.03em 0.042em 0 var(--lc-violet);
+}
+
+/* ── MASTHEAD (under the global nav) ───────────────────────────────────────── */
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 4px;
+  padding-bottom: 10px;
+}
+
+.fur {
+  font-family: var(--lc-body);
+  font-weight: var(--lc-weight-eyebrow);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  opacity: 0.7;
+}
+
+.furR {
+  opacity: 0.55;
+}
+
+/* ── HERO ──────────────────────────────────────────────────────────────────── */
 .hero {
   position: relative;
-  padding: 48px 0 var(--lc-section-pad-y);
+  padding: 40px 0 44px;
 }
 
-.heroContent {
-  position: relative;
-  z-index: 1;
+.heroEyebrow {
+  margin-bottom: 20px;
+  transform: rotate(-1.5deg);
+  transform-origin: left;
 }
 
-.heroHeadlineWrap {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.heroHeadline {
-  font-size: var(--lc-size-page-headline);
-  line-height: 1;
-  text-wrap: balance;
-}
-
-.subhead {
-  position: relative;
-  z-index: 1;
-  margin: var(--lc-rhythm-mid) 0 0;
-  max-width: 620px;
-  font-size: var(--lc-size-body);
-  font-weight: var(--lc-weight-body);
-  line-height: 1.5;
-  color: var(--lc-plum);
-  text-wrap: pretty;
-}
-
-/* Canonical body-to-CTA gap (sub-section tier). Same value used on every
-   page with a body-above-CTA pattern so the button sits the same distance
-   below the paragraph everywhere. */
-.ctaRow {
-  position: relative;
-  z-index: 1;
-  margin-top: var(--lc-space-sub);
-}
-
-/* Generic section */
-.section {
-  padding: var(--lc-section-pad-y) 0 0;
-}
-
-.sectionTitle {
-  margin: 0 0 var(--lc-rhythm-mid);
-  font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
-  font-weight: var(--lc-weight-display);
-  font-size: var(--lc-size-section-title);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  color: var(--lc-plum);
-  text-wrap: balance;
-}
-
-/* 01 PAID SOCIAL (gets the most vertical room: bigger numeral, bigger title,
-   wider description, generous gaps). */
-.leadBlock {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
-}
-
-.leadNum {
-  font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-statement), "wght" var(--lc-weight-display);
-  font-weight: var(--lc-weight-display);
-  font-size: 72px;
-  line-height: 1;
-  color: var(--lc-plum);
-}
-
-.leadTitle {
+.heroH1 {
   margin: 0;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: var(--lc-size-section-title);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  color: var(--lc-plum);
-  text-wrap: balance;
+  font-size: clamp(52px, 10.5vw, 128px);
+  line-height: 0.9;
+  letter-spacing: -0.012em;
+  white-space: nowrap;
+  transform: rotate(-1deg);
+  /* Load choreography (interaction 1): snap in from a large offset, the violet
+     plate clicking into register. Static transform is preserved. */
+  opacity: 0;
+  animation: register 0.65s cubic-bezier(0.16, 0.9, 0.3, 1) 0.2s both;
 }
 
-.leadDesc {
-  margin: 0;
-  max-width: 620px;
-  font-size: var(--lc-size-body);
-  font-weight: var(--lc-weight-body);
-  line-height: 1.55;
-  color: var(--lc-plum);
-  text-wrap: pretty;
+.hl1 {
+  display: block;
+  margin-left: -1.5vw;
 }
 
-/* Inline deliverables list, no pills, no boxes. Used by 01, 02, 03. */
-.deliverables {
-  margin: 0;
-  max-width: 720px;
+.hl2 {
+  display: block;
+  margin-left: 28%;
+}
+
+@keyframes register {
+  0% {
+    opacity: 0;
+    text-shadow: 0.2em 0.24em 0 var(--lc-violet);
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    text-shadow: 0.03em 0.042em 0 var(--lc-violet);
+  }
+}
+
+.sub {
+  max-width: 30ch;
+  margin-top: 28px;
   font-family: var(--lc-body);
-  font-size: var(--lc-size-caption);
-  font-weight: var(--lc-weight-caption);
+  font-size: clamp(15px, 1.3vw, 18px);
   line-height: 1.5;
-  letter-spacing: 0.01em;
   color: var(--lc-plum);
-  text-wrap: pretty;
 }
 
-/* 02 + 03 smaller treatment than 01, 2-col grid. */
-.expansionGrid {
+.heroCta {
+  margin-top: 32px;
+}
+
+/* ── EDITORIAL SECTIONS ─────────────────────────────────────────────────────── */
+.sec {
+  position: relative;
+  padding: 92px 0;
+}
+
+/* Rotated vertical sidelabel, sat in the left gutter (the page pads content by
+   --lc-page-pad; a negative left of that magnitude drops the label into the
+   gutter at ~6px from the viewport edge, matching the reference). Same vertical
+   treatment as the About sidelabels. */
+.sidelabel {
+  position: absolute;
+  left: calc(6px - var(--lc-page-pad));
+  top: 92px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--lc-body);
+  font-weight: var(--lc-weight-eyebrow);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  opacity: 0.5;
+}
+
+.num {
+  display: inline-block;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(46px, 6vw, 72px);
+  line-height: 1;
+  color: var(--lc-plum);
+}
+
+.secH2 {
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(34px, 4.4vw, 56px);
+  line-height: 0.93;
+  letter-spacing: -0.012em;
+  color: var(--lc-plum);
+}
+
+/* 01: paid social. Left column carries the offer, right column the proof. */
+.top {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1.2fr 0.9fr;
   gap: 60px;
   align-items: start;
 }
 
-.expCol {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
+/* Section eyebrow inside an editorial block: sits tight under the numeral. */
+.blkEyebrow {
+  margin: 14px 0 4px;
 }
 
-.expNum {
-  font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
-  font-weight: var(--lc-weight-display);
-  font-size: 48px;
-  line-height: 1;
-  color: var(--lc-plum);
-}
-
-.expTitle {
-  margin: 0;
-  font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-sub), "wght" var(--lc-weight-display);
-  font-weight: var(--lc-weight-display);
-  font-size: var(--lc-size-sub);
-  letter-spacing: -0.015em;
-  line-height: 1.05;
-  color: var(--lc-plum);
-  text-wrap: balance;
-}
-
-.expDesc {
-  margin: 0;
-  max-width: 480px;
-  font-size: var(--lc-size-body);
-  font-weight: var(--lc-weight-body);
-  line-height: 1.5;
-  color: var(--lc-plum);
-  text-wrap: pretty;
-}
-
-/* HOW IT WORKS: 3-col grid, same column count/gap as the ClosingCTA grid so
-   the dry-stat lockup below lines up with the "03" column above it. */
-.howGrid {
+.lede2 {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  align-items: start;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-top: 24px;
+  max-width: 720px;
 }
 
-.howCol {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
+.lede2 p {
+  margin: 0;
+  font-family: var(--lc-body);
+  font-size: 13.5px;
+  line-height: 1.5;
+  text-align: justify;
+  hyphens: auto;
+  color: var(--lc-plum);
 }
 
-.howNum {
+.dropcap::first-letter {
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" 40, "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: 56px;
+  font-size: 3em;
+  line-height: 0.78;
+  float: left;
+  padding: 6px 8px 0 0;
+  color: var(--lc-violet);
+}
+
+.tags {
+  margin-top: 24px;
+  font-family: var(--lc-body);
+  font-size: 10.5px;
+  font-weight: var(--lc-weight-eyebrow);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  opacity: 0.65;
+}
+
+.footnote {
+  margin-top: 38px;
+  font-family: var(--lc-body);
+  font-size: 9px;
+  font-weight: var(--lc-weight-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  opacity: 0.45;
+}
+
+/* The receipt: right-aligned proof block with the count-up number. */
+.proof {
+  max-width: 400px;
+  margin-left: auto;
+  text-align: right;
+}
+
+.rk {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--lc-body);
+  font-size: 11px;
+  font-weight: var(--lc-weight-eyebrow);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  opacity: 0.6;
+}
+
+.rk::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: var(--lc-plum);
+}
+
+.pre {
+  margin-top: 18px;
+  font-family: var(--lc-body);
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--lc-plum);
+  opacity: 0.78;
+}
+
+.big {
+  margin-top: 8px;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(80px, 11vw, 150px);
+  line-height: 0.8;
+  color: var(--lc-plum);
+  transform: rotate(-2deg);
+}
+
+.post {
+  margin-top: 12px;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" 48, "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(20px, 2.4vw, 32px);
   line-height: 1;
   color: var(--lc-plum);
 }
 
-.howTitle {
+/* 02 + 03 */
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-top: 6px;
+}
+
+.svcH3 {
   margin: 0;
   font-family: var(--lc-display);
-  font-variation-settings: "opsz" var(--lc-opsz-sub), "wght" var(--lc-weight-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
   font-weight: var(--lc-weight-display);
-  font-size: var(--lc-size-sub);
-  letter-spacing: -0.01em;
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 0.95;
   color: var(--lc-plum);
-  text-wrap: balance;
 }
 
-.howDesc {
+.svcP {
+  max-width: 40ch;
+  margin-top: 14px;
+  font-family: var(--lc-body);
+  font-size: 13.5px;
+  line-height: 1.55;
+  text-align: justify;
+  color: var(--lc-plum);
+}
+
+/* ── THREE STEPS: full-width crooked escalating stack ───────────────────────── */
+.proc {
+  position: relative;
+  padding: 96px 0 110px;
+  overflow: hidden;
+}
+
+.procH2 {
+  margin-top: 14px;
+  transform: rotate(-1.2deg);
+  transform-origin: left;
+}
+
+.stack {
+  margin-top: 54px;
+  display: flex;
+  flex-direction: column;
+  gap: 74px;
+  padding: 0 2%;
+}
+
+.line {
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  line-height: 0.86;
+  color: var(--lc-plum);
+  opacity: 0;
+  transform: rotate(var(--rot));
+  transform-origin: left center;
+}
+
+.cap {
+  display: block;
+  margin-top: 12px;
+  font-family: var(--lc-body);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.45;
+  letter-spacing: 0;
+  color: var(--lc-plum);
+  opacity: 0.78;
+  text-shadow: none;
+}
+
+.l1 {
+  --rot: -2.6deg;
+  align-self: flex-start;
+  font-size: clamp(36px, 5.2vw, 74px);
+  max-width: 74%;
+  margin-left: 0;
+}
+
+.l2 {
+  --rot: 2deg;
+  align-self: flex-end;
+  text-align: right;
+  font-size: clamp(40px, 5.8vw, 82px);
+  max-width: 82%;
+  margin-right: 0;
+  transform-origin: right center;
+}
+
+.l2 .cap {
+  margin-left: auto;
+  max-width: 34ch;
+}
+
+.l3 {
+  --rot: -1.6deg;
+  align-self: center;
+  text-align: center;
+  font-size: clamp(44px, 6.6vw, 94px);
+  max-width: 100%;
+  transform-origin: center;
+}
+
+.l3 .cap {
+  max-width: 34ch;
+  margin: 12px auto 0;
+}
+
+/* Stamp-in (interaction 3): each line lands one at a time, oversized with the
+   color offset out of register, then snaps into place. */
+@keyframes stamp {
+  0% {
+    opacity: 0;
+    transform: rotate(var(--rot)) scale(1.14);
+    text-shadow: 0.16em 0.2em 0 var(--lc-violet);
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(var(--rot)) scale(1);
+    text-shadow: 0.03em 0.042em 0 var(--lc-violet);
+  }
+}
+
+.stack[data-go] .line {
+  animation: stamp 0.5s cubic-bezier(0.16, 0.9, 0.3, 1) both;
+}
+
+.stack[data-go] .l1 {
+  animation-delay: 0s;
+}
+
+.stack[data-go] .l2 {
+  animation-delay: 0.2s;
+}
+
+.stack[data-go] .l3 {
+  animation-delay: 0.4s;
+}
+
+/* ── CLOSING CTA (dark, torn band) ──────────────────────────────────────────── */
+.ctaSection {
+  padding: 30px 0;
+}
+
+/* Full-bleed plum band with torn top/bottom edges. Breaks out of the page
+   column the same way the site's other inverted beats do. */
+.cta {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  background: var(--lc-plum);
+  color: var(--lc-cream);
+  padding: 152px 0 136px;
+  clip-path: polygon(0 7%, 46% 1.5%, 100% 6%, 100% 93%, 54% 99.5%, 0 95.5%);
+}
+
+/* Recentered, padded column inside the bleed, tilted off-axis. */
+.ctaInner {
+  max-width: var(--lc-page-max-width);
+  margin: 0 auto;
+  padding: 0 var(--lc-page-pad);
+  transform: rotate(-1.8deg);
+}
+
+.ctaH2 {
   margin: 0;
-  max-width: 280px;
-  font-size: var(--lc-size-body);
-  font-weight: var(--lc-weight-body);
-  line-height: 1.5;
-  color: var(--lc-plum);
-  text-wrap: pretty;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(40px, 6.2vw, 90px);
+  line-height: 0.9;
+  letter-spacing: -0.012em;
+  color: var(--lc-cream);
 }
 
+.ctaBtn {
+  margin-top: 32px;
+}
+
+.yell {
+  margin-top: 22px;
+  font-family: var(--lc-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--lc-cream);
+  opacity: 0.75;
+}
+
+.yell a {
+  border-bottom: 1px solid var(--lc-cream);
+}
+
+/* Flippy on the dark beat: the real artwork (public/flippy.svg, already
+   pink-on-near-black) anchored lower-right, with a small cream speech bubble.
+   The bubble is the only new piece. Hidden on mobile. */
+.flippyWrap {
+  position: absolute;
+  right: 6%;
+  bottom: 13%;
+  width: clamp(82px, 9vw, 118px);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.flippyImg {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: rotate(6deg);
+}
+
+.flippyBubble {
+  position: absolute;
+  top: -8px;
+  left: -30px;
+  background: var(--lc-cream);
+  color: var(--lc-plum);
+  font-family: var(--lc-body);
+  font-weight: var(--lc-weight-eyebrow);
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  padding: 7px 13px;
+  border-radius: 14px;
+  transform: rotate(-6deg);
+  white-space: nowrap;
+}
+
+.flippyBubble::after {
+  content: "";
+  position: absolute;
+  left: 32px;
+  bottom: -7px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 8px solid var(--lc-cream);
+}
+
+/* ── REVEALS ────────────────────────────────────────────────────────────────
+   .rv rises + fades; .rvf fades only (keeps the element's static rotation).
+   ServicesMotion toggles [data-in] when each element enters the viewport. */
+.rv {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.rv[data-in] {
+  opacity: 1;
+  transform: none;
+}
+
+.rvf {
+  opacity: 0;
+  transition: opacity 0.65s ease;
+}
+
+.rvf[data-in] {
+  opacity: 1;
+}
+
+/* ── REDUCED MOTION ─────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .rv,
+  .rvf {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .heroH1 {
+    opacity: 1;
+    animation: none;
+    transform: rotate(-1deg);
+    text-shadow: 0.03em 0.042em 0 var(--lc-violet);
+  }
+
+  .line {
+    opacity: 1;
+    animation: none;
+    transform: rotate(var(--rot));
+  }
+}
+
+/* ── MOBILE ─────────────────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .expansionGrid {
-    grid-template-columns: 1fr;
-    gap: 32px;
+  .furR {
+    display: none;
   }
-  .howGrid {
-    grid-template-columns: 1fr;
-    gap: 32px;
+
+  .sidelabel {
+    display: none;
   }
-  .leadDesc,
-  .expDesc,
-  .howDesc,
-  .deliverables {
+
+  .heroH1 {
+    white-space: normal;
+    font-size: clamp(46px, 14vw, 84px);
+    transform: rotate(-1deg);
+  }
+
+  .hl1,
+  .hl2 {
+    margin-left: 0;
+  }
+
+  .top {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .proof {
     max-width: none;
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .lede2,
+  .two {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .l1,
+  .l2,
+  .l3 {
+    align-self: stretch;
+    text-align: left;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    transform-origin: left center;
+  }
+
+  .l2 .cap,
+  .l3 .cap {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .l3 .cap {
+    margin: 10px 0 0;
+  }
+
+  .cta {
+    clip-path: polygon(0 3%, 50% 0, 100% 3%, 100% 98%, 50% 100%, 0 98%);
+  }
+
+  .ctaInner {
+    transform: none;
+  }
+
+  .flippyWrap {
+    display: none;
   }
 }
