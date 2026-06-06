@@ -24,7 +24,7 @@ export const getAllCaseStudies = groq`*[_type == "caseStudy"]{
 /** Featured cases for the home page: featured DESC, then year DESC, then
  *  caseNumber ASC for deterministic order when multiple cases share a year.
  *  Limit 2. */
-export const getFeaturedCaseStudies = groq`*[_type == "caseStudy" && featured == true] | order(featured desc, year desc, caseNumber asc)[0...2]{
+export const getFeaturedCaseStudies = groq`*[_type == "caseStudy" && featured == true] | order(featured desc, year desc, caseNumber asc)[0...3]{
   "slug": slug.current,
   client,
   discipline,

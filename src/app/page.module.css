@@ -3,6 +3,31 @@
    PNG reads big and unframed on the pink canvas). Bottom padding stays 0
    so the chapter break to the work section comes only from .firstSection
    below (per the "chapters never bottom-pad themselves" rule). */
+
+/* ── MASTHEAD (under the global nav) ───────────────────────────────────────── */
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 4px;
+  padding-bottom: 10px;
+}
+
+.fur {
+  font-family: var(--lc-body);
+  font-weight: var(--lc-weight-eyebrow);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  opacity: 0.7;
+}
+
+.furR {
+  opacity: 0.55;
+}
+
 .hero {
   position: relative;
   padding: 48px 0 0;
@@ -36,16 +61,24 @@
   letter-spacing: -0.03em;
   color: var(--lc-plum);
   text-wrap: balance;
+  /* Zine hero treatment: gentle crook + the canonical pulled-back violet
+     offset. Size is intentionally kept (the narrow left column can't take the
+     full-width hero ramp / bleed); left origin anchors the tilt. */
+  transform: rotate(-1.5deg);
+  transform-origin: left;
+  text-shadow: 0.016em 0.022em 0 var(--lc-violet);
 }
 
 /* Support line: DM Sans 400 body tier. max-width caps the measure so it
    stays a 2-3 line block under the headline, doesn't run to column edge. */
+/* Matches the .subhead hero-subcopy treatment now shared by About / Services /
+   Contact / Work, so all five hero body lines read the same. */
 .heroSupport {
-  margin: var(--lc-space-intra) 0 0;
-  max-width: 460px;
+  margin: 22px 0 0;
+  max-width: 540px;
   font-family: var(--lc-body);
   font-size: var(--lc-size-body);
-  font-weight: var(--lc-weight-body);
+  font-weight: var(--lc-weight-eyebrow);
   line-height: 1.5;
   color: var(--lc-plum);
   text-wrap: pretty;
@@ -74,8 +107,9 @@
   height: auto;
 }
 
-/* Generic section */
+/* Generic section. position: relative anchors the gutter sidelabels. */
 .section {
+  position: relative;
   padding: var(--lc-section-pad-y) 0 0;
 }
 
@@ -98,6 +132,10 @@
   line-height: 1;
   color: var(--lc-plum);
   text-wrap: balance;
+  /* Standard section-head zine treatment: gentle crook + violet offset. */
+  transform: rotate(-1.2deg);
+  transform-origin: left;
+  text-shadow: 0.016em 0.022em 0 var(--lc-violet);
 }
 
 /* Featured work */
@@ -167,6 +205,66 @@
   text-wrap: pretty;
 }
 
+/* ── SIDELABELS (vertical gutter marginalia) ───────────────────────────────────
+   Same treatment as the About / Services / Work sidelabels: dropped into the
+   left gutter (negative left of the page pad), rotated vertical. Top aligns
+   with each section's content; the first (work) section uses the smaller
+   sub-section padding. Hidden under 900px. */
+.sidelabel {
+  position: absolute;
+  left: calc(6px - var(--lc-page-pad));
+  top: var(--lc-section-pad-y);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  font-family: var(--lc-body);
+  font-weight: var(--lc-weight-eyebrow);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.firstSection .sidelabel {
+  top: var(--lc-space-sub);
+}
+
+/* ── REVEALS ────────────────────────────────────────────────────────────────
+   .rv rises + fades; .rvf fades only (keeps any static crook). HomeMotion
+   toggles [data-in] when each element enters the viewport. */
+.rv {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.rv[data-in] {
+  opacity: 1;
+  transform: none;
+}
+
+.rvf {
+  opacity: 0;
+  transition: opacity 0.65s ease;
+}
+
+.rvf[data-in] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv,
+  .rvf {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 @media (max-width: 900px) {
   /* Hero stacks: headline + support + CTA on top, image full-width below.
      Image bleed is removed so the PNG sits inside the page padding (no
@@ -181,6 +279,10 @@
   }
   .heroImageWrap {
     margin-right: 0;
+  }
+  .furR,
+  .sidelabel {
+    display: none;
   }
   .servicesGrid {
     grid-template-columns: 1fr;

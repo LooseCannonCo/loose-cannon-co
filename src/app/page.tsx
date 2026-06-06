@@ -11,6 +11,7 @@ import {
   type CaseStudyListItem,
 } from "@/sanity/queries/caseStudy";
 
+import { HomeMotion } from "./HomeMotion";
 import styles from "./page.module.css";
 
 const SERVICES = [
@@ -38,6 +39,16 @@ export default async function Home() {
   return (
     <Page>
       <Nav />
+      <HomeMotion />
+
+      {/* MASTHEAD — same pattern as the other pages. Home is the cover, so it
+          carries No. 000 (others run 001-004). */}
+      <div className={styles.masthead}>
+        <span className={styles.fur}>Loose Cannon Co. // No. 000</span>
+        <span className={`${styles.fur} ${styles.furR}`}>
+          {"// Social that doesn't suck"}
+        </span>
+      </div>
 
       {/* HERO — static launch layout. Asymmetric grid: headline + support +
           CTA on the left, transparent PNG of work on the right, sized larger
@@ -49,11 +60,11 @@ export default async function Home() {
             <h1 className={`${styles.heroHeadline} flippy-hide-behind`}>
               Social that doesn&apos;t&nbsp;suck.
             </h1>
-            <p className={styles.heroSupport}>
+            <p className={`${styles.heroSupport} ${styles.rv}`}>
               Social-first creative for brands tired of looking like
               everyone&nbsp;else.
             </p>
-            <div className={styles.heroCta}>
+            <div className={`${styles.heroCta} ${styles.rv}`}>
               <Button href="/work">See the work</Button>
             </div>
           </div>
@@ -78,8 +89,11 @@ export default async function Home() {
           break (200/88px). Lets the visitor see hero + start of work on
           the first screen. */}
       <section className={`${styles.section} ${styles.firstSection}`}>
+        <span className={styles.sidelabel} aria-hidden="true">
+          Recent work
+        </span>
         <SectionEyebrow>Recent receipts</SectionEyebrow>
-        <h2 className={styles.sectionTitle}>The work.</h2>
+        <h2 className={`${styles.sectionTitle} ${styles.rvf}`}>The work.</h2>
         <div className={styles.workList}>
           {featured.map((c) => (
             <WorkRow
@@ -103,11 +117,14 @@ export default async function Home() {
 
       {/* SERVICES */}
       <section className={styles.section}>
+        <span className={styles.sidelabel} aria-hidden="true">
+          The offer
+        </span>
         <SectionEyebrow>What we do</SectionEyebrow>
-        <h2 className={styles.sectionTitle}>Three things.</h2>
+        <h2 className={`${styles.sectionTitle} ${styles.rvf}`}>Three things.</h2>
         <div className={styles.servicesGrid}>
           {SERVICES.map((s) => (
-            <div key={s.num} className={styles.serviceCol}>
+            <div key={s.num} className={`${styles.serviceCol} ${styles.rv}`}>
               <div className={styles.serviceNum}>{s.num}</div>
               <h3 className={styles.serviceTitle}>{s.title}</h3>
               <p className={styles.serviceDesc}>{s.desc}</p>

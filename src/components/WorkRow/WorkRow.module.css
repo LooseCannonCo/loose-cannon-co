@@ -33,7 +33,11 @@
 }
 
 /* Client name on a row reads at statement scale: marquee feel, the case
-   name as the punch line of the row. */
+   name as the punch line of the row. Now carries the same zine treatment as
+   the CaseBand names on /work: violet offset (a hair out of register at rest),
+   a gentle alternating crook row to row, and on row hover it straightens while
+   the offset clicks into the canonical register. (WorkRow has no arrow, so
+   there's no arrow-kick to mirror.) */
 .client {
   margin: 0;
   font-family: var(--lc-display);
@@ -44,6 +48,28 @@
   letter-spacing: -0.03em;
   color: var(--lc-plum);
   text-wrap: balance;
+  text-shadow: 0.022em 0.028em 0 var(--lc-violet);
+  transform-origin: left center;
+  transition:
+    transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    text-shadow 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Gentle alternating tilt, computed from the row's position in the list. */
+.row:nth-child(odd) .client {
+  transform: rotate(-1.8deg);
+}
+
+.row:nth-child(even) .client {
+  transform: rotate(1.8deg);
+}
+
+/* Hover/focus: straighten + click the offset into register. Placed after the
+   tilt rules so it wins at equal specificity. */
+.row:hover .client,
+.row:focus-visible .client {
+  transform: rotate(0deg);
+  text-shadow: 0.016em 0.022em 0 var(--lc-violet);
 }
 
 .meta {
@@ -76,5 +102,21 @@
   }
   .cover {
     max-width: 320px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .client {
+    transition: none;
+  }
+  /* Name shown straight, offset at canonical register, no hover motion. Listed
+     at the tilt rules' specificity (and later in source) so they're overridden. */
+  .client,
+  .row:nth-child(odd) .client,
+  .row:nth-child(even) .client,
+  .row:hover .client,
+  .row:focus-visible .client {
+    transform: none;
+    text-shadow: 0.016em 0.022em 0 var(--lc-violet);
   }
 }

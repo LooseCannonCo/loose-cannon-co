@@ -63,6 +63,10 @@
   letter-spacing: -0.025em;
   text-wrap: balance;
   max-width: 100%;
+  /* Canonical pulled-back violet offset, matching the other closing CTAs.
+     Inherits onto PrintHeadline's .ink span, so it sits behind the type on the
+     dark band. Used only by the homepage (the only ClosingCTA consumer). */
+  text-shadow: 0.016em 0.022em 0 var(--lc-violet);
 }
 
 .closingLastLine {
