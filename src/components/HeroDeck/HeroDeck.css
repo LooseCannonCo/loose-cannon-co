@@ -1,0 +1,143 @@
+.lc-hero{
+  --lc-pink-0:#fec6eb; --lc-pink-1:#fbafdf; --lc-pink-3:#ee65b3;
+  --lc-plum:#270c1d; --lc-violet:#b14aff; --lc-cream:#fdf3e7; --lc-red:#d9342c;
+  --ay-cream:#FFF8E4; --ay-black:#141414; --ay-amber:#FFBF00; --ay-violet:#B14AFF;
+  /* --lc-display / --lc-body inherit the repo's global tokens (next/font
+     Bricolage + DM Sans). General Sans comes from the Fontshare <link> in
+     layout.tsx; Poppins (the Ayye wordmark) is wired to its next/font var. */
+  --ay-font:'General Sans','Inter',system-ui,sans-serif;
+  --ay-wm:var(--font-poppins),'Poppins',sans-serif;
+  background:var(--lc-pink-0); color:var(--lc-plum); font-family:var(--lc-body);
+  -webkit-font-smoothing:antialiased; display:block;
+}
+.lc-hero *{box-sizing:border-box}
+/* Embedded inside the repo's Page column (which already supplies max-width +
+   horizontal padding), so this inner wrapper drops both to stay aligned with
+   the masthead and sections below it. */
+/* overflow:hidden clips the bleeding cards + the over-sized headline at the
+   hero edges, so the thrown-down deck never spawns a horizontal scrollbar. */
+/* padding-top is the whole gap between the nav and the hero now that the
+   masthead strip is gone — comfortable, balanced, not cramped. */
+.lc-hero .hero{position:relative;max-width:none;margin:0;padding:44px 0 0;overflow:hidden;
+  min-height:74vh;display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:start}
+.lc-hero .hero-left{position:relative;z-index:5}
+.lc-hero .eyebrow{display:inline-flex;align-items:center;font-weight:600;font-size:11px;
+  letter-spacing:.16em;text-transform:uppercase;opacity:.85;margin-bottom:16px}
+/* Right-anchor the headline within the (left) column so a line wider than the
+   column overflows LEFT only. Its right edge stays at the column's right edge,
+   which is always left of center, so it never reaches into the deck. */
+.lc-hero .headwrap{display:flex;justify-content:flex-end;margin-bottom:42px}
+/* Oversized, tilted, bleeding off the LEFT edge — the site's hero headline
+   treatment. Violet offset is PrintHeadline's `bleed` (the flat 4px text-shadow
+   is gone). nowrap so the long line bleeds rather than wraps; origin:right pins
+   the anchored edge; the section's overflow:hidden clips the bleed at the edge. */
+.lc-hero .headline{font-family:var(--lc-display);font-weight:700;font-variation-settings:"opsz" 96,"wght" 700;
+  font-size:clamp(60px,9vw,128px);line-height:.9;letter-spacing:-.02em;color:var(--lc-plum);
+  white-space:nowrap;transform:rotate(-2.5deg);transform-origin:right;margin:0}
+.lc-hero .subhead{font-weight:600;font-size:clamp(16px,1.5vw,20px);line-height:1.4;max-width:30ch;
+  opacity:.92;margin-bottom:30px}
+.lc-hero .cta{display:inline-flex;align-items:center;gap:12px;background:var(--lc-plum);color:var(--lc-cream);
+  font-weight:600;font-size:16px;padding:17px 30px;border:none;cursor:pointer;text-decoration:none;
+  box-shadow:6px 6px 0 var(--lc-violet);transition:transform .14s ease,box-shadow .14s ease}
+.lc-hero .cta:hover{transform:translate(-2px,-2px);box-shadow:9px 9px 0 var(--lc-violet)}
+.lc-hero .cta:active{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--lc-violet)}
+.lc-hero .cta .arr{transition:transform .2s ease}.lc-hero .cta:hover .arr{transform:translateX(5px)}
+
+.lc-hero .hero-right{position:relative;z-index:4;height:620px}
+.lc-hero .deck-wrap{position:absolute;inset:0;perspective:1400px;transition:transform .5s ease}
+/* Deck origin is the FRONT card's anchor: parked toward the right of its column
+   so the front card sits near the right with clear margin from the edge. Every
+   other card is dealt to NEGATIVE x (behind + left of it), so the front card
+   alone defines the right boundary and nothing extends past it. */
+.lc-hero .deck{position:absolute;top:50%;left:60%;width:0;height:0;transform-style:preserve-3d}
+/* Card size is responsive (scales down on narrower viewports) and capped so the
+   right-anchored front card keeps >=5vw margin from the edge. --cw drives width;
+   height + centering offsets derive from it. */
+.lc-hero .card{--cw:clamp(230px,21vw,285px);--ch:calc(var(--cw) * 1.435);
+  position:absolute;width:var(--cw);height:var(--ch);left:calc(var(--cw) / -2);top:calc(var(--ch) / -2);
+  transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .6s ease;cursor:pointer;
+  will-change:transform,opacity}
+.lc-hero .card__bleed{position:absolute;inset:0;background:var(--lc-violet);opacity:0;
+  transform:translate(6px,5px);transition:opacity .5s ease,transform .5s ease}
+.lc-hero .card.in .card__bleed{opacity:.5}
+.lc-hero .card__face{position:absolute;inset:0;overflow:hidden;box-shadow:9px 11px 0 var(--lc-plum);
+  opacity:0;transform:translateY(10px);transition:opacity .5s ease .22s,transform .5s ease .22s}
+.lc-hero .card.in .card__face{opacity:1;transform:translateY(0)}
+@keyframes lc-breath{0%,100%{transform:translate(6px,5px)}50%{transform:translate(7px,5.7px)}}
+.lc-hero .card.settled .card__bleed{animation:lc-breath 4.2s ease-in-out infinite}
+
+.lc-hero .face-post{background:#1a0a14}
+.lc-hero .face-post .post-link{position:absolute;inset:0;display:block}
+/* The card is sized to the image's aspect ratio (see HeroDeck.tsx), so the
+   image fills it edge to edge. object-fit:contain guarantees the full artifact
+   is always shown — never cropped — even if a ratio is missing/rounded. */
+.lc-hero .face-post .post-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
+.lc-hero .face-poster{background:#1a0a14;color:#fff}
+.lc-hero .face-poster .ht{position:absolute;inset:0;width:100%;height:100%;opacity:.16}
+.lc-hero .face-poster .topbar{position:absolute;top:0;left:0;width:64px;height:9px;background:var(--lc-red)}
+.lc-hero .face-poster .bignum{position:absolute;left:-6px;bottom:46px;font-family:var(--lc-display);font-weight:700;
+  font-variation-settings:"opsz" 96,"wght" 700;font-size:300px;line-height:.7;color:var(--lc-red)}
+.lc-hero .face-poster .ptitle{position:absolute;right:18px;top:30px;width:172px;text-align:right;
+  font-family:var(--lc-display);font-weight:700;font-size:31px;line-height:.96;text-transform:uppercase;letter-spacing:-.01em}
+.lc-hero .face-quote{background:var(--lc-cream);color:var(--lc-plum);padding:30px 26px}
+.lc-hero .face-quote .topbar{position:absolute;top:0;left:0;right:0;height:9px;background:var(--lc-red)}
+.lc-hero .face-quote .qeyebrow{font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--lc-red);margin:14px 0 18px}
+.lc-hero .face-quote .qmark{font-family:var(--lc-display);font-weight:700;font-size:62px;line-height:.4;color:var(--lc-red)}
+.lc-hero .face-quote .qtext{font-family:var(--lc-display);font-weight:700;font-size:29px;line-height:1.03;
+  letter-spacing:-.01em;margin-top:8px}
+.lc-hero .face-review{background:#fff;color:var(--lc-plum);padding:24px}
+.lc-hero .face-review .topbar{position:absolute;top:0;left:0;right:0;height:9px;background:var(--lc-red)}
+.lc-hero .face-review .stars{margin-top:12px;font-size:21px;letter-spacing:2px;color:#f5b50a}
+.lc-hero .face-review .who{display:flex;align-items:center;gap:11px;margin:16px 0 14px}
+.lc-hero .face-review .av{width:42px;height:42px;border-radius:50%;background:var(--lc-plum);flex:0 0 auto;object-fit:cover}
+.lc-hero .face-review .nm{font-weight:700;font-size:16px;line-height:1.1}
+.lc-hero .face-review .role{font-size:12px;opacity:.55}
+.lc-hero .face-review .rtext{font-size:13.5px;line-height:1.45}.lc-hero .face-review .rtext .more{opacity:.5}
+.lc-hero .face-review .foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
+.lc-hero .face-review .pg{font-size:12px;opacity:.6}
+.lc-hero .face-review .gg{font-family:var(--lc-display);font-weight:700;font-size:18px}
+.lc-hero .face-review .gg b:nth-child(6n+1){color:#4285F4}.lc-hero .face-review .gg b:nth-child(6n+2){color:#EA4335}
+.lc-hero .face-review .gg b:nth-child(6n+3){color:#FBBC05}.lc-hero .face-review .gg b:nth-child(6n+4){color:#4285F4}
+.lc-hero .face-review .gg b:nth-child(6n+5){color:#34A853}.lc-hero .face-review .gg b:nth-child(6n){color:#EA4335}
+.lc-hero .face-review .help{font-size:10px;opacity:.45;text-align:right;margin-top:5px}
+
+.lc-hero .face-ay{background:var(--ay-cream);color:var(--ay-black);font-family:var(--ay-font);padding:30px 26px}
+.lc-hero .face-ay .abar{position:absolute;top:0;left:0;right:0;height:7px;background:var(--ay-amber)}
+.lc-hero .face-ay .awm{position:absolute;left:26px;bottom:24px;font-family:var(--ay-wm);font-weight:700;font-size:19px}
+.lc-hero .face-ay .atag{position:absolute;right:26px;bottom:26px;font-size:10px;letter-spacing:.04em;opacity:.5}
+.lc-hero .face-ay-stmt .astmt{font-weight:600;font-size:30px;line-height:1.06;letter-spacing:-.015em;margin-top:18px}
+.lc-hero .face-ay-stmt .astmt em{font-style:normal;color:var(--ay-amber)}
+.lc-hero .face-ay-rcpt{background:linear-gradient(180deg,#FFF8E4 0%,#FFEFC4 22%,#FFE39A 44%,#FFD66B 64%,#FFCB3D 82%,#FFBF00 100%);
+  color:var(--ay-black);font-family:ui-monospace,Menlo,monospace;padding:26px 24px}
+.lc-hero .face-ay-rcpt .rhead{font-family:var(--ay-wm);font-weight:700;font-size:15px;letter-spacing:.32em;text-align:center;margin:6px 0 2px}
+.lc-hero .face-ay-rcpt .rsub{font-size:11px;text-align:center;opacity:.6;margin-bottom:20px;letter-spacing:.06em}
+.lc-hero .face-ay-rcpt .rline{display:flex;justify-content:space-between;font-size:12.5px;padding:6px 0;gap:10px}
+.lc-hero .face-ay-rcpt .rline span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lc-hero .face-ay-rcpt .rrule{border-top:1.5px dashed rgba(20,20,20,.5);margin:10px 0}
+.lc-hero .face-ay-rcpt .rtot{font-weight:700;font-size:13.5px}
+.lc-hero .face-ay-rcpt .rfoot{font-family:var(--ay-font);font-weight:600;text-align:center;margin-top:22px;font-size:13px}
+.lc-hero .face-ay-rev{background:#fff;color:var(--ay-black);font-family:var(--ay-font);padding:24px}
+.lc-hero .face-ay-rev .abar{background:var(--ay-amber)}
+.lc-hero .face-ay-rev .stars{margin-top:12px;font-size:20px;letter-spacing:2px;color:var(--ay-amber)}
+.lc-hero .face-ay-rev .who{margin:14px 0 12px}
+.lc-hero .face-ay-rev .nm{font-weight:600;font-size:16px}.lc-hero .face-ay-rev .role{font-size:12px;opacity:.55}
+.lc-hero .face-ay-rev .rtext{font-size:13.5px;line-height:1.45}
+.lc-hero .face-ay-rev .store{position:absolute;left:24px;bottom:22px;font-size:11px;opacity:.55}
+.lc-hero .face-ay-rev .store b{font-family:var(--ay-wm);opacity:1}
+
+@media (max-width:900px){
+  .lc-hero .hero{grid-template-columns:1fr;gap:0;padding-top:24px;min-height:auto}
+  .lc-hero .hero-left{padding:30px 0 18px}.lc-hero .hero-right{height:560px;margin-bottom:48px}
+  /* Single column: left-align + wrap the headline so it doesn't bleed weirdly. */
+  .lc-hero .headwrap{justify-content:flex-start}
+  .lc-hero .headline{white-space:normal;transform:none;font-size:clamp(42px,11vw,72px)}
+  /* Single column: centre the deck (no right-anchor) and a smaller card. */
+  .lc-hero .deck{left:50%}
+  .lc-hero .card{--cw:clamp(210px,56vw,300px)}
+  .lc-hero .face-poster .bignum{font-size:248px}
+}
+@media (prefers-reduced-motion:reduce){
+  .lc-hero .card,.lc-hero .card__face,.lc-hero .card__bleed,.lc-hero .cta,.lc-hero .deck-wrap{transition:none!important;animation:none!important}
+  .lc-hero .card__bleed{opacity:.5}.lc-hero .card__face{opacity:1;transform:none}
+}

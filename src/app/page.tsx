@@ -1,10 +1,11 @@
-import { Button } from "@/components/Button/Button";
 import { ClosingCTA } from "@/components/ClosingCTA/ClosingCTA";
 import { Footer } from "@/components/Footer/Footer";
+import HeroDeck from "@/components/HeroDeck/HeroDeck";
 import { Nav } from "@/components/Nav/Nav";
 import { Page } from "@/components/Page/Page";
 import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
 import { WorkRow } from "@/components/WorkRow/WorkRow";
+import { getHeroDeck } from "@/lib/heroDeck";
 import { client } from "@/sanity/client";
 import {
   getFeaturedCaseStudies,
@@ -33,56 +34,21 @@ const SERVICES = [
 ];
 
 export default async function Home() {
-  const featured =
-    await client.fetch<CaseStudyListItem[]>(getFeaturedCaseStudies);
+  const [featured, deck] = await Promise.all([
+    client.fetch<CaseStudyListItem[]>(getFeaturedCaseStudies),
+    getHeroDeck(),
+  ]);
 
   return (
     <Page>
       <Nav />
       <HomeMotion />
 
-      {/* MASTHEAD — same pattern as the other pages. Home is the cover, so it
-          carries No. 000 (others run 001-004). */}
-      <div className={styles.masthead}>
-        <span className={styles.fur}>Loose Cannon Co. // No. 000</span>
-        <span className={`${styles.fur} ${styles.furR}`}>
-          {"// Social that doesn't suck"}
-        </span>
-      </div>
-
-      {/* HERO — static launch layout. Asymmetric grid: headline + support +
-          CTA on the left, transparent PNG of work on the right, sized larger
-          than the text block and bled past the page padding so it reads
-          unframed on the pink canvas. No reel, no video, no autoplay. */}
-      <section className={styles.hero}>
-        <div className={styles.heroGrid}>
-          <div className={styles.heroLeft}>
-            <h1 className={`${styles.heroHeadline} flippy-hide-behind`}>
-              Social that doesn&apos;t&nbsp;suck.
-            </h1>
-            <p className={`${styles.heroSupport} ${styles.rv}`}>
-              Social-first creative for brands tired of looking like
-              everyone&nbsp;else.
-            </p>
-            <div className={`${styles.heroCta} ${styles.rv}`}>
-              <Button href="/work">See the work</Button>
-            </div>
-          </div>
-          <div className={styles.heroImageWrap}>
-            {/* Transparent PNG, composites onto the pink canvas with no frame
-                or card behind it. eager + high fetch priority because this is
-                the above-the-fold LCP candidate. */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/lc-home-hero-work.png"
-              alt=""
-              className={styles.heroImage}
-              loading="eager"
-              fetchPriority="high"
-            />
-          </div>
-        </div>
-      </section>
+      {/* HERO — living press sheet: a randomly dealt card deck (Sanity-curated)
+          with the headline + CTA on the left. Replaces the prior static
+          headline-and-PNG hero. Its own Flippy was dropped on integration since
+          the global cursor Flippy is already mounted in layout.tsx. */}
+      <HeroDeck cards={deck} />
 
       {/* FEATURED WORK — uses .firstSection on top of .section so the gap
           from the hero is a sub-section break (72/40px), not a full chapter

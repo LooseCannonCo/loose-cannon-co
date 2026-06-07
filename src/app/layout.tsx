@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, DM_Sans } from "next/font/google";
+import { Bricolage_Grotesque, DM_Sans, Poppins } from "next/font/google";
 import Script from "next/script";
 import { Suspense } from "react";
 
@@ -26,8 +26,19 @@ const display = Bricolage_Grotesque({
 
 const body = DM_Sans({
   subsets: ["latin"],
-  weight: ["400", "600"],
+  // 400 body + 600 eyebrow/caption (site), plus 500 + 700 the HeroDeck uses.
+  weight: ["400", "500", "600", "700"],
   variable: "--font-body",
+  display: "swap",
+});
+
+// Ayye wordmark + receipt header on the HeroDeck's Ayye cards. Self-hosted via
+// next/font/google (no render-block), exposed as --font-poppins and consumed by
+// the hero's --ay-wm token.
+const wordmark = Poppins({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  variable: "--font-poppins",
   display: "swap",
 });
 
@@ -42,7 +53,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`}>
+    <html
+      lang="en"
+      className={`${display.variable} ${body.variable} ${wordmark.variable}`}
+    >
+      <head>
+        {/* General Sans (Fontshare) — Ayye body font on the HeroDeck cards.
+            Loaded by literal family name so the hero CSS --ay-font resolves. */}
+        <link
+          rel="preconnect"
+          href="https://api.fontshare.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap"
+        />
+      </head>
       <body>
         {/* Meta Pixel base: standard fbevents.js bootstrap + initial PageView.
             Subsequent client-side route changes fire PageView via the tracker
