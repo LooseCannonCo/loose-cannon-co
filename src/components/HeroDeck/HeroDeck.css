@@ -19,7 +19,7 @@
 /* padding-top is the whole gap between the nav and the hero now that the
    masthead strip is gone — comfortable, balanced, not cramped. */
 .lc-hero .hero{position:relative;max-width:none;margin:0;padding:44px 0 0;overflow:hidden;
-  min-height:74vh;display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:start}
+  display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:start}
 .lc-hero .hero-left{position:relative;z-index:5}
 .lc-hero .eyebrow{display:inline-flex;align-items:center;font-weight:600;font-size:11px;
   letter-spacing:.16em;text-transform:uppercase;opacity:.85;margin-bottom:16px}
