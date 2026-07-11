@@ -3,7 +3,7 @@
 
 import { groq } from 'next-sanity';
 
-import { client } from '@/sanity/client';
+import { sanityFetch } from '@/sanity/fetch';
 import type { HeroCard } from '@/components/HeroDeck/heroDeck.types';
 
 export const HERO_DECK_QUERY = groq`
@@ -31,6 +31,6 @@ export const HERO_DECK_QUERY = groq`
 export type HeroDeckResponse = { deck?: HeroCard[] };
 
 export async function getHeroDeck(): Promise<HeroCard[]> {
-  const data = await client.fetch<HeroDeckResponse>(HERO_DECK_QUERY);
+  const data = await sanityFetch<HeroDeckResponse>({ query: HERO_DECK_QUERY });
   return data?.deck ?? [];
 }

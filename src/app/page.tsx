@@ -6,7 +6,7 @@ import { Page } from "@/components/Page/Page";
 import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
 import { WorkRow } from "@/components/WorkRow/WorkRow";
 import { getHeroDeck } from "@/lib/heroDeck";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import {
   getFeaturedCaseStudies,
   type CaseStudyListItem,
@@ -35,7 +35,7 @@ const SERVICES = [
 
 export default async function Home() {
   const [featured, deck] = await Promise.all([
-    client.fetch<CaseStudyListItem[]>(getFeaturedCaseStudies),
+    sanityFetch<CaseStudyListItem[]>({ query: getFeaturedCaseStudies }),
     getHeroDeck(),
   ]);
 

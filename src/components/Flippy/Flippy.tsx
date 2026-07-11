@@ -51,7 +51,19 @@ function pickLine(
   return arr[i];
 }
 
+/**
+ * Guard wrapper: Flippy is mounted once in the root layout, which includes
+ * the embedded Studio at /studio. The Studio is a working backend, so the
+ * cursor-follower is suppressed there and renders only on the public site.
+ * Kept as a separate component so the inner hooks are never conditional.
+ */
 export function Flippy() {
+  const pathname = usePathname();
+  if (pathname === "/studio" || pathname.startsWith("/studio/")) return null;
+  return <FlippyInner />;
+}
+
+function FlippyInner() {
   const pathname = usePathname();
 
   // SSR-safe defaults. Hydrate from matchMedia after mount.

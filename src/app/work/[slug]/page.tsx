@@ -18,6 +18,7 @@ import { StatsTrio, type TrioCell } from "@/components/StatsTrio/StatsTrio";
 import { ThreeUpVideo } from "@/components/ThreeUpVideo/ThreeUpVideo";
 import { UpNext } from "@/components/UpNext/UpNext";
 import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { urlFor } from "@/sanity/image";
 import {
   getAllCaseStudies,
@@ -186,8 +187,13 @@ export default async function CaseStudyPage({
 }: {
   params: { slug: string };
 }) {
-  const doc = await client.fetch<CaseStudy | null>(getCaseStudyBySlug, {
-    slug: params.slug,
+  // Draft-aware: normal visitors get the published doc exactly as before;
+  // inside the Presentation tool this returns drafts with click-to-edit
+  // markers. generateStaticParams above keeps using the plain client (it runs
+  // at build time, where draft mode does not exist).
+  const doc = await sanityFetch<CaseStudy | null>({
+    query: getCaseStudyBySlug,
+    params: { slug: params.slug },
   });
   if (!doc) notFound();
 

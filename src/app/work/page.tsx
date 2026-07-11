@@ -5,7 +5,7 @@ import { Nav } from "@/components/Nav/Nav";
 import { Page } from "@/components/Page/Page";
 import { SectionEyebrow } from "@/components/SectionEyebrow/SectionEyebrow";
 import { cn } from "@/lib/utils";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import {
   getAllCaseStudies,
   type CaseStudyListItem,
@@ -34,7 +34,9 @@ function sortCases(a: CaseStudyListItem, b: CaseStudyListItem): number {
 }
 
 export default async function WorkIndex() {
-  const cases = await client.fetch<CaseStudyListItem[]>(getAllCaseStudies);
+  const cases = await sanityFetch<CaseStudyListItem[]>({
+    query: getAllCaseStudies,
+  });
   const sorted = [...cases].sort(sortCases);
 
   return (

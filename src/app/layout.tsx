@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import { Bricolage_Grotesque, DM_Sans, Poppins } from "next/font/google";
 import Script from "next/script";
+import { VisualEditing } from "next-sanity";
 import { Suspense } from "react";
 
 import { Flippy } from "@/components/Flippy/Flippy";
 import { MetaPixelRouteTracker } from "@/components/MetaPixel/MetaPixelRouteTracker";
+import { DisableDraftMode } from "@/components/Preview/DisableDraftMode";
 
 import "@/styles/globals.css";
 
@@ -109,6 +112,15 @@ fbq('track', 'PageView');
         {/* Flippy is mounted once at the root so he survives every route
             change. Position is fixed, pointer-events: none. */}
         <Flippy />
+        {/* Presentation-tool preview plumbing. Renders nothing for normal
+            visitors; in draft mode it draws click-to-edit overlays and
+            refreshes the page as edits stream in from the Studio. */}
+        {draftMode().isEnabled ? (
+          <>
+            <VisualEditing />
+            <DisableDraftMode />
+          </>
+        ) : null}
       </body>
     </html>
   );
