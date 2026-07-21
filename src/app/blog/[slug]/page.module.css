@@ -1,0 +1,340 @@
+/* /blog/[slug], a single Blah Blah Blah post. Reading page in the LC system:
+ * Bricolage one-weight display for the title with the violet misregistration
+ * offset, DM Sans body at the reading size, print-card treatment on the
+ * cover. No boxed or highlighted text.
+ *
+ * Header, cover, and body all sit at the full width of .article (the Page
+ * column), one shared container, so all three line up on both edges. */
+
+.article {
+  padding-bottom: var(--lc-space-chapter);
+}
+
+.header {
+  padding: 24px 0 0;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-statement), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: var(--lc-size-page-headline);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  color: var(--lc-plum);
+  text-shadow: 0.016em 0.022em 0 var(--lc-violet);
+  text-wrap: balance;
+}
+
+.meta {
+  margin: var(--lc-space-intra) 0 0;
+  font-size: var(--lc-size-eyebrow);
+  font-weight: var(--lc-weight-eyebrow);
+  letter-spacing: var(--lc-tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  opacity: 0.7;
+}
+
+/* Cover carries the locked print-card treatment: plum border + hard offset
+   plum block shadow, no blur. Sub-section gap from the header above. */
+.cover {
+  margin-top: var(--lc-space-sub);
+}
+
+.cover img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+  border: 2px solid var(--lc-plum);
+  box-shadow: var(--lc-offset-block);
+}
+
+/* ── BODY (portable text) ────────────────────────────────────────────────── */
+.body {
+  margin-top: var(--lc-space-sub);
+  font-size: var(--lc-size-body);
+  line-height: 1.6;
+  color: var(--lc-plum);
+}
+
+.body p {
+  margin: 0 0 1.35em;
+  text-wrap: pretty;
+}
+
+/* In-article headings carry the same crooked one-weight treatment as the
+   post title: canonical violet misregistration offset plus a slight tilt.
+   Rotation origin stays left so the tilt reads as a press slip, not a lean. */
+.body h2,
+.body h3 {
+  margin: 2em 0 0.6em;
+  font-family: var(--lc-display);
+  font-weight: var(--lc-weight-display);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  text-shadow: 0.016em 0.022em 0 var(--lc-violet);
+  transform: rotate(-1deg);
+  transform-origin: left;
+}
+
+.body h2 {
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-size: clamp(28px, 3.4vw, 38px);
+}
+
+.body h3 {
+  font-variation-settings: "opsz" var(--lc-opsz-sub), "wght" var(--lc-weight-display);
+  font-size: var(--lc-size-sub);
+}
+
+.body a {
+  color: var(--lc-plum);
+  text-decoration: underline;
+  text-decoration-color: var(--lc-pink-3);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.body a:hover {
+  text-decoration-color: var(--lc-violet);
+}
+
+.body ul,
+.body ol {
+  margin: 0 0 1.35em;
+  padding-left: 1.3em;
+}
+
+.body li {
+  margin-bottom: 0.4em;
+  text-wrap: pretty;
+}
+
+/* Quote as a plum rule in the margin, not a box. */
+.body blockquote {
+  margin: 1.6em 0;
+  padding-left: 20px;
+  border-left: 2px solid var(--lc-plum);
+  text-wrap: pretty;
+}
+
+/* ── BODY BLOCKS ─────────────────────────────────────────────────────────
+   Every image block scopes its own img styling (never a bare .body img rule,
+   which would double-frame the Carousel's already-framed tiles). */
+
+/* Shared caption: small DM Sans under any image or video block. */
+.caption {
+  margin-top: 12px;
+  font-size: var(--lc-size-caption);
+  font-weight: var(--lc-weight-caption);
+  line-height: 1.4;
+  color: var(--lc-plum);
+  opacity: 0.8;
+  text-wrap: pretty;
+}
+
+/* Single image, column width by default. Print-card treatment, native aspect. */
+.figure {
+  margin: 2em 0;
+}
+
+.figure img {
+  display: block;
+  width: 100%;
+  border: 2px solid var(--lc-plum);
+  box-shadow: var(--lc-offset-block);
+}
+
+/* Small: centered, capped measure. */
+.figSmall {
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Full bleed: escapes the article column via the 100vw breakout pattern.
+   Flat treatment (no border, no offset), matching FeatureImage's full-bleed
+   language. Caption re-inserts the page padding so it aligns with content. */
+.figBleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.figBleed img {
+  border: none;
+  box-shadow: none;
+}
+
+.figBleed .caption {
+  max-width: var(--lc-page-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 var(--lc-page-pad);
+}
+
+/* Carousel block: the shared Carousel owns its own chrome; this wrapper just
+   sets the article rhythm around it. */
+.carouselBlock {
+  margin: 2.4em 0;
+}
+
+/* Two up: a row on desktop, a stack on mobile. Tiles crop 4:5 so the row
+   lines up regardless of source ratios. */
+.sideBySide {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin: 2em 0;
+}
+
+.sideFig {
+  margin: 0;
+}
+
+.sideFig img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border: 2px solid var(--lc-plum);
+  box-shadow: var(--lc-offset-block);
+}
+
+/* Wrapped image: floats inside the text flow on desktop; following
+   paragraphs wrap around it. Stacks full width on mobile. */
+.wrapFig {
+  width: min(46%, 420px);
+  margin: 0.4em 0 1.2em;
+}
+
+.wrapLeft {
+  float: left;
+  margin-right: 32px;
+}
+
+.wrapRight {
+  float: right;
+  margin-left: 32px;
+}
+
+.wrapFig img {
+  display: block;
+  width: 100%;
+  border: 2px solid var(--lc-plum);
+  box-shadow: var(--lc-offset-block);
+}
+
+/* Floats must not leak past their section: clear at headings, dividers, and
+   the end of the article. */
+.body h2,
+.body h3,
+.sectionBreak,
+.body::after {
+  clear: both;
+}
+
+.body::after {
+  content: "";
+  display: block;
+}
+
+/* Video: 16:9 print-card frame. The iframe fills it absolutely; an uploaded
+   file renders a native <video> with controls at the same treatment. */
+.videoBlock {
+  margin: 2em 0;
+}
+
+.videoFrame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border: 2px solid var(--lc-plum);
+  box-shadow: var(--lc-offset-block);
+  background: var(--lc-plum);
+}
+
+.videoFrame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.videoFile {
+  display: block;
+  width: 100%;
+  border: 2px solid var(--lc-plum);
+  box-shadow: var(--lc-offset-block);
+  background: var(--lc-plum);
+}
+
+/* Pull quote: big one-weight Bricolage, crooked with the violet
+   misregistration offset. No box, no highlight, no background fill. */
+.pullQuote {
+  margin: 2.4em 0;
+}
+
+.pullQuoteText {
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: var(--lc-size-section-title);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: var(--lc-plum);
+  text-shadow: 0.016em 0.022em 0 var(--lc-violet);
+  transform: rotate(-1deg);
+  transform-origin: left;
+  text-wrap: balance;
+}
+
+.pullQuoteAttr {
+  margin: 20px 0 0;
+  font-size: var(--lc-size-eyebrow);
+  font-weight: var(--lc-weight-eyebrow);
+  letter-spacing: var(--lc-tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  opacity: 0.7;
+}
+
+/* Section break: three plum squares (the SectionEyebrow marker) with the
+   violet registration bleed offset behind each. A print mark, not a rule. */
+.sectionBreak {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 3.5em 0;
+}
+
+.sectionBreak span {
+  width: 7px;
+  height: 7px;
+  background: var(--lc-plum);
+  box-shadow: var(--lc-bleed-offset-x) var(--lc-bleed-offset-y) 0 var(--lc-bleed-color);
+}
+
+@media (max-width: 900px) {
+  .cover img {
+    aspect-ratio: 3 / 2;
+  }
+
+  .sideBySide {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .wrapFig,
+  .wrapLeft,
+  .wrapRight {
+    float: none;
+    width: 100%;
+    margin: 2em 0;
+  }
+}

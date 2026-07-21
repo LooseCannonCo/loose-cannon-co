@@ -1,0 +1,148 @@
+/* /blog, "Blah Blah Blah". Zine index in the same system as /work: masthead
+ * fur lines, eyebrow + square bullet (via SectionEyebrow), one-weight crooked
+ * display headline with the canonical violet misregistration offset, and
+ * post rows revealed by the shared data-reveal system Page already mounts. */
+
+/* ── MASTHEAD (under the global nav) ─────────────────────────────────────── */
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 4px;
+  padding-bottom: 10px;
+}
+
+.fur {
+  font-family: var(--lc-body);
+  font-weight: var(--lc-weight-eyebrow);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  opacity: 0.7;
+}
+
+.furR {
+  opacity: 0.55;
+}
+
+/* ── HERO ────────────────────────────────────────────────────────────────── */
+.header {
+  position: relative;
+  padding: 40px 0 var(--lc-space-chapter);
+}
+
+/* Same hero display treatment as the other index pages: one weight, crooked,
+   violet misregistration offset. Sentence case. */
+.headline {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(52px, 10.5vw, 128px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: var(--lc-plum);
+  transform: rotate(-2deg);
+  transform-origin: left;
+  text-shadow: 0.016em 0.022em 0 var(--lc-violet);
+  text-wrap: balance;
+}
+
+.subhead {
+  position: relative;
+  z-index: 1;
+  margin: 22px 0 0;
+  max-width: 540px;
+  font-size: var(--lc-size-body);
+  font-weight: var(--lc-weight-eyebrow);
+  line-height: 1.5;
+  color: var(--lc-plum);
+  text-wrap: pretty;
+}
+
+/* ── POST LIST ───────────────────────────────────────────────────────────── */
+/* Chapter-break rhythm between rows so the index reads as deliberate beats,
+   same as the /work bands. */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lc-space-chapter);
+  padding-bottom: var(--lc-space-chapter);
+}
+
+.empty {
+  margin: 0;
+  font-size: var(--lc-size-body);
+  color: var(--lc-plum);
+}
+
+.rowLink {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 48px;
+  align-items: center;
+  color: var(--lc-plum);
+  text-decoration: none;
+}
+
+/* Cover carries the locked print-card treatment: plum border + hard offset
+   plum block shadow, no blur. */
+.cover img,
+.coverBlank {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border: 2px solid var(--lc-plum);
+  box-shadow: var(--lc-offset-block);
+  background: var(--lc-cream);
+}
+
+.rowTitle {
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: var(--lc-size-section-title);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  transition: text-shadow 0.2s ease;
+}
+
+.rowLink:hover .rowTitle {
+  text-shadow: 0.016em 0.022em 0 var(--lc-violet);
+}
+
+.rowSummary {
+  margin: var(--lc-space-intra) 0 0;
+  max-width: 520px;
+  font-size: var(--lc-size-body);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.rowMeta {
+  margin: var(--lc-space-intra) 0 0;
+  font-size: var(--lc-size-eyebrow);
+  font-weight: var(--lc-weight-eyebrow);
+  letter-spacing: var(--lc-tracking-eyebrow);
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+@media (max-width: 900px) {
+  .furR {
+    display: none;
+  }
+
+  .rowLink {
+    grid-template-columns: 1fr;
+    gap: var(--lc-space-intra);
+  }
+}
