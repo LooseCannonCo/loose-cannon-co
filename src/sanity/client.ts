@@ -47,6 +47,9 @@ export const client = createClient({
         "kind",
         "position",
         "percent",
+        // Blog body image controls: both pick CSS classes on /blog/[slug].
+        "width",
+        "side",
       ]);
       if (SKIP.has(key)) return false;
       return props.filterDefault(props);

@@ -1,3 +1,4 @@
+import { EyeOpenIcon } from "@sanity/icons";
 import { useToast } from "@sanity/ui";
 import { visionTool } from "@sanity/vision";
 import { defineConfig, type DocumentActionComponent } from "sanity";
@@ -47,9 +48,32 @@ function withPublishDelayNote(
   return PublishWithNote;
 }
 
+// One-click jump from the editing form to the Presentation tool with this
+// post loaded in the live preview iframe. Presentation enables draft mode on
+// its own, so an unpublished draft previews immediately, nothing to toggle.
+const OpenPostPreview: DocumentActionComponent = (props) => {
+  const doc = (props.draft ?? props.published) as {
+    slug?: { current?: string };
+  } | null;
+  const slug = doc?.slug?.current;
+  return {
+    label: "Open preview",
+    icon: EyeOpenIcon,
+    disabled: !slug,
+    title: slug
+      ? "See the post exactly as readers will, live, while you edit."
+      : "Add the web address first (click Generate under Web address).",
+    onHandle: () => {
+      window.location.href = `/studio/presentation?preview=${encodeURIComponent(
+        `/blog/${slug}`,
+      )}`;
+    },
+  };
+};
+
 // Custom desk: surface each singleton as a single editable document, then the
-// case studies under a plain-language label, then any other (non-singleton,
-// non-caseStudy) document types added later.
+// case studies and blog posts under plain-language labels, then any other
+// document types added later.
 const structure: StructureResolver = (S) =>
   S.list()
     .title("Website content")
@@ -62,10 +86,12 @@ const structure: StructureResolver = (S) =>
       ),
       S.divider(),
       S.documentTypeListItem("caseStudy").title("Case studies (work pages)"),
+      S.documentTypeListItem("post").title("Blog posts (Blah Blah Blah)"),
       ...S.documentTypeListItems().filter(
         (item) =>
           !SINGLETON_TYPES.has(item.getId() ?? "") &&
-          item.getId() !== "caseStudy",
+          item.getId() !== "caseStudy" &&
+          item.getId() !== "post",
       ),
     ]);
 
@@ -77,10 +103,11 @@ export default defineConfig({
   dataset,
   schema,
   plugins: [
-    structureTool({ structure }),
     // Live preview: opens the real site in an iframe (desktop/mobile toggle
     // built in), enables Next draft mode via the route below, and draws
-    // click-to-edit overlays on stega-marked content.
+    // click-to-edit overlays on stega-marked content. Listed FIRST so the
+    // Studio opens straight into it: editors land on the live site with the
+    // split editing pane, no hunting for a preview button.
     presentationTool({
       title: "Live preview",
       previewUrl: {
@@ -93,6 +120,10 @@ export default defineConfig({
           {
             route: "/work/:slug",
             filter: `_type == "caseStudy" && slug.current == $slug`,
+          },
+          {
+            route: "/blog/:slug",
+            filter: `_type == "post" && slug.current == $slug`,
           },
         ]),
         // Document -> URLs: the "Used on this page" banner in the editor.
@@ -113,9 +144,22 @@ export default defineConfig({
           homeHero: defineLocations({
             locations: [{ title: "Homepage", href: "/" }],
           }),
+          post: defineLocations({
+            select: { title: "title", slug: "slug.current" },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: doc?.title || "Blog post",
+                  href: `/blog/${doc?.slug}`,
+                },
+                { title: "Blog index", href: "/blog" },
+              ],
+            }),
+          }),
         },
       },
     }),
+    structureTool({ structure }),
     // Vision is a raw GROQ query console: useful for developers, confusing
     // (and risky-looking) for editors. Only mount it in local dev.
     ...(process.env.NODE_ENV === "development"
@@ -140,9 +184,14 @@ export default defineConfig({
       // Wrap Publish so editors learn the site is not instant: a Sanity
       // webhook pings a Netlify build hook on publish, and the rebuild takes
       // a couple of minutes to go live.
-      return base.map((a) =>
+      const wrapped = base.map((a) =>
         a.action === "publish" ? withPublishDelayNote(a) : a,
       );
+      // Blog posts get a one-click "Open preview" right after Publish.
+      if (schemaType === "post") {
+        wrapped.splice(1, 0, OpenPostPreview);
+      }
+      return wrapped;
     },
   },
 });

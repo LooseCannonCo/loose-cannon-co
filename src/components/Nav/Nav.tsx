@@ -16,6 +16,7 @@ const LINKS: { label: string; href: string }[] = [
   { label: "Work", href: "/work" },
   { label: "Services", href: "/services" },
   { label: "About", href: "/about" },
+  { label: "Blog", href: "/blog" },
   // { label: "Shop", href: "/shop" }, // re-enable when /shop ships
   { label: "Contact", href: "/contact" },
 ];

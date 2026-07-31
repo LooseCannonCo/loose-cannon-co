@@ -43,6 +43,9 @@ export function FooterCols() {
           <li>
             <Link href="/about">About</Link>
           </li>
+          <li>
+            <Link href="/privacy">Privacy</Link>
+          </li>
         </ul>
       </div>
       <div className={styles.col}>

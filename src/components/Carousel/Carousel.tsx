@@ -11,7 +11,8 @@ export interface CarouselSlide {
   /** Resolved image URL. Empty renders the cream placeholder with `caption`. */
   src: string;
   alt?: string;
-  /** Placeholder text shown when `src` is empty. */
+  /** Placeholder text shown when `src` is empty. Also rendered as a visible
+   *  caption under the tile when the host passes `showCaptions`. */
   caption?: string;
 }
 
@@ -33,6 +34,9 @@ export interface CarouselProps {
    *  for when a host section (Ayye social card) already supplies the header.
    *  Default false, so standalone callers (FITAID) are unchanged. */
   bare?: boolean;
+  /** Render each slide's caption under its tile (blog carousels). Default
+   *  false, so case study galleries are unchanged. */
+  showCaptions?: boolean;
 }
 
 const pad2 = (n: number) => n.toString().padStart(2, "0");
@@ -59,6 +63,7 @@ export function Carousel({
   title,
   intro,
   bare = false,
+  showCaptions = false,
 }: CarouselProps) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const tileRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -266,6 +271,9 @@ export function Carousel({
                 </div>
               )}
             </div>
+            {showCaptions && slide.src && slide.caption ? (
+              <p className={styles.tileCaption}>{slide.caption}</p>
+            ) : null}
           </div>
         ))}
       </div>

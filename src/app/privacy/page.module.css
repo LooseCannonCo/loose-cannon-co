@@ -1,0 +1,116 @@
+/* /privacy: quiet legal page. Existing tokens only, none of the loud parts.
+   No stickers, no halftone, no misregistration, no slot-rolls, no reveals. */
+
+/* Header block */
+
+.header {
+  padding-top: 80px;
+  margin-bottom: var(--lc-space-sub);
+}
+
+.eyebrow {
+  display: block;
+  font-family: var(--lc-body);
+  font-size: var(--lc-size-source);
+  font-weight: var(--lc-weight-source);
+  letter-spacing: var(--lc-tracking-source);
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  margin-bottom: var(--lc-space-intra-tight);
+}
+
+.headline {
+  font-family: var(--lc-display);
+  font-size: clamp(42px, 6vw, 58px);
+  font-variation-settings:
+    "opsz" var(--lc-opsz-section-title),
+    "wght" var(--lc-weight-display);
+  font-style: normal;
+  color: var(--lc-plum);
+  line-height: 1.05;
+  margin-bottom: var(--lc-space-intra-tight);
+}
+
+.effective {
+  font-family: var(--lc-body);
+  font-size: 13px;
+  font-weight: var(--lc-weight-caption);
+  color: var(--lc-plum);
+  opacity: 0.7;
+}
+
+/* Body column: readable measure, aligned to the page grid, not centered. */
+
+.body {
+  max-width: 720px;
+  padding-bottom: 80px;
+}
+
+.body h2 {
+  font-family: var(--lc-display);
+  font-size: 24px;
+  font-variation-settings:
+    "opsz" 48,
+    "wght" var(--lc-weight-display);
+  font-style: normal;
+  color: var(--lc-plum);
+  line-height: 1.15;
+  margin-top: 48px;
+  margin-bottom: 12px;
+}
+
+.body h3 {
+  font-family: var(--lc-display);
+  font-size: 18px;
+  font-variation-settings:
+    "opsz" var(--lc-opsz-sub),
+    "wght" var(--lc-weight-display);
+  font-style: normal;
+  color: var(--lc-plum);
+  line-height: 1.2;
+  margin-top: 32px;
+  margin-bottom: 10px;
+}
+
+.body p {
+  font-family: var(--lc-body);
+  font-size: 16px;
+  font-weight: var(--lc-weight-body);
+  line-height: 1.65;
+  color: var(--lc-plum);
+  margin-bottom: 16px;
+}
+
+.body ul {
+  font-family: var(--lc-body);
+  font-size: 16px;
+  font-weight: var(--lc-weight-body);
+  line-height: 1.65;
+  color: var(--lc-plum);
+  list-style: disc;
+  padding-left: 20px;
+  margin: 0 0 16px;
+}
+
+.body li + li {
+  margin-top: 6px;
+}
+
+/* Same link treatment as body links elsewhere on the site. */
+.body a {
+  color: var(--lc-plum);
+  text-decoration: underline;
+  text-decoration-color: var(--lc-pink-3);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.body a:hover {
+  text-decoration-color: var(--lc-violet);
+}
+
+@media (max-width: 900px) {
+  .headline {
+    font-size: clamp(34px, 7.5vw, 46px);
+  }
+}
