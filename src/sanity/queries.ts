@@ -18,7 +18,8 @@ export const getAllPosts = groq`*[_type == "post" && defined(slug.current)] | or
   summary,
   coverImage,
   author,
-  publishedAt
+  publishedAt,
+  cardSize
 }`;
 
 /** Full post by slug for /blog/[slug]. Uploaded videos in the body get the
@@ -53,6 +54,8 @@ export interface PostListItem {
   coverImage?: PostImage;
   author?: string;
   publishedAt?: string;
+  /** Editor override for the blog list card: "auto" or a fixed size key. */
+  cardSize?: string;
 }
 
 export interface Post {

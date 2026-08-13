@@ -312,10 +312,9 @@ export default async function BlogPostPage({
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     datePublished: post.publishedAt,
     ...(coverUrl ? { image: coverUrl } : {}),
-    author: {
-      "@type": post.author === "Loose Cannon Co." ? "Organization" : "Person",
-      name: post.author ?? "Loose Cannon Co.",
-    },
+    // The visible byline shows the author field (pen names included), but
+    // structured data always credits the studio.
+    author: { "@type": "Organization", name: "Loose Cannon Co." },
     publisher: { "@type": "Organization", name: "Loose Cannon Co.", url: SITE_URL },
     isPartOf: { "@type": "Blog", name: "Blah Blah Blah", url: `${SITE_URL}/blog` },
   };

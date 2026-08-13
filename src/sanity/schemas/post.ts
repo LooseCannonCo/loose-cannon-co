@@ -51,6 +51,16 @@ export const post = defineType({
   title: "Blah Blah Blah (Blog Post)",
   type: "document",
   icon: ComposeIcon,
+  // The layout fieldset holds the one knob that is about the blog page, not
+  // the writing. It stays collapsed and sits below every writing field, so a
+  // post can be written and published without ever opening it.
+  fieldsets: [
+    {
+      name: "layout",
+      title: "Blog page layout",
+      options: { collapsible: true, collapsed: true },
+    },
+  ],
   fields: [
     defineField({
       name: "title",
@@ -131,13 +141,14 @@ export const post = defineType({
       description: "Who wrote this.",
       options: {
         list: [
+          { title: "Seymour Buttz", value: "Seymour Buttz" },
           { title: "Briana Brugh", value: "Briana Brugh" },
           { title: "Noah Charnow", value: "Noah Charnow" },
           { title: "Loose Cannon Co.", value: "Loose Cannon Co." },
         ],
         layout: "radio",
       },
-      initialValue: "Briana Brugh",
+      initialValue: "Seymour Buttz",
     }),
     defineField({
       name: "publishedAt",
@@ -427,6 +438,26 @@ export const post = defineType({
           },
         },
       ],
+    }),
+    defineField({
+      name: "cardSize",
+      title: "Card size on the blog page",
+      type: "string",
+      fieldset: "layout",
+      description:
+        "Leave this alone unless the cover image looks badly cropped on the blog page.",
+      options: {
+        list: [
+          { title: "Auto", value: "auto" },
+          { title: "Small", value: "small" },
+          { title: "Medium", value: "medium" },
+          { title: "Large", value: "large" },
+          { title: "Wide", value: "wide" },
+          { title: "Tall", value: "tall" },
+        ],
+        layout: "dropdown",
+      },
+      initialValue: "auto",
     }),
   ],
   orderings: [

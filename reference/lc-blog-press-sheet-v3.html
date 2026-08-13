@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blah blah blah. Press sheet index v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --lc-pink-0:#fec6eb;
+  --lc-pink-1:#fbafdf;
+  --lc-pink-2:#f793cc;
+  --lc-pink-3:#ee65b3;
+  --lc-plum:#270c1d;
+  --lc-violet:#b14aff;
+  --lc-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --lc-body:'DM Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--lc-pink-0);color:var(--lc-plum);font-family:var(--lc-body);-webkit-font-smoothing:antialiased}
+.page{max-width:1320px;margin:0 auto;padding:0 32px}
+
+.nav{display:flex;justify-content:space-between;align-items:center;padding:26px 0}
+.nav__mark{font-family:var(--lc-display);font-variation-settings:"opsz" 24,"wght" 700;font-size:19px}
+.nav__links{display:flex;gap:26px}
+.nav__links a{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--lc-plum);text-decoration:none;opacity:.8}
+
+.masthead{position:relative;padding:14px 0 30px;border-bottom:1.5px solid var(--lc-plum)}
+.masthead__eyebrow{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;opacity:.7;margin-bottom:10px}
+.masthead__row{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.masthead__title{position:relative;font-family:var(--lc-display);font-variation-settings:"opsz" 96,"wght" 700;font-size:clamp(46px,7vw,86px);line-height:.9;letter-spacing:-.02em}
+.masthead__title::before{content:"Blah blah blah.";position:absolute;inset:0;color:var(--lc-violet);transform:translate(2.5px,2px);z-index:-1}
+.masthead__sub{font-size:14px;max-width:300px;padding-bottom:8px;opacity:.85}
+
+.rig{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:22px 0 0;padding:12px 14px;border:1.5px dashed var(--lc-plum);background:rgba(255,255,255,.28)}
+.rig__label{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.7;margin-right:4px}
+.rig button{font-family:var(--lc-body);font-size:12px;font-weight:600;padding:7px 13px;background:var(--lc-plum);color:var(--lc-pink-0);border:0;cursor:pointer}
+.rig button.ghost{background:transparent;color:var(--lc-plum);border:1.5px solid var(--lc-plum)}
+.rig button:hover{opacity:.85}
+.rig__count{font-size:12px;font-weight:600;margin-left:auto}
+
+.sheet{position:relative;padding:44px 0 96px}
+.sheet__grid{display:grid;grid-template-columns:repeat(12,1fr);gap:52px 32px;grid-auto-flow:dense}
+
+.post{position:relative;display:block;transition:transform .35s cubic-bezier(.2,.8,.3,1)}
+.post__frame{position:relative;display:block}
+.post__img{position:relative;display:block;width:100%;background:var(--lc-pink-2);border:1.5px solid var(--lc-plum);overflow:hidden}
+.post__img::after{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--lc-plum) 1.1px,transparent 1.2px);background-size:7px 7px;opacity:.5}
+.post__bleed{position:absolute;inset:0;background:var(--lc-violet);opacity:.62;transform:translate(4px,3px);z-index:-1;border:1.5px solid var(--lc-violet)}
+.post__title{font-family:var(--lc-display);font-variation-settings:"opsz" 48,"wght" 700;font-size:24px;line-height:1.08;letter-spacing:-.012em;margin-top:16px}
+.post__sum{font-size:14px;line-height:1.45;margin-top:8px;opacity:.85;max-width:46ch}
+.post__meta{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.65;margin-top:12px}
+.post:hover{transform:rotate(0deg) translateY(-4px)}
+
+.slot{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px dashed rgba(39,12,29,.35)}
+.slot__tag{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;opacity:.6}
+.slot select{font-family:var(--lc-body);font-size:11px;font-weight:600;padding:4px 6px;background:transparent;border:1.5px solid var(--lc-plum);color:var(--lc-plum);cursor:pointer}
+.slot.off{display:none}
+
+.foot{border-top:1.5px solid var(--lc-plum);padding:26px 0 60px;display:flex;justify-content:space-between;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
+
+@media (max-width:900px){
+  .page{padding:0 20px}
+  .sheet__grid{gap:40px 20px}
+  .sheet__grid .post{grid-column:span 12 !important}
+  .masthead__sub{padding-bottom:0}
+}
+@media (prefers-reduced-motion:reduce){.post{transition:none}}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <nav class="nav">
+    <span class="nav__mark">Loose Cannon Co.</span>
+    <span class="nav__links">
+      <a href="#">Work</a><a href="#">Services</a><a href="#">About</a><a href="#">Blog</a><a href="#">Contact</a>
+    </span>
+  </nav>
+
+  <header class="masthead">
+    <p class="masthead__eyebrow">Blah blah blah // the blog</p>
+    <div class="masthead__row">
+      <h1 class="masthead__title">Blah blah blah.</h1>
+      <p class="masthead__sub">Things we think about social, creative, and agency life. Read them or skip them, we will keep writing either way.</p>
+    </div>
+  </header>
+
+  <div class="rig">
+    <span class="rig__label">Preview rig</span>
+    <button id="add">Add a post</button>
+    <button id="add5" class="ghost">Add 5</button>
+    <button id="remove" class="ghost">Remove newest</button>
+    <button id="reset" class="ghost">Reset</button>
+    <button id="toggle" class="ghost">Hide slot controls</button>
+    <span class="rig__count" id="count">7 posts</span>
+  </div>
+
+  <main class="sheet">
+    <svg class="splat" style="position:absolute;top:20px;left:-14px;pointer-events:none" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#270c1d" opacity=".5"/></svg>
+    <svg class="splat" style="position:absolute;top:240px;right:4px;pointer-events:none" width="11" height="11" viewBox="0 0 11 11"><circle cx="5.5" cy="5.5" r="5" fill="#b14aff" opacity=".55"/></svg>
+    <div class="sheet__grid" id="grid"></div>
+  </main>
+
+  <footer class="foot">
+    <span>&copy; Loose Cannon Co.</span>
+    <span>Working everywhere</span>
+  </footer>
+
+</div>
+
+<script>
+const WIDTHS = [7, 5, 4, 4, 4];
+const CROPS  = ["4 / 3", "3 / 4", "1 / 1", "16 / 9"];
+const TILTS  = [-1.4, 2.1, -2.3, 1.2, 0.8, -1.0, 1.6];
+
+const OVERRIDES = {
+  auto:   null,
+  small:  { cols: 3, crop: "1 / 1" },
+  medium: { cols: 4, crop: "4 / 3" },
+  large:  { cols: 7, crop: "4 / 3" },
+  wide:   { cols: 6, crop: "16 / 9" },
+  tall:   { cols: 5, crop: "3 / 4" }
+};
+
+const SEED = [
+  ["Your brand does not need a mascot. Probably.", "Everyone wants a little guy now. Here is when a mascot earns its keep and when it is just a logo wearing a hat.", "Briana Brugh"],
+  ["We killed the deck. Nobody noticed.", "Eighteen slides became four. The work got better and the call got shorter.", "Noah Charnow"],
+  ["Hooks are not headlines.", "One is written to stop a thumb. The other is written to sit still. They are not the same job.", "Loose Cannon Co."],
+  ["What a social-first brand book actually needs.", "Most brand books are written for print and then quietly ignored by everyone making the content.", "Briana Brugh"],
+  ["The client is not the audience.", "A short argument about who you are actually making the work for.", "Noah Charnow"],
+  ["Nobody wants your carousel.", "Ten slides of a thing nobody asked to swipe through. Say it in one.", "Loose Cannon Co."],
+  ["How we price a retainer.", "No mystery, no rate card theater. Here is the actual math behind it.", "Briana Brugh"]
+];
+
+const FILLER = [
+  ["Stop asking for a viral moment.", "You cannot brief virality. You can brief a reason to care.", "Noah Charnow"],
+  ["Comment sections are research.", "The cheapest audience insight you will ever get is sitting under your last post.", "Briana Brugh"],
+  ["Two colors is a system. Nine is a mood board.", "Constraint is what makes a brand recognizable at thumbnail size.", "Loose Cannon Co."],
+  ["The brief is the deliverable.", "Half the projects that go sideways went sideways on page one.", "Noah Charnow"],
+  ["Trends have a shelf life of about nine days.", "By the time it reaches the approval chain it is already stale.", "Briana Brugh"],
+  ["Your founder should not be the face.", "Sometimes they should. Here is how to tell which one you are.", "Loose Cannon Co."],
+  ["We do not do rounds of revisions.", "We do conversations. Here is why that is cheaper for everyone.", "Noah Charnow"],
+  ["Good social is a format, not a post.", "One idea you can run fifty times beats fifty ideas you run once.", "Briana Brugh"]
+];
+
+let posts = [];
+let showSlots = true;
+
+function seedPosts() {
+  posts = SEED.map((p, i) => ({ title: p[0], sum: p[1], author: p[2], date: dateFor(i), size: "auto" }));
+}
+
+function dateFor(i) {
+  const d = new Date(2026, 7, 8);
+  d.setDate(d.getDate() - i * 9);
+  return d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+}
+
+function addPost() {
+  const f = FILLER[posts.length % FILLER.length];
+  posts.unshift({ title: f[0], sum: f[1], author: f[2], date: dateFor(0), size: "auto" });
+  posts.forEach((p, i) => { p.date = dateFor(i); });
+  render();
+}
+
+function removePost() {
+  if (posts.length <= 1) return;
+  posts.shift();
+  render();
+}
+
+function render() {
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  posts.forEach((p, i) => {
+    const ov = OVERRIDES[p.size];
+    const cols = ov ? ov.cols : WIDTHS[i % WIDTHS.length];
+    const crop = ov ? ov.crop : CROPS[i % CROPS.length];
+    const tilt = TILTS[i % TILTS.length];
+
+    const el = document.createElement("article");
+    el.className = "post";
+    el.style.gridColumn = "span " + cols;
+    el.style.transform = "rotate(" + tilt + "deg)";
+
+    const tag = p.size === "auto"
+      ? cols + " col &middot; " + crop.replace(/ /g, "") + " &middot; " + tilt + "&deg;"
+      : "override &middot; " + cols + " col &middot; " + crop.replace(/ /g, "");
+
+    el.innerHTML =
+      '<span class="post__frame"><span class="post__bleed"></span>' +
+      '<span class="post__img" style="aspect-ratio:' + crop + '"></span></span>' +
+      '<h2 class="post__title">' + p.title + '</h2>' +
+      '<p class="post__sum">' + p.sum + '</p>' +
+      '<p class="post__meta">' + p.author + ' &middot; ' + p.date + '</p>' +
+      '<div class="slot' + (showSlots ? '' : ' off') + '">' +
+      '<span class="slot__tag">' + tag + '</span>' +
+      '<select data-i="' + i + '">' +
+      Object.keys(OVERRIDES).map(k =>
+        '<option value="' + k + '"' + (k === p.size ? ' selected' : '') + '>' +
+        (k === "auto" ? "Auto" : k.charAt(0).toUpperCase() + k.slice(1)) + '</option>').join("") +
+      '</select></div>';
+
+    grid.appendChild(el);
+  });
+
+  grid.querySelectorAll("select").forEach(s => {
+    s.addEventListener("change", e => {
+      posts[+e.target.dataset.i].size = e.target.value;
+      render();
+    });
+  });
+
+  document.getElementById("count").textContent = posts.length + (posts.length === 1 ? " post" : " posts");
+}
+
+document.getElementById("add").addEventListener("click", addPost);
+document.getElementById("add5").addEventListener("click", () => { for (let i = 0; i < 5; i++) addPost(); });
+document.getElementById("remove").addEventListener("click", removePost);
+document.getElementById("reset").addEventListener("click", () => { seedPosts(); render(); });
+document.getElementById("toggle").addEventListener("click", e => {
+  showSlots = !showSlots;
+  e.target.textContent = showSlots ? "Hide slot controls" : "Show slot controls";
+  render();
+});
+
+seedPosts();
+render();
+</script>
+</body>
+</html>
