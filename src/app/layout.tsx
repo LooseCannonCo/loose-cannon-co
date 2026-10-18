@@ -5,6 +5,8 @@ import Script from "next/script";
 import { VisualEditing } from "next-sanity";
 import { Suspense } from "react";
 
+import { CartDrawer } from "@/components/Cart/CartDrawer";
+import { CartProvider } from "@/components/Cart/CartProvider";
 import { Flippy } from "@/components/Flippy/Flippy";
 import { MetaPixelRouteTracker } from "@/components/MetaPixel/MetaPixelRouteTracker";
 import { DisableDraftMode } from "@/components/Preview/DisableDraftMode";
@@ -108,7 +110,12 @@ fbq('track', 'PageView');
             </Suspense>
           </>
         ) : null}
-        {children}
+        {/* Cart state lives at the root so the nav count, product pages and
+            the drawer share one Shopify cart across route changes. */}
+        <CartProvider>
+          {children}
+          <CartDrawer />
+        </CartProvider>
         {/* Flippy is mounted once at the root so he survives every route
             change. Position is fixed, pointer-events: none. */}
         <Flippy />

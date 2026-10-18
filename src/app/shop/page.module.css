@@ -1,0 +1,210 @@
+/* /shop. Compact masthead (shared shape with the blog index), then products
+ * laid out as print proofs: 4:5 frames with the plum border and violet
+ * registration bleed, a fixed-size title + price row underneath. Unlike the
+ * blog press sheet the grid is regular, so prices scan in a straight line. */
+
+/* ── MASTHEAD ────────────────────────────────────────────────────────────── */
+.masthead {
+  position: relative;
+  padding: 14px 0 30px;
+  border-bottom: 1.5px solid var(--lc-plum);
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-family: var(--lc-body);
+  font-weight: var(--lc-weight-eyebrow);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lc-plum);
+  opacity: 0.7;
+}
+
+.mastheadRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.headline {
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-mega), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: clamp(46px, 7vw, 86px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--lc-plum);
+  text-shadow: 0.016em 0.022em 0 var(--lc-violet);
+  text-wrap: balance;
+}
+
+.tagline {
+  margin: 0;
+  max-width: 320px;
+  padding-bottom: 8px;
+  font-size: var(--lc-size-caption);
+  font-weight: var(--lc-weight-body);
+  line-height: 1.45;
+  color: var(--lc-plum);
+  opacity: 0.85;
+  text-wrap: pretty;
+}
+
+/* ── SHEET ───────────────────────────────────────────────────────────────── */
+.sheet {
+  padding: 44px 0 var(--lc-space-chapter);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 56px 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cardLink {
+  display: block;
+  color: var(--lc-plum);
+  text-decoration: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cardLink {
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.3, 1);
+  }
+
+  .cardLink:hover {
+    transform: translateY(-4px);
+  }
+}
+
+.frame {
+  position: relative;
+  display: block;
+}
+
+.bleed {
+  position: absolute;
+  inset: 0;
+  background: var(--lc-violet);
+  opacity: 0.62;
+  transform: translate(4px, 3px);
+}
+
+.cover {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  border: 1.5px solid var(--lc-plum);
+  background: var(--lc-cream);
+  overflow: hidden;
+}
+
+.cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blank {
+  position: absolute;
+  inset: 0;
+  background-color: var(--lc-pink-2);
+  background-image: radial-gradient(var(--lc-plum) 1.1px, transparent 1.2px);
+  background-size: 7px 7px;
+  opacity: 0.5;
+}
+
+.soldOut {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  padding: 6px 10px;
+  background: var(--lc-plum);
+  color: var(--lc-cream);
+  font-size: var(--lc-size-eyebrow);
+  font-weight: var(--lc-weight-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" 48, "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: 24px;
+  line-height: 1.08;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+.price {
+  flex-shrink: 0;
+  font-size: var(--lc-size-caption);
+  font-weight: var(--lc-weight-caption);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── EMPTY ───────────────────────────────────────────────────────────────── */
+.empty {
+  padding: 40px 0;
+}
+
+.emptyTitle {
+  margin: 0 0 var(--lc-space-intra-tight);
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: var(--lc-size-section-title);
+  line-height: 1;
+  color: var(--lc-plum);
+}
+
+.emptyBody {
+  margin: 0;
+  font-size: var(--lc-size-body);
+  color: var(--lc-plum);
+}
+
+/* ── MOBILE ──────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .mastheadRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .tagline {
+    padding-bottom: 0;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 20px;
+  }
+
+  .title {
+    font-size: 19px;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 6px;
+  }
+}

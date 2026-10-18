@@ -5,9 +5,6 @@ import styles from "./FooterCols.module.css";
 /**
  * Footer columns: studio tagline + secondary nav + contact + socials.
  *
- * Shop column intentionally omitted until /shop ships in Phase F. To restore,
- * add a column with { label: "Shop" } and link entries to /shop, /shop/new.
- *
  * Journal link held until the route exists. No TikTok (no account); only the
  * three live socials below.
  */
@@ -45,6 +42,14 @@ export function FooterCols() {
           </li>
           <li>
             <Link href="/privacy">Privacy</Link>
+          </li>
+        </ul>
+      </div>
+      <div className={styles.col}>
+        <div className={styles.lbl}>Shop</div>
+        <ul>
+          <li>
+            <Link href="/shop">All merch</Link>
           </li>
         </ul>
       </div>

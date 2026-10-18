@@ -1,0 +1,122 @@
+/* /shop/[handle]. Two columns: product proofs left (lead image full width,
+ * the rest two-up), sticky buy column right. Frames use the same plum border
+ * + violet registration bleed as the shop grid and blog cards. */
+
+.product {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 64px;
+  align-items: start;
+  padding: 32px 0 var(--lc-space-chapter);
+}
+
+/* ── GALLERY ─────────────────────────────────────────────────────────────── */
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.frame,
+.frameLead {
+  position: relative;
+  display: block;
+}
+
+.frameLead {
+  grid-column: span 2;
+}
+
+.bleed {
+  position: absolute;
+  inset: 0;
+  background: var(--lc-violet);
+  opacity: 0.62;
+  transform: translate(4px, 3px);
+}
+
+.shot {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  border: 1.5px solid var(--lc-plum);
+  background: var(--lc-cream);
+  overflow: hidden;
+}
+
+.frameLead .shot {
+  aspect-ratio: 1;
+}
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blank {
+  position: absolute;
+  inset: 0;
+  background-color: var(--lc-pink-2);
+  background-image: radial-gradient(var(--lc-plum) 1.1px, transparent 1.2px);
+  background-size: 7px 7px;
+  opacity: 0.5;
+}
+
+/* ── INFO ────────────────────────────────────────────────────────────────── */
+.info {
+  position: sticky;
+  top: 32px;
+  color: var(--lc-plum);
+}
+
+.title {
+  margin: 0 0 var(--lc-space-intra);
+  font-family: var(--lc-display);
+  font-variation-settings: "opsz" var(--lc-opsz-section-title), "wght" var(--lc-weight-display);
+  font-weight: var(--lc-weight-display);
+  font-size: var(--lc-size-section-title);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.description {
+  margin-top: 40px;
+  padding-top: var(--lc-space-intra);
+  border-top: 1.5px solid var(--lc-plum);
+  font-size: 16px;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.description p {
+  margin: 0 0 12px;
+}
+
+.description ul {
+  margin: 0 0 12px;
+  padding-left: 18px;
+}
+
+.description li {
+  margin-bottom: 4px;
+}
+
+/* ── MOBILE ──────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .product {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-top: 16px;
+  }
+
+  .info {
+    position: static;
+  }
+
+  .gallery {
+    gap: 16px;
+  }
+}
