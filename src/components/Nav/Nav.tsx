@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { CartButton } from "@/components/Cart/CartButton";
+
 import styles from "./Nav.module.css";
 
 /**
@@ -9,15 +11,15 @@ import styles from "./Nav.module.css";
  * a standalone contextual back link via the BackLink component, mounted in
  * a slim row directly below the nav.
  *
- * Shop is intentionally commented out until /shop ships in Phase F. Restore
- * the { label: "Shop", href: "/shop" } entry below when the route exists.
+ * The cart link sits last. It shows on every /shop page, and elsewhere only
+ * once the visitor has something in the cart.
  */
 const LINKS: { label: string; href: string }[] = [
   { label: "Work", href: "/work" },
   { label: "Services", href: "/services" },
   { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },
-  // { label: "Shop", href: "/shop" }, // re-enable when /shop ships
+  { label: "Shop", href: "/shop" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -35,6 +37,7 @@ export function Nav() {
             {link.label}
           </Link>
         ))}
+        <CartButton />
       </div>
     </nav>
   );

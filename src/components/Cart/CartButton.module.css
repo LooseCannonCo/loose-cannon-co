@@ -1,0 +1,33 @@
+/* Matches the nav link type (eyebrow tier, uppercase tracked) so it reads as
+ * one more nav item, with the count in a small plum chip. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.button:hover {
+  opacity: 0.6;
+}
+
+.count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: var(--lc-plum);
+  color: var(--lc-cream);
+  border-radius: 2px;
+  font-size: 10px;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}

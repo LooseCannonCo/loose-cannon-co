@@ -1,9 +1,8 @@
 .footCols {
   padding: 32px 0;
   display: grid;
-  /* 3 columns: tagline (1.6fr) + two link cols (1fr each). Was 4 cols when
-     Shop column existed; restore as 1.6fr 1fr 1fr 1fr when /shop ships. */
-  grid-template-columns: 1.6fr 1fr 1fr;
+  /* 4 columns: tagline (1.6fr) + Studio, Shop and Contact link cols. */
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
   gap: 40px;
   font-size: var(--lc-size-caption);
 }

@@ -11,6 +11,7 @@ import { structureTool, type StructureResolver } from "sanity/structure";
 
 import { apiVersion, dataset, projectId } from "./src/sanity/env";
 import { schema } from "./src/sanity/schemas";
+import { SHOPIFY_TYPES } from "./src/sanity/schemas/shopify";
 
 // Document types pinned as singletons: one document each, fixed id, edited in
 // place (not creatable repeatedly). homeHero curates the homepage hero deck.
@@ -87,9 +88,25 @@ const structure: StructureResolver = (S) =>
       S.divider(),
       S.documentTypeListItem("caseStudy").title("Case studies (work pages)"),
       S.documentTypeListItem("post").title("Blog posts (Blah Blah Blah)"),
+      S.divider(),
+      // Synced from Shopify by Sanity Connect. Read-only here; products are
+      // edited in the Shopify admin and show up on the site's /shop.
+      S.listItem()
+        .title("Shop (synced from Shopify)")
+        .id("shop")
+        .child(
+          S.list()
+            .title("Shop (synced from Shopify)")
+            .items([
+              S.documentTypeListItem("product").title("Products"),
+              S.documentTypeListItem("productVariant").title("Variants"),
+              S.documentTypeListItem("collection").title("Collections"),
+            ]),
+        ),
       ...S.documentTypeListItems().filter(
         (item) =>
           !SINGLETON_TYPES.has(item.getId() ?? "") &&
+          !SHOPIFY_TYPES.has(item.getId() ?? "") &&
           item.getId() !== "caseStudy" &&
           item.getId() !== "post",
       ),
@@ -167,13 +184,20 @@ export default defineConfig({
       : []),
   ],
   // Belt-and-suspenders: hide the global "create new" action for singletons so
-  // there can only ever be the one pinned document.
+  // there can only ever be the one pinned document. Shopify-synced types are
+  // never created here at all; Sanity Connect owns them.
   document: {
     newDocumentOptions: (prev, { creationContext }) =>
-      creationContext.type === "global"
-        ? prev.filter((t) => !SINGLETON_TYPES.has(t.templateId))
-        : prev,
+      prev
+        .filter((t) => !SHOPIFY_TYPES.has(t.templateId))
+        .filter(
+          (t) =>
+            creationContext.type !== "global" ||
+            !SINGLETON_TYPES.has(t.templateId),
+        ),
     actions: (prev, { schemaType }) => {
+      // Synced Shopify docs get no actions: no publish, duplicate or delete.
+      if (SHOPIFY_TYPES.has(schemaType)) return [];
       const base = SINGLETON_TYPES.has(schemaType)
         ? prev.filter(
             ({ action }) =>
